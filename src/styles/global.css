@@ -20,6 +20,16 @@ h1 {
   font-size: 2.5rem;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:link,
+a:active,
+a:visited {
+  color: #2cb67d;
+}
+
 /* nav styles */
 .hamburger {
   cursor: pointer;
@@ -53,7 +63,7 @@ h1 {
 }
 
 .nav-links a:hover,
-a:focus {
+.nav-links a:focus {
   background-color: #ff9776;
 }
 
@@ -62,12 +72,36 @@ a:focus {
 }
 
 html.dark {
-  background-color: #0d0950;
-  color: #fff;
+  background-color: #16161a;
+}
+
+.dark h1,
+.dark h2,
+.dark h3 {
+  color: #fffffe;
+}
+
+.dark p,
+.dark li {
+  color: #94a1b2;
+}
+
+.dark .hamburger .line {
+  background-color: #7f5af0;
+}
+
+.dark .nav-links {
+  background-color: #7f5af0;
 }
 
 .dark .nav-links a {
   color: #fff;
+}
+
+.dark .nav-links a:hover,
+.dark .nav-links a:focus {
+  background-color: #7f5af0;
+  color: #fffffe;
 }
 
 @media screen and (min-width: 636px) {
@@ -76,6 +110,10 @@ html.dark {
     display: block;
     position: static;
     width: auto;
+    background: none;
+  }
+
+  .dark .nav-links {
     background: none;
   }
 
