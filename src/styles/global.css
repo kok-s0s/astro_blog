@@ -32,14 +32,18 @@ a:visited {
 
 /* nav styles */
 .hamburger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
   cursor: pointer;
 }
 
 .hamburger .line {
   display: block;
-  width: 40px;
+  width: 33px;
   height: 5px;
-  margin-bottom: 10px;
   background-color: #ff9776;
 }
 
