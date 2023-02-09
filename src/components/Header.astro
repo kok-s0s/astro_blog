@@ -5,9 +5,17 @@ import ThemeIcon from "./ThemeIcon.astro";
 ---
 
 <header>
-  <nav>
+  <nav id="header">
     <Hamburger />
-    <ThemeIcon />
     <Navigation />
+    <ThemeIcon />
   </nav>
 </header>
+
+<style>
+  #header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+</style>
