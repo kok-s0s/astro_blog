@@ -24,12 +24,6 @@ a {
   text-decoration: none;
 }
 
-a:link,
-a:active,
-a:visited {
-  color: #2cb67d;
-}
-
 /* nav styles */
 .hamburger {
   display: flex;

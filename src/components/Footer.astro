@@ -1,6 +1,10 @@
 ---
-import Social from "./Social.astro";
 ---
+
+<footer>
+  <a href="https://kok-s0s.top/" target="_blank">Blog</a>
+  <a href="https://github.com/kok-s0s">Github</a>
+</footer>
 
 <style>
   footer {
@@ -8,10 +12,11 @@ import Social from "./Social.astro";
     gap: 1rem;
     margin-top: 2rem;
   }
-</style>
 
-<footer>
-  <Social platform="twitter" username="astrodotbuild" />
-  <Social platform="github" username="withastro" />
-  <Social platform="youtube" username="astrodotbuild" />
-</footer>
+  a {
+    padding: 0.5rem 1rem;
+    color: #fffffe;
+    background-color: #7f5af0;
+    text-decoration: none;
+  }
+</style>

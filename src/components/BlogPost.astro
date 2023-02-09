@@ -3,3 +3,11 @@ const { title, url } = Astro.props;
 ---
 
 <li><a href={url}>{title}</a></li>
+
+<style>
+  a:link,
+  a:active,
+  a:visited {
+    color: #2cb67d;
+  }
+</style>

@@ -1,11 +1,33 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Greeting from "../components/Greeting.jsx";
 
-const pageTitle = "Home Page";
+const pageTitle = "零";
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+  <p>该博客用于记录自己的学习</p>
+  <p>可能更像个自己整理的知识库</p>
+  <ul>
+    <li><span class="topic">数据结构与算法</span></li>
+    <li><span class="topic">操作系统</span></li>
+    <li><span class="topic">C++ 心得</span></li>
+  </ul>
+  <p></p>
 </BaseLayout>
+
+<style>
+  p {
+    letter-spacing: 3px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .topic {
+    color: #078080;
+    letter-spacing: 2px;
+  }
+</style>
