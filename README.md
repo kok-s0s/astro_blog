@@ -1,46 +1,15 @@
-# Astro Starter Kit: Minimal
+# Astro-Blog
 
-```
-npm create astro@latest -- --template minimal
-```
+## To Do
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/s/github/withastro/astro/tree/latest/examples/minimal)
+- [ ] 中英文字体样式
+- [ ] 黑暗主题和常规主题下各种元素的颜色设置
+- [ ] 更新博客信息
+- [ ] 写篇博客理理用 Astro 做博客的感受
+- [ ] 增加一个友情链接页面
+- [ ] 手机端的 menu 改为覆盖式的展示
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 该博客作用
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. Astro 技术尝鲜
+2. 记录数据结构和算法的学习（又要刷 LeetCode 啦）
