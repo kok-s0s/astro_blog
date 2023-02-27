@@ -21,11 +21,30 @@ h1 {
 }
 
 h3 {
+  padding-left: 0.5rem;
+}
+
+h3 em {
   color: #808080;
 }
 
 a {
   text-decoration: none;
+}
+
+a:link,
+a:visited {
+  color: #808080;
+}
+a:hover,
+a:active {
+  color: #2cb67d;
+}
+
+blockquote {
+  margin-inline-start: 0.5rem;
+  border-left: 0.5rem solid #808080;
+  padding-left: 1rem;
 }
 
 /* nav styles */
@@ -62,6 +81,7 @@ a {
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
+  color: #3f2882;
 }
 
 .nav-links a:hover,
@@ -78,7 +98,8 @@ html.dark {
 }
 
 .dark h1,
-.dark h2 {
+.dark h2,
+.dark h3 {
   color: #fffffe;
 }
 
