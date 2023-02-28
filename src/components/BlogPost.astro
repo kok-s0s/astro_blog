@@ -5,11 +5,16 @@ const { title, url } = Astro.props
 <li><a href={url}>{title}</a></li>
 
 <style>
+  li {
+    line-height: 1.8;
+  }
+
   a:link,
   a:hover,
   a:visited {
     color: #2cb67d;
   }
+
   a:active {
     color: #0a613d;
   }

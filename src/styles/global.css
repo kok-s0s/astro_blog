@@ -28,6 +28,10 @@ h3 em {
   color: #808080;
 }
 
+p {
+  line-height: 1.8;
+}
+
 a {
   text-decoration: none;
 }
@@ -45,6 +49,26 @@ blockquote {
   margin-inline-start: 0.5rem;
   border-left: 0.5rem solid #808080;
   padding-left: 1rem;
+}
+
+details summary::marker {
+  color: #808080;
+}
+
+details summary {
+  color: #808080;
+}
+
+details summary:hover {
+  color: #2cb67d;
+}
+
+p code {
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+  background-color: #002b36;
+  color: #e0e0e0;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 /* nav styles */
