@@ -11,6 +11,10 @@ body {
   line-height: 1.5;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -89,12 +93,12 @@ p code {
 }
 
 .nav-links {
-  width: 100%;
-  top: 5rem;
-  left: 48px;
+  width: 60%;
+  position: fixed;
+  top: 2rem;
+  left: 20%;
   background-color: #ff9776;
   display: none;
-  margin: 0;
 }
 
 .nav-links a {
@@ -152,6 +156,7 @@ html.dark {
 
 @media screen and (min-width: 636px) {
   .nav-links {
+    width: 100%;
     margin-left: 5em;
     display: block;
     position: static;

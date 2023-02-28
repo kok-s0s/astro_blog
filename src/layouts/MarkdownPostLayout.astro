@@ -21,6 +21,10 @@ const { frontmatter } = Astro.props
   <slot />
 </BaseLayout>
 <style>
+  img {
+    margin-bottom: 0.5rem;
+  }
+
   .tag a {
     color: #00539f !important;
   }
@@ -35,8 +39,14 @@ const { frontmatter } = Astro.props
     margin: 0.25em;
     border: dotted 1px #a1a1a1;
     border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
     background-color: #f8fcfd;
+  }
+
+  @media screen and (min-width: 636px) {
+    .tag {
+      font-size: 1.15rem;
+    }
   }
 </style>
