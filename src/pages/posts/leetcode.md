@@ -89,3 +89,33 @@ public:
 ```
 
 </details>
+
+## 2023-03-01 [矩阵中的局部最大值](https://leetcode.cn/problems/largest-local-values-in-a-matrix/)
+
+根据题目意思，先申请 `(n-2) x (n - 2)` 的二维数组来存储结果。
+
+然后做遍历来模拟找到最大值的过程，并将最大值存储进 `result` 数组中。
+
+<details><summary>我滴代码</summary>
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> largestLocal(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<vector<int>> result(n - 2, vector<int>(n - 2, 0));
+        for (int i = 0; i < n - 2; ++i) {
+            for (int j = 0; j < n -2; ++j) {
+                for (int x = i; x < i + 3; ++x) {
+                    for (int y = j; y < j + 3; y++) {
+                        result[i][j] = max(result[i][j], grid[x][y]);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+};
+```
+
+</details>
