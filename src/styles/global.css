@@ -75,6 +75,10 @@ p code {
   border-radius: 5px;
 }
 
+p svg {
+  width: 100%;
+}
+
 /* nav styles */
 .hamburger {
   display: flex;
