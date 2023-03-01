@@ -161,7 +161,6 @@ html.dark {
 @media screen and (min-width: 636px) {
   .nav-links {
     width: 100%;
-    margin-left: 5em;
     display: block;
     position: static;
     width: auto;
