@@ -1,0 +1,45 @@
+---
+import BaseLayout from './BaseLayout.astro'
+
+const { frontmatter } = Astro.props
+---
+
+<BaseLayout pageTitle={frontmatter.title}>
+  <p>Written by: {frontmatter.author}</p>
+  <div class="tags">
+    {
+      frontmatter.tags.map((tag) => (
+        <p class="tag">
+          <a href={`/tags/${tag}`}>{tag}</a>
+        </p>
+      ))
+    }
+  </div>
+  <slot />
+</BaseLayout>
+<style>
+  .tag a {
+    color: #00539f !important;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+
+  .tag {
+    margin: 0.25em;
+    border: dotted 1px #a1a1a1;
+    border-radius: 0.5em;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #f8fcfd;
+  }
+
+  @media screen and (min-width: 636px) {
+    .tag {
+      font-size: 1.15rem;
+    }
+  }
+</style>
