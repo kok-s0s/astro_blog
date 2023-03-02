@@ -90,3 +90,39 @@ if __name__ == "__main__":
     folder_absolute_path: str = ""
     traverse_directory(folder_absolute_path)
 ```
+
+小坑，遇到一些 Visual Studio 下创建的文件，格式为 `ansi`，需要转为 `utf-8` 才可再用上面的脚本处理，分另一个脚本文件处理此过程。这样跑完一个脚本，可以验证一个阶段。
+
+```python
+import chardet
+import codecs
+import os
+
+
+def ansi_to_utf_8(cur_file_name: str):
+    with open(cur_file_name, "rb") as f:
+        r = f.read()
+    f_charInfo = chardet.detect(r)  # 获取文本编码信息
+    charset = f_charInfo["encoding"]
+    if charset != "utf-8":
+        print(cur_file_name, charset)
+        f = codecs.open(cur_file_name, "r", "ansi")
+        ff = f.read()
+        file_object = codecs.open(cur_file_name, "w", "utf-8")
+        file_object.write(ff)
+
+
+def traverse_directory(cur_dir: str):
+    for cur_dir_item in os.listdir(cur_dir):
+        cur_path_name: str = cur_dir + "/" + cur_dir_item
+
+        if cur_dir_item[-3:] == "hpp" or cur_dir_item[-1:] == "h":
+            ansi_to_utf_8(cur_path_name)
+        elif os.path.isdir(cur_path_name):
+            traverse_directory(cur_path_name)
+
+
+if __name__ == "__main__":
+    folder_absolute_path: str = ""
+    traverse_directory(folder_absolute_path)
+```
