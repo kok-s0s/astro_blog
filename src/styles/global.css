@@ -67,12 +67,17 @@ details summary:hover {
   color: #2cb67d;
 }
 
-p code {
+p code,
+li code {
   padding: 0.2rem 0.3rem 0.2rem 0.3rem;
   background-color: #002b36;
   color: #e0e0e0;
   font-weight: bold;
   border-radius: 5px;
+}
+
+li {
+  line-height: 1.7;
 }
 
 p svg {

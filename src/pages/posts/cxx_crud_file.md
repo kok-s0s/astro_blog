@@ -10,9 +10,13 @@ image:
 tags: ['C++', 'Test', 'Cross-platform']
 ---
 
+> [cxx_crud_file](https://github.com/kok-s0s/cxx_crud_file)
+
 ## 起因
 
-> [cxx_crud_file](https://github.com/kok-s0s/cxx_crud_file)
+被分配一个任务，用现今的 C++ 标准改写一个原先用 Qt 编写的代码。就是要去除掉那些 Q 开头的代码（QString、QVariant、QSetting 和 QFile 等等）。
+
+重新用 C++ 标准改写的这份代码，扩展性就会更强，当然 Qt 的生态也不错，不过业务需求如此罢了，不展开具体内容。
 
 ## 开始「 包轮子 」
 

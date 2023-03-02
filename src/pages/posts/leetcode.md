@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '每日一道 LeetCode'
-pubDate: 2023-02-28
+pubDate: 2023-03-02
 description: '开始康复训练'
 author: 'kok-s0s'
 image:
   url: '/images/leetcode.jpeg'
-  alt: 'Rocket'
+  alt: 'LeetCode'
 tags: ['C++', 'Algorithm', 'Data Structure']
 ---
 

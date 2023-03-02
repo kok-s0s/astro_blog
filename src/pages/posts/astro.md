@@ -6,6 +6,6 @@ description: '一个生成器，支持 markdown，能自己写 css 改样式，�
 author: 'kok-s0s'
 image:
   url: '/images/astro.png'
-  alt: 'Rocket'
+  alt: 'Astro'
 tags: ['Front-End']
 ---
