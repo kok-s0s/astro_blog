@@ -67,6 +67,10 @@ details summary:hover {
   color: #2cb67d;
 }
 
+pre {
+  clear: both;
+}
+
 p code,
 li code {
   padding: 0.2rem 0.3rem 0.2rem 0.3rem;
