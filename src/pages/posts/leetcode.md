@@ -119,3 +119,72 @@ public:
 ```
 
 </details>
+
+## 2023-03-02 [二进制数转字符串](https://leetcode.cn/problems/bianry-number-to-string-lcci/)
+
+| 二进制 | 十进制 |
+| :----: | :----: |
+|  0.1   |  0.5   |
+|  0.11  |  0.75  |
+| 0.101  | 0.625  |
+| 0.111  | 0.875  |
+
+与十进制转化为二进制时所用的「 除 2 求余数 」不同。
+
+这里的规律为「 乘 2 减整 」。
+
+例如 0.625，用一个名为 result 的字符串存储结果，其初始值为 `0.`。
+
+1. 0.625 乘 2 为 1.25，只保留小数，即为 0.25，将整数 1 拼接到 result 后面；
+2. 0.25 乘 2 为 0.5，只保留小数，即为 0.5，将整数 0 拼接到 result 后面；
+3. 0.5 乘 2 为 1.0，只保留小数，即为 0.0，将整数 1 拼接到 result 后面；
+
+结果为 0.101。
+
+所有的数均可用上述例子的模式来处理，结束条件为字符串长度不超过 32 或者 num 等于 0。
+
+<details><summary>我滴代码</summary>
+
+```cpp
+class Solution {
+public:
+    string printBin(double num) {
+        string result = "0.";
+        while (result.size() <= 32 && num != 0) {
+            num *= 2;
+            int digit = num;
+            result.push_back(digit + '0');
+            num -= digit;
+        }
+        return result.size() <= 32 ? result : "ERROR";
+    }
+};
+```
+
+</details>
+
+<details><summary>ta人的推导，很帅，值得学习。</summary>
+
+> [真棒的解法](https://leetcode.cn/problems/bianry-number-to-string-lcci/solution/zheng-ming-zhi-duo-xun-huan-6-ci-pythonj-b6sj/)
+
+```cpp
+class Solution {
+public:
+    string printBin(double num) {
+        string bin = "0.";
+        for (int i = 0; i < 6; ++i) { // 至多循环 6 次
+            num *= 2;
+            if (num < 1)
+                bin += '0';
+            else {
+                bin += '1';
+                if (--num == 0)
+                    return bin;
+            }
+        }
+        return "ERROR";
+    }
+};
+```
+
+</details>

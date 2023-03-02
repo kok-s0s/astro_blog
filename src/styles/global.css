@@ -88,6 +88,24 @@ p svg {
   width: 100%;
 }
 
+table {
+  border: 1px solid #94a1b2;
+  margin: 0.6rem 0;
+}
+
+table thead {
+  font-weight: bold;
+}
+
+table tbody {
+  color: #505050;
+}
+
+table thead tr th,
+table tbody tr td {
+  border: 1px solid #808080;
+}
+
 /* nav styles */
 .hamburger {
   display: flex;
@@ -165,6 +183,19 @@ html.dark {
 .dark .nav-links a:focus {
   background-color: #7f5af0;
   color: #fffffe;
+}
+
+.dark table thead {
+  color: #94a1b2;
+}
+
+.dark table tbody {
+  color: #b0b0b0;
+}
+
+.dark table thead tr th,
+table tbody tr td {
+  border: 1px solid #808080;
 }
 
 @media screen and (min-width: 636px) {

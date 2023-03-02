@@ -1,11 +1,13 @@
 ;[...document.getElementsByTagName('pre')].forEach((item) => {
   item.style.position = 'relative'
-  item.style.marginTop = '0'
   let copyButton = document.createElement('button')
   copyButton.style.cssText =
     'position: relative; right: 1rem; z-index: 9999999 !important; float: right; border: none; border-radius: 8px; padding: 6px 8px; margin-bottom: -1rem; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; cursor: pointer; background-color: #002b36; color: #808080'
   if (window.screen.width < 636) {
     copyButton.style.cssText = 'display: none;'
+    item.style.marginTop = '0.5rem'
+  } else {
+    item.style.marginTop = '0'
   }
 
   copyButton.innerHTML = 'Copy'
