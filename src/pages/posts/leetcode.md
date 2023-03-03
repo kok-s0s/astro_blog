@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '每日一道 LeetCode'
-pubDate: 2023-03-02
+pubDate: 2023-03-03
 description: '开始康复训练'
 author: 'kok-s0s'
 image:
@@ -183,6 +183,59 @@ public:
             }
         }
         return "ERROR";
+    }
+};
+```
+
+</details>
+
+## 2023-03-03 [保证文件名唯一](https://leetcode.cn/problems/making-file-names-unique/)
+
+**情境题**
+
+抽象下
+
+丢过来一堆东西，里面有的可能相同，如果存在相同，就给它个后缀（从 1 开始），1 不行，就看 2, 2 不行，继续看 3，直到这堆东西没一个相同。
+
+这种有相同，又要让它不同，可以想到 `map` 这种映射结构，用 `map` 来存储。
+
+定义一个 `unordered_map<string, int> index` 来维护这堆东西。
+
+`vector<string>` 存储结果
+
+遍历 `names`，如果 `index` 中不存在这个东西，就直接存储进 `res` 中，同时 `index` 中存储这个东西，值为 1。
+
+如果 `index` 中存在这个东西，就要给它个后缀，从 1 开始，直到这个东西加上后缀不存在于 `index` 中，就可以了。
+
+> 官解的代码，看了一眼，很 OK 了。我的也就是习惯用 `std::map` 了。官方解用的是 `unordered_map`，是用哈希表实现的，对于查找问题来说，unordered_map 会更加高效一些。 `std::map` 是用红黑树实现的，有序但是空间占用率较高，因为每一个节点都需要额外保存父节点，孩子节点以及红/黑性质，使得每一个节点都占用大量的空间。
+
+<details><summary>直接上官方解</summary>
+
+```cpp
+class Solution {
+public:
+    string addSuffix(string name, int k) {
+        return name + "(" + to_string(k) + ")";
+    }
+
+    vector<string> getFolderNames(vector<string>& names) {
+        unordered_map<string, int> index;
+        vector<string> res;
+        for (const auto &name : names) {
+            if (!index.count(name)) {
+                res.push_back(name);
+                index[name] = 1;
+            } else {
+                int k = index[name];
+                while (index.count(addSuffix(name, k))) {
+                    k++;
+                }
+                res.push_back(addSuffix(name, k));
+                index[name] = k + 1;
+                index[addSuffix(name, k)] = 1;
+            }
+        }
+        return res;
     }
 };
 ```
