@@ -207,7 +207,7 @@ public:
 
 如果 `index` 中存在这个东西，就要给它个后缀，从 1 开始，直到这个东西加上后缀不存在于 `index` 中，就可以了。
 
-> 官解的代码，看了一眼，很 OK 了。我的也就是习惯用 `std::map` 了。官方解用的是 `unordered_map`，是用哈希表实现的，对于查找问题来说，unordered_map 会更加高效一些。 `std::map` 是用红黑树实现的，有序但是空间占用率较高，因为每一个节点都需要额外保存父节点，孩子节点以及红/黑性质，使得每一个节点都占用大量的空间。
+> 官解的代码，看了一眼，很 OK 了。我的也就是习惯用 `std::map` 了。官方解用的是 `unordered_map`，是用哈希表实现的，对于查找问题来说，`unordered_map` 会更加高效一些。 `std::map` 是用红黑树实现的，有序但是空间占用率较高，因为每一个节点都需要额外保存父节点，孩子节点以及红/黑性质，使得每一个节点都占用大量的空间。
 
 <details><summary>直接上官方解</summary>
 
@@ -241,3 +241,7 @@ public:
 ```
 
 </details>
+
+## [待补] 2023-03-04 [按位与为零的三元组](https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/)
+
+## [待补] 2023-03-05 [经营摩天轮的最大利润](https://leetcode.cn/problems/maximum-profit-of-operating-a-centennial-wheel/)
