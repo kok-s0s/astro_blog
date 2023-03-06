@@ -3,9 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 
 const projectPosts = await Astro.glob('../posts/*.md')
 const cleanCxxPosts = await Astro.glob('../posts/clean_cxx/note/*.md')
+const cxxCreationalPatternsPosts = await Astro.glob('../posts/cxx_design_patterns/creational_patterns/*.md')
+const cxxStructuralPatternsPosts = await Astro.glob('../posts/cxx_design_patterns/structural_patterns/*.md')
+const cxxBehavioralPatternsPosts = await Astro.glob('../posts/cxx_design_patterns/behavioral_patterns/*.md')
 const projectTags = [...new Set(projectPosts.map((post) => post.frontmatter.tags).flat())]
 const cleanCxxTags = [...new Set(cleanCxxPosts.map((post) => post.frontmatter.tags).flat())]
-const uniqueTags = [...new Set([...projectTags, ...cleanCxxTags])]
+const cxxCreationalPatternsTags = [...new Set(cxxCreationalPatternsPosts.map((post) => post.frontmatter.tags).flat())]
+const cxxStructuralPatternsTags = [...new Set(cxxStructuralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
+const cxxBehavioralPatternsTags = [...new Set(cxxBehavioralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
+const uniqueTags = [...new Set([...projectTags, ...cleanCxxTags, ...cxxCreationalPatternsTags, ...cxxStructuralPatternsTags, ...cxxBehavioralPatternsTags])]
 const pageTitle = '标签'
 ---
 
@@ -34,9 +40,16 @@ const pageTitle = '标签'
   .tag {
     margin: 0.25em;
     border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.6em;
+    font-size: 1rem;
     background-color: #f8fcfd;
+  }
+
+  @media screen and (min-width: 636px) {
+    .tag {
+      padding: 0.5rem 1rem;
+      font-size: 1.15rem;
+    }
   }
 </style>

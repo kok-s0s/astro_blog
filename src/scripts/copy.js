@@ -36,5 +36,3 @@ function copyToClipboard(content) {
     document.execCommand('Copy')
   }
 }
-
-console.log(window.screen.width)

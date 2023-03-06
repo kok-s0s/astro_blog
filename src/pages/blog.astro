@@ -2,18 +2,57 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import BlogPost from '../components/BlogPost.astro'
 
-const projectPosts = await Astro.glob('../pages/posts/*.md')
-const cleanCxxPosts = await Astro.glob('../pages/posts/clean_cxx/note/*.md')
+const projectPosts = await Astro.glob('./posts/*.md')
+const cleanCxxPosts = await Astro.glob('./posts/clean_cxx/note/*.md')
+const cxxCreationalPatternsPosts = await Astro.glob('./posts/cxx_design_patterns/creational_patterns/*.md')
+const cxxStructuralPatternsPosts = await Astro.glob('./posts/cxx_design_patterns/structural_patterns/*.md')
+const cxxBehavioralPatternsPosts = await Astro.glob('./posts/cxx_design_patterns/behavioral_patterns/*.md')
 const pageTitle = '博文'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p>如果我写的内容，能对观看的你有帮助就好了。</p>
+  <h2>原创</h2>
+  <blockquote>
+    <p>如果我写的内容，能对观看的你有帮助就好了。</p>
+  </blockquote>
   <ul>
     {projectPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
   </ul>
-  <p>《C++ 代码整洁之道》读书记录</p>
+  <h3>《C++ 代码整洁之道》读书记录</h3>
   <ul>
     {cleanCxxPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
   </ul>
+  <hr />
+  <h2>搬运</h2>
+  <h3><a href="https://refactoring.guru/design-patterns">DESIGN PATTERNS</a></h3>
+  <ul>
+    <li>
+      <div class="pattern">Creational Patterns</div>
+      <ul>
+        {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+      </ul>
+    </li>
+    <li>
+      <div class="pattern">Structural Patterns</div>
+      <ul>
+        {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+      </ul>
+    </li>
+    <li>
+      <div class="pattern">Behavioral Patterns</div>
+      <ul>
+        {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+      </ul>
+    </li>
+  </ul>
 </BaseLayout>
+
+<style>
+  .pattern {
+    padding: 0.3rem 0 0.5rem 0;
+  }
+
+  ul li:first-child div.pattern {
+    padding-top: 0;
+  }
+</style>
