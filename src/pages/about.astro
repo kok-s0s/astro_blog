@@ -3,34 +3,53 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 
 const pageTitle = '关于这个码仔'
 
-const skills = ['网络搜索技巧', '英语', '调试', '文档阅读能力']
+const selfInfo = [
+  '目前做着和 C++ 相关的工作，类比 Linux 中的管道概念，常做一些数据的输入输出的工作，做一个好的「 中转站 」，偶尔用用 Python 这个利器来辅助处理下数据。',
+  '离不开 Code Format',
+  '团队开发最喜欢 Code Review 环节 /doge',
+]
+const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试']
+const projects = [
+  {
+    name: 'cxx_crud_file',
+    desc: '以剔除 Qt 代码为目标而诞生的项目，UString 替换 QString，用 C++ 标准编写的 UFile 基类，基于 UFile 衍生出 JsonFile、IniFile 和 DatFile 来替换掉 Qt 的 QFile、QJson 和 QSetting 等。',
+    link: 'https://github.com/kok-s0s/cxx_crud_file',
+  },
+]
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p>他的一些信息</p>
+  <p>他的一些信息：</p>
   <ul>
     <li class="textGap">常用网名 <em>kok-s0s</em></li>
-    <li class="textGap">目前做着和 C++ 相关的工作，类比 Linux 中的管道概念，常做一些数据的输入输出的工作，做一个好的「 中转站 」，偶尔用用 Python 这个利器来辅助处理下数据。</li>
-    <li class="textGap">离不开 Code Format</li>
-    <li class="textGap">团队开发最喜欢 Code Review 环节 /doge</li>
+    {selfInfo.map((info) => <li class="textGap">{info}</li>)}
   </ul>
   <p>他认为程序员要熟练的能力：</p>
-  <ul id="skills">
+  <ul>
     {skills.map((skill) => <li class="skill textGap">{skill}</li>)}
+  </ul>
+  <p>他的一些 C++ 项目：</p>
+  <ul>
+    {
+      projects.map((project) => (
+        <li>
+          <a href={project.link} target="_blank">
+            <em>{project.name}</em>
+          </a>
+
+          <p class="textGap">{project.desc}</p>
+        </li>
+      ))
+    }
   </ul>
 </BaseLayout>
 
 <style>
-  #skills {
-    gap: 0.2rem;
-  }
-
   .textGap {
     line-height: 1.6;
   }
 
   .skill {
-    font-weight: bold;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
   }
 </style>
