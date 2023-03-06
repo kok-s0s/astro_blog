@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '每日一道 LeetCode'
-pubDate: 2023-03-03
+pubDate: 2023-03-06
 description: '开始康复训练'
 author: 'kok-s0s'
 image:
@@ -123,7 +123,7 @@ public:
 ## 2023-03-02 [二进制数转字符串](https://leetcode.cn/problems/bianry-number-to-string-lcci/)
 
 | 二进制 | 十进制 |
-| :----: | :----: |
+|:------:|:------:|
 |  0.1   |  0.5   |
 |  0.11  |  0.75  |
 | 0.101  | 0.625  |
@@ -245,3 +245,5 @@ public:
 ## [待补] 2023-03-04 [按位与为零的三元组](https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/)
 
 ## [待补] 2023-03-05 [经营摩天轮的最大利润](https://leetcode.cn/problems/maximum-profit-of-operating-a-centennial-wheel/)
+
+## [待补] 2023-03-06 [使字符串平衡的最少删除次数](https://leetcode.cn/problems/minimum-deletions-to-make-string-balanced/)
