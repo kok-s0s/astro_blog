@@ -26,6 +26,7 @@ const projects = [
     link: 'https://github.com/kok-s0s/socket_qt_dotNet',
   },
 ]
+const books = ['Clean C++', 'Linux Shell 脚本攻略']
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -52,6 +53,10 @@ const projects = [
       ))
     }
   </ul>
+  <p>他目前阅览的书籍：</p>
+  <ul>
+    {books.map((book) => <li class="book textGap">{book}</li>)}
+  </ul>
 </BaseLayout>
 
 <style>
@@ -59,7 +64,8 @@ const projects = [
     line-height: 1.6;
   }
 
-  .skill {
+  .skill,
+  .book {
     letter-spacing: 1px;
   }
 </style>
