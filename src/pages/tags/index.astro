@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 
 const projectPosts = await Astro.glob('../posts/*.md')
-const cleanCxxPosts = await Astro.glob('../posts/clean_cxx/note/*.md')
+const cleanCxxPosts = await Astro.glob('../posts/clean_cxx/*.md')
 const cxxCreationalPatternsPosts = await Astro.glob('../posts/cxx_design_patterns/creational_patterns/*.md')
 const cxxStructuralPatternsPosts = await Astro.glob('../posts/cxx_design_patterns/structural_patterns/*.md')
 const cxxBehavioralPatternsPosts = await Astro.glob('../posts/cxx_design_patterns/behavioral_patterns/*.md')
