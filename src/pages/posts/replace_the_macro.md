@@ -52,8 +52,6 @@ def replace_the_marco(cur_file_name: str) -> bool:
             if index < 3:
                 if temp_item == "#pragma once":
                     flag = True
-            else:
-                break
 
             index = index + 1
             lines.append(line)
@@ -80,7 +78,7 @@ def traverse_directory(cur_dir: str):
     for cur_dir_item in os.listdir(cur_dir):
         cur_path_name: str = cur_dir + "/" + cur_dir_item
 
-        if cur_dir_item[-3:] == "hpp" or cur_dir_item[-1:] == "h":
+        if cur_dir_item[-4:] == ".hpp" or cur_dir_item[-2:] == ".h":
             replace_the_marco(cur_path_name)
         elif os.path.isdir(cur_path_name):
             traverse_directory(cur_path_name)
@@ -104,7 +102,7 @@ def ansi_to_utf_8(cur_file_name: str):
         r = f.read()
     f_charInfo = chardet.detect(r)  # 获取文本编码信息
     charset = f_charInfo["encoding"]
-    if charset != "utf-8":
+    if charset != "utf-8" and charset != "UTF-8-SIG":
         print(cur_file_name, charset)
         f = codecs.open(cur_file_name, "r", "ansi")
         ff = f.read()
@@ -116,7 +114,12 @@ def traverse_directory(cur_dir: str):
     for cur_dir_item in os.listdir(cur_dir):
         cur_path_name: str = cur_dir + "/" + cur_dir_item
 
-        if cur_dir_item[-3:] == "hpp" or cur_dir_item[-1:] == "h":
+        if (
+            cur_dir_item[-4:] == ".hpp"
+            or cur_dir_item[-2:] == ".h"
+            or cur_dir_item[-4:] == ".cpp"
+            or cur_dir_item[-2:] == ".c"
+        ):
             ansi_to_utf_8(cur_path_name)
         elif os.path.isdir(cur_path_name):
             traverse_directory(cur_path_name)
