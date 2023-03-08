@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '每日一道 LeetCode'
-pubDate: 2023-03-06
+pubDate: 2023-03-08
 description: '开始康复训练'
 author: 'kok-s0s'
 image:
@@ -247,3 +247,33 @@ public:
 ## [待补] 2023-03-05 [经营摩天轮的最大利润](https://leetcode.cn/problems/maximum-profit-of-operating-a-centennial-wheel/)
 
 ## [待补] 2023-03-06 [使字符串平衡的最少删除次数](https://leetcode.cn/problems/minimum-deletions-to-make-string-balanced/)
+
+## [待补] 2023-03-07 [花括号展开 II](https://leetcode.cn/problems/brace-expansion-ii/)
+
+## 2023-03-08 [礼物的最大价值](https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/)
+
+<details><summary>我滴代码</summary>
+
+```cpp
+class Solution {
+public:
+    int maxValue(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<int>> f(m, vector<int>(n));
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i > 0) {
+                    f[i][j] = max(f[i][j], f[i - 1][j]);
+                }
+                if (j > 0) {
+                    f[i][j] = max(f[i][j], f[i][j - 1]);
+                }
+                f[i][j] += grid[i][j];
+            }
+        }
+        return f[m - 1][n - 1];
+    }
+};
+```
+
+</details>
