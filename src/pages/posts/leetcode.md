@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '每日一道 LeetCode'
-pubDate: 2023-03-09
+pubDate: 2023-03-10
 description: '开始康复训练'
 author: 'kok-s0s'
 image:
@@ -123,7 +123,7 @@ public:
 ## 2023-03-02 [二进制数转字符串](https://leetcode.cn/problems/bianry-number-to-string-lcci/)
 
 | 二进制 | 十进制 |
-|:------:|:------:|
+| :----: | :----: |
 |  0.1   |  0.5   |
 |  0.11  |  0.75  |
 | 0.101  | 0.625  |
@@ -347,6 +347,70 @@ public:
             r++;
         }
         return res;
+    }
+};
+```
+
+</details>
+
+## 2023-03-10 [使数组和能被 P 整除](https://leetcode.cn/problems/make-sum-divisible-by-p/)
+
+先计算出前缀和，这里前缀和保存的是余数 `remainder`，再将问题转化为两数之和即可，用哈希解决。
+
+<details><summary>我滴代码</summary>
+
+```cpp
+class Solution {
+public:
+    int minSubarray(vector<int>& nums, int p) {
+        int remainder = 0;
+        for (auto& num : nums) {
+            remainder = (remainder + num) % p;
+        }
+        if (remainder == 0) {
+            return 0;
+        }
+        unordered_map<int, int> pos;
+        pos[0] = -1;
+        int prefixSum = 0, result = nums.size(), findSum;
+        for (int i = 0; i < nums.size(); ++i) {
+            prefixSum = (prefixSum + nums[i]) % p;
+            findSum = (prefixSum - remainder + p) % p;
+            pos[prefixSum] = i;
+            result = min(result, pos.find(findSum) == pos.end() ? INT_MAX : i - pos[findSum]);
+        }
+        return result == nums.size() ? -1 : result;
+    }
+};
+```
+
+</details>
+
+官方解法思路一致。
+
+<details><summary>官方解</summary>
+
+```cpp
+class Solution {
+public:
+    int minSubarray(vector<int>& nums, int p) {
+        int x = 0;
+        for (auto num : nums) {
+            x = (x + num) % p;
+        }
+        if (x == 0) {
+            return 0;
+        }
+        unordered_map<int, int> index;
+        int y = 0, res = nums.size();
+        for (int i = 0; i < nums.size(); i++) {
+            index[y] = i; // f[i] mod p = y，因此哈希表记录 y 对应的下标为 i
+            y = (y + nums[i]) % p;
+            if (index.count((y - x + p) % p) > 0) {
+                res = min(res, i - index[(y - x + p) % p] + 1);
+            }
+        }
+        return res == nums.size() ? -1 : res;
     }
 };
 ```
