@@ -242,13 +242,13 @@ public:
 
 </details>
 
-## [待补] 2023-03-04 [按位与为零的三元组](https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/)
+## 2023-03-04 [按位与为零的三元组](https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/)
 
-## [待补] 2023-03-05 [经营摩天轮的最大利润](https://leetcode.cn/problems/maximum-profit-of-operating-a-centennial-wheel/)
+## 2023-03-05 [经营摩天轮的最大利润](https://leetcode.cn/problems/maximum-profit-of-operating-a-centennial-wheel/)
 
-## [待补] 2023-03-06 [使字符串平衡的最少删除次数](https://leetcode.cn/problems/minimum-deletions-to-make-string-balanced/)
+## 2023-03-06 [使字符串平衡的最少删除次数](https://leetcode.cn/problems/minimum-deletions-to-make-string-balanced/)
 
-## [待补] 2023-03-07 [花括号展开 II](https://leetcode.cn/problems/brace-expansion-ii/)
+## 2023-03-07 [花括号展开 II](https://leetcode.cn/problems/brace-expansion-ii/)
 
 ## 2023-03-08 [礼物的最大价值](https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/)
 
