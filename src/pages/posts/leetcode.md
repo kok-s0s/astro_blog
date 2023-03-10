@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '每日一道 LeetCode'
-pubDate: 2023-03-08
+pubDate: 2023-03-09
 description: '开始康复训练'
 author: 'kok-s0s'
 image:
@@ -272,6 +272,81 @@ public:
             }
         }
         return f[m - 1][n - 1];
+    }
+};
+```
+
+</details>
+
+## 2023-03-09 [得到 K 个黑块的最少涂色次数](https://leetcode.cn/problems/minimum-recolors-to-get-k-consecutive-black-blocks/)
+
+这种读题目意思能感觉是要在某一范围寻求一个答案，那就可以考虑下滑动窗口了。
+
+我这里是使用一个 `queue` 来维护一个窗口，窗口的大小为 `k`，窗口中的 `W` 的个数为 `cnt`。
+
+先将队列塞满指定元素，同时记录此时滑动窗口中 `W` 的个数，即 `cnt`。
+
+然后开始滑动，每次滑动都要判断一下，如果当前元素是 `W`，那么 `cnt++`，如果滑出的元素是 `W`，那么 `cnt--`。
+
+然后每次滑动都要更新一下结果，即 `result = min(result, cnt)`。
+
+最后返回结果即可。
+
+<details><summary>我滴代码</summary>
+
+```cpp
+class Solution {
+public:
+    int minimumRecolors(string blocks, int k) {
+        queue<char> q;
+        int result = 0;
+        int cnt = 0;
+        for (auto& b : blocks) {
+            q.push(b);
+            if (q.size() <= k && b == 'W') {
+                result++;
+                cnt++;
+            }
+            if (q.size() > k) {
+                if (b == 'W') {
+                    cnt++;
+                }
+                if (q.front() == 'W') {
+                    cnt--;
+                }
+                result = min(result, cnt);
+                q.pop();
+            }
+        }
+        return result;
+    }
+};
+```
+
+</details>
+
+官方解思路一样的，只是用的是双指针。
+
+<details><summary>官方解</summary>
+
+```cpp
+class Solution {
+public:
+    int minimumRecolors(string blocks, int k) {
+        int l = 0, r = 0, cnt = 0;
+        while (r < k) {
+            cnt += blocks[r] == 'W' ? 1 : 0;
+            r++;
+        }
+        int res = cnt;
+        while (r < blocks.size()) {
+            cnt += blocks[r] == 'W' ? 1 : 0;
+            cnt -= blocks[l] == 'W' ? 1 : 0;
+            res = min(res, cnt);
+            l++;
+            r++;
+        }
+        return res;
     }
 };
 ```
