@@ -1,0 +1,16 @@
+---
+---
+
+<div id="toc"></div>
+
+<script>
+  let toc = document.querySelectorAll('h1, h2, h3')
+  let tocHtml = ''
+  toc.forEach((heading) => {
+    let id = heading.id
+    let text = (heading as HTMLElement).innerText
+    let level = heading.tagName
+    tocHtml += `<a href="#${id}"><span class="toc-${level}">${text}</span></a>`
+  })
+  if (document.getElementById('toc') !== null) document.getElementById('toc').innerHTML = tocHtml
+</script>

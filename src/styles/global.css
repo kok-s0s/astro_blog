@@ -236,6 +236,24 @@ a.back-to-top {
   opacity: 1;
 }
 
+#toc {
+  display: none;
+}
+
+#toc span {
+  font-size: 1.2rem;
+}
+
+.toc-H2 {
+  font-size: 1 rem;
+  padding-left: 0.6rem;
+}
+
+.toc-H3 {
+  font-size: 0.8rem;
+  padding-left: 1.3rem;
+}
+
 @media screen and (min-width: 636px) {
   .nav-links {
     width: 100%;
@@ -256,5 +274,30 @@ a.back-to-top {
 
   .hamburger {
     display: none;
+  }
+
+  #toc {
+    position: fixed;
+    top: 30%;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0 auto;
+    max-width: calc((100vw - 80ch) / 3);
+    max-height: 600px;
+    overflow: auto;
+    padding: 0.8rem;
+    background-color: #fffffe;
+    border: solid 1.3px #a1a1a1;
+    border-radius: 0.5em;
+  }
+
+  #toc::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dark #toc {
+    background-color: #000000;
   }
 }
