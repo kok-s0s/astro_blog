@@ -276,16 +276,21 @@ a.back-to-top {
     display: none;
   }
 
+  .dark #toc {
+    background-color: #000000;
+  }
+}
+
+@media screen and (min-width: 1200px) {
   #toc {
     position: fixed;
-    top: 30%;
+    top: 25%;
     left: 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
     margin: 0 auto;
-    max-width: calc((100vw - 80ch) / 3);
-    max-height: 600px;
+    max-width: calc((100vw - 80ch) * 3 / 4);
     overflow: auto;
     padding: 0.8rem;
     background-color: #fffffe;
@@ -295,9 +300,5 @@ a.back-to-top {
 
   #toc::-webkit-scrollbar {
     display: none;
-  }
-
-  .dark #toc {
-    background-color: #000000;
   }
 }

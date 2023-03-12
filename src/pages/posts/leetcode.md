@@ -1,16 +1,16 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
-title: '每日一道 LeetCode'
-pubDate: 2023-03-10
-description: '开始康复训练'
+title: 'LeetCode'
+pubDate: 2023-03-12
+description: '开始康复训练，太忙了～，劳逸结合下'
 author: 'kok-s0s'
 image:
-  url: '/images/leetcode.jpeg'
+  url: '/images/leetcode.png'
   alt: 'LeetCode'
 tags: ['C++', 'Algorithm', 'Data Structure']
 ---
 
-## 2023-02-28 [合并相似的物品](https://leetcode.cn/problems/merge-similar-items/)
+## [合并相似的物品](https://leetcode.cn/problems/merge-similar-items/)
 
 合并的问题，可以考虑使用 `map` 这种映射结构来处理。
 
@@ -90,7 +90,7 @@ public:
 
 </details>
 
-## 2023-03-01 [矩阵中的局部最大值](https://leetcode.cn/problems/largest-local-values-in-a-matrix/)
+## [矩阵中的局部最大值](https://leetcode.cn/problems/largest-local-values-in-a-matrix/)
 
 根据题目意思，先申请 `(n-2) x (n - 2)` 的二维数组来存储结果。
 
@@ -120,7 +120,7 @@ public:
 
 </details>
 
-## 2023-03-02 [二进制数转字符串](https://leetcode.cn/problems/bianry-number-to-string-lcci/)
+## [二进制数转字符串](https://leetcode.cn/problems/bianry-number-to-string-lcci/)
 
 | 二进制 | 十进制 |
 | :----: | :----: |
@@ -189,7 +189,7 @@ public:
 
 </details>
 
-## 2023-03-03 [保证文件名唯一](https://leetcode.cn/problems/making-file-names-unique/)
+## [保证文件名唯一](https://leetcode.cn/problems/making-file-names-unique/)
 
 **情境题**
 
@@ -242,15 +242,80 @@ public:
 
 </details>
 
-## 2023-03-04 [按位与为零的三元组](https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/)
+## [花括号展开 II](https://leetcode.cn/problems/brace-expansion-ii/)
 
-## 2023-03-05 [经营摩天轮的最大利润](https://leetcode.cn/problems/maximum-profit-of-operating-a-centennial-wheel/)
+这题很帅，官方解值得[一看](https://leetcode.cn/problems/brace-expansion-ii/solution/hua-gua-hao-zhan-kai-ii-by-leetcode-solu-1s1y/)
 
-## 2023-03-06 [使字符串平衡的最少删除次数](https://leetcode.cn/problems/minimum-deletions-to-make-string-balanced/)
+<details><summary>官方解</summary>
 
-## 2023-03-07 [花括号展开 II](https://leetcode.cn/problems/brace-expansion-ii/)
+```cpp
+class Solution {
+    string expression;
+    int idx;
 
-## 2023-03-08 [礼物的最大价值](https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/)
+    // item -> letter | { expr }
+    set<string> item() {
+        set<string> ret;
+        if (expression[idx] == '{') {
+            idx++;
+            ret = expr();
+        } else {
+            ret = {string(1, expression[idx])};
+        }
+        idx++;
+        return move(ret);
+    }
+
+    // term -> item | item term
+    set<string> term() {
+        // 初始化空集合，与之后的求解结果求笛卡尔积
+        set<string> ret = {""};
+        // item 的开头是 { 或小写字母，只有符合时才继续匹配
+        while (idx < expression.size() && (expression[idx] == '{' || isalpha(expression[idx]))) {
+            auto sub = item();
+            set<string> tmp;
+            for (auto &left : ret) {
+                for (auto &right : sub) {
+                    tmp.insert(left + right);
+                }
+            }
+            ret = move(tmp);
+        }
+        return move(ret);
+    }
+
+    // expr -> term | term, expr
+    set<string> expr() {
+        set<string> ret;
+        while (true) {
+            // 与 term() 求解结果求并集
+            ret.merge(term());
+            // 如果匹配到逗号则继续，否则结束匹配
+            if (idx < expression.size() && expression[idx] == ',') {
+                idx++;
+                continue;
+            } else {
+                break;
+            }
+        }
+        return move(ret);
+    }
+
+public:
+    vector<string> braceExpansionII(string expression) {
+        this->expression = expression;
+        this->idx = 0;
+        auto ret = expr();
+        return {ret.begin(), ret.end()};
+    }
+};
+```
+
+</details>
+
+## [礼物的最大价值](https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/)
+
+因限制条件实在给的太多了，而且给的条件很适合用 DP 动态规划解决。
 
 <details><summary>我滴代码</summary>
 
@@ -278,7 +343,7 @@ public:
 
 </details>
 
-## 2023-03-09 [得到 K 个黑块的最少涂色次数](https://leetcode.cn/problems/minimum-recolors-to-get-k-consecutive-black-blocks/)
+## [得到 K 个黑块的最少涂色次数](https://leetcode.cn/problems/minimum-recolors-to-get-k-consecutive-black-blocks/)
 
 这种读题目意思能感觉是要在某一范围寻求一个答案，那就可以考虑下滑动窗口了。
 
@@ -353,7 +418,7 @@ public:
 
 </details>
 
-## 2023-03-10 [使数组和能被 P 整除](https://leetcode.cn/problems/make-sum-divisible-by-p/)
+## [使数组和能被 P 整除](https://leetcode.cn/problems/make-sum-divisible-by-p/)
 
 先计算出前缀和，这里前缀和保存的是余数 `remainder`，再将问题转化为两数之和即可，用哈希解决。
 
@@ -411,6 +476,48 @@ public:
             }
         }
         return res == nums.size() ? -1 : res;
+    }
+};
+```
+
+</details>
+
+## [字母与数字](https://leetcode.cn/problems/find-longest-subarray-lcci/)
+
+[转化 + 前缀和](https://leetcode.cn/problems/find-longest-subarray-lcci/solution/zi-mu-yu-shu-zi-by-leetcode-solution-ezf4/)
+
+<details><summary>官方解</summary>
+
+```cpp
+class Solution {
+public:
+    vector<string> findLongestSubarray(vector<string>& array) {
+        unordered_map<int, int> indices;
+        indices[0] = -1;
+        int sum = 0;
+        int maxLength = 0;
+        int startIndex = -1;
+        int n = array.size();
+        for (int i = 0; i < n; i++) {
+            if (isalpha(array[i][0])) {
+                sum++;
+            } else {
+                sum--;
+            }
+            if (indices.count(sum)) {
+                int firstIndex = indices[sum];
+                if (i - firstIndex > maxLength) {
+                    maxLength = i - firstIndex;
+                    startIndex = firstIndex + 1;
+                }
+            } else {
+                indices[sum] = i;
+            }
+        }
+        if (maxLength == 0) {
+            return {};
+        }
+        return vector<string>(array.begin() + startIndex, array.begin() + startIndex + maxLength);
     }
 };
 ```
