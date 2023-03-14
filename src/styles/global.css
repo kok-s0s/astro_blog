@@ -284,19 +284,18 @@ a.back-to-top {
 @media screen and (min-width: 1200px) {
   #toc {
     position: fixed;
-    top: 25%;
+    top: 20%;
     left: 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
     margin: 0 auto;
     max-width: calc((100vw - 80ch) * 3 / 4);
-    max-height: 50%;
+    max-height: 60%;
     overflow: auto;
     padding: 0.8rem;
     background-color: #fffffe;
     border: solid 1.3px #a1a1a1;
-    border-radius: 0.5em;
   }
 
   #toc::-webkit-scrollbar {
