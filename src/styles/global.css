@@ -291,6 +291,7 @@ a.back-to-top {
     gap: 0.15rem;
     margin: 0 auto;
     max-width: calc((100vw - 80ch) * 3 / 4);
+    max-height: 50%;
     overflow: auto;
     padding: 0.8rem;
     background-color: #fffffe;
