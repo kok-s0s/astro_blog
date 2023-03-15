@@ -121,7 +121,7 @@ table tbody tr td {
   display: block;
   width: 33px;
   height: 5px;
-  background-color: #ff9776;
+  background-color: #7f5af0;
 }
 
 .nav-links {
@@ -129,7 +129,7 @@ table tbody tr td {
   position: fixed;
   top: 2rem;
   left: 20%;
-  background-color: #ff9776;
+  background-color: #7f5af0;
   display: none;
 }
 
@@ -141,12 +141,12 @@ table tbody tr td {
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #3f2882;
+  color: #fffffe;
 }
 
 .nav-links a:hover,
 .nav-links a:focus {
-  background-color: #ff9776;
+  background-color: #7f5af0;
 }
 
 .expanded {
@@ -168,10 +168,6 @@ html.dark {
   color: #94a1b2;
 }
 
-.dark .hamburger .line {
-  background-color: #7f5af0;
-}
-
 .dark .nav-links {
   background-color: #7f5af0;
 }
@@ -182,7 +178,6 @@ html.dark {
 
 .dark .nav-links a:hover,
 .dark .nav-links a:focus {
-  background-color: #7f5af0;
   color: #fffffe;
 }
 
@@ -306,6 +301,7 @@ a.back-to-top {
   .nav-links a {
     display: inline-block;
     padding: 15px 20px;
+    color: #000000d0;
   }
 
   .hamburger {
