@@ -4,13 +4,13 @@
 <div id="toc"></div>
 
 <script>
-  let toc = document.querySelectorAll('h1, h2, h3')
+  let toc = document.querySelectorAll('h1, h2, h3, h4, h5')
   let tocHtml = ''
   toc.forEach((heading) => {
     let id = heading.id
     let text = (heading as HTMLElement).innerText
     let level = heading.tagName
-    tocHtml += `<a href="#${id}"><span class="toc-${level}">${text}</span></a>`
+    tocHtml += `<span class="toc-${level}"><a href="#${id}">${text}</a></span>`
   })
   if (document.getElementById('toc') !== null) document.getElementById('toc').innerHTML = tocHtml
 </script>
