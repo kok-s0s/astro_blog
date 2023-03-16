@@ -1341,8 +1341,6 @@ class IniFile : public UFile {
 #ifndef JSONFILE_HPP_
 #define JSONFILE_HPP_
 
-#include <fstream>
-
 #include "UFile.hpp"
 #include "json/json.hpp"
 
@@ -1375,6 +1373,8 @@ class JsonFile : public UFile {
 
   void getFromJson(const std::string &key, std::string &param,
                    std::string defaultVal) {
+    if (key == "") param = defaultVal;
+
     json temp = _data;
     std::vector<std::string> keyArr = split(key, ".");
 
@@ -1389,6 +1389,8 @@ class JsonFile : public UFile {
 
   template <typename T>
   void getFromJson(const std::string &key, T &param, T defaultVal) {
+    if (key == "") param = defaultVal;
+
     json temp = _data;
     std::vector<std::string> keyArr = split(key, ".");
 
@@ -1403,6 +1405,8 @@ class JsonFile : public UFile {
 
   void getFromJson(const std::string &key, std::string *param,
                    std::string *defaultVal, const int &size) {
+    if (key == "") param = defaultVal;
+
     json temp = _data;
     std::vector<std::string> keyArr = split(key, ".");
 
@@ -1876,7 +1880,7 @@ class UString {
 
 ### Variant
 
-原先前辈在 Github 找的，软件组的大家在实际使用中，根据业务的需求，有做一些修改，加了个 `wchar` 的处理。
+原先前辈在 Github 找的，软件组的大家在实际使用中，根据业务的需求，有做一些修改和 bug 修复，加了个 `wchar` 的处理。
 
 算是直接借用，找不到其原本来源。
 
@@ -1886,6 +1890,7 @@ class UString {
 #ifndef VARIANT_HPP_
 #define VARIANT_HPP_
 
+#include <cstring>
 #include <sstream>
 #include <string>
 
@@ -2068,7 +2073,7 @@ class Variant {
     if (this == &other) return *this;
     if (String == _d.type || WString == _d.type) {
       if (_d.data.ptr) {
-        delete[] _d.data.ptr;
+        delete[](char *) _d.data.ptr;
         _d.data.ptr = nullptr;
       }
     }
