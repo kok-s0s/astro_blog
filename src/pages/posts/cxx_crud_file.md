@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '记一次「 包轮子 」的经历'
-pubDate: 2023-03-02
+pubDate: 2023-03-17
 description: '重新拾起 C++ 开发已经有 8 个月了，自己主导做的一件事情。两个感受，一是记住 C++ 能不造轮子，就别造轮子了，二是能做单元测试的东西，就要做单元测试。'
 author: 'kok-s0s'
 image:
@@ -1649,7 +1649,7 @@ class BmpFile : public UFile {
 
 呃，也用的[开源库](https://github.com/kok-s0s/cxx_crud_file/blob/main/bmp/BMP.h)，是公司的前辈 clone 的，我没找到来源，不过还是日常感谢无私的开源贡献者。
 
-> 百度百科 - BMP是英文Bitmap（位图）的简写，它是Windows操作系统中的标准图像文件格式，能够被多种Windows应用程序所支持。随着Windows操作系统的流行与丰富的Windows应用程序的开发，BMP位图格式理所当然地被广泛应用。这种格式的特点是包含的图像信息较丰富，几乎不进行压缩，但由此导致了它与生俱来的缺点--占用磁盘空间过大。所以，BMP在单机上比较流行。
+> 百度百科 - BMP 是英文 Bitmap（位图）的简写，它是 Windows 操作系统中的标准图像文件格式，能够被多种 Windows 应用程序所支持。随着 Windows 操作系统的流行与丰富的 Windows 应用程序的开发，BMP 位图格式理所当然地被广泛应用。这种格式的特点是包含的图像信息较丰富，几乎不进行压缩，但由此导致了它与生俱来的缺点--占用磁盘空间过大。所以，BMP 在单机上比较流行。
 
 这个开源库的接口考虑的很全面了，处理目前的业务够用了，就没做二次封装，不包了，直接用。
 
