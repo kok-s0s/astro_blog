@@ -258,7 +258,7 @@ a.back-to-top {
 #toc {
   position: fixed;
   top: 16%;
-  right: -290px;
+  right: -287.2px;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -310,5 +310,6 @@ a.back-to-top {
 
   #toc {
     right: -285px;
+    padding: 1rem;
   }
 }
