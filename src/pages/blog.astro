@@ -18,38 +18,48 @@ const pageTitle = '博文'
   <ul>
     {projectPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
   </ul>
-  <h3>《C++ 代码整洁之道》读书记录</h3>
-  <ul>
-    {cleanCxxPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-  </ul>
-  <hr />
+  <details>
+    <summary>《C++ 代码整洁之道》读书记录</summary>
+    <ul>
+      {cleanCxxPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+    </ul>
+  </details>
   <h2>搬运</h2>
-  <h3><a href="https://refactoring.guru/design-patterns">DESIGN PATTERNS</a></h3>
+  <blockquote>
+    <p><a href="https://refactoring.guru/design-patterns">DESIGN PATTERNS</a></p>
+  </blockquote>
+  <p class="pattern">Creational Patterns</p>
   <ul>
-    <li>
-      <div class="pattern">Creational Patterns</div>
-      <ul>
-        {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-      </ul>
-    </li>
-    <li>
-      <div class="pattern">Structural Patterns</div>
-      <ul>
-        {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-      </ul>
-    </li>
-    <li>
-      <div class="pattern">Behavioral Patterns</div>
-      <ul>
-        {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-      </ul>
-    </li>
+    {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+  </ul>
+  <p class="pattern">Structural Patterns</p>
+  <ul>
+    {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+  </ul>
+  <p class="pattern">Behavioral Patterns</p>
+  <ul>
+    {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
   </ul>
 </BaseLayout>
 
 <style>
   .pattern {
-    padding: 0.3rem 0 0.5rem 0;
+    margin: 0;
+    padding: 0 0 0 1rem;
+    letter-spacing: 0.3px;
+  }
+
+  .pattern + ul {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  details ul {
+    margin-top: 0.5rem;
+  }
+
+  ul li {
+    list-style: none;
   }
 
   ul li:first-child div.pattern {
