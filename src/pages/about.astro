@@ -8,25 +8,7 @@ const selfInfo = [
   '离不开 Code Format',
   '团队开发最喜欢 Code Review 环节 /doge',
 ]
-const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试']
-const projects = [
-  {
-    name: 'cxx_crud_file',
-    desc: '以剔除 Qt 代码为目标而诞生的项目，UString 替换 QString，用 C++ 标准编写的 UFile 基类，基于 UFile 衍生出 JsonFile、IniFile 和 DatFile 来替换掉 Qt 的 QFile、QJson 和 QSetting 等。',
-    link: 'https://github.com/kok-s0s/cxx_crud_file',
-  },
-  {
-    name: 'cxx_thread',
-    desc: '根据实际业务需求而设计的线程基类，模仿了 Qt 的信号与槽机制，即一个信号 ID 与一个事件绑定，信号 ID 由一个队列维护。',
-    link: 'https://github.com/kok-s0s/cxx_thread',
-  },
-  {
-    name: 'socket_qt_dotNet',
-    desc: '基于 Qt 和 .Net 的 Socket 通信，实现了客户端与服务端的通信，服务端可以同时与多个客户端通信。',
-    link: 'https://github.com/kok-s0s/socket_qt_dotNet',
-  },
-]
-const books = ['Clean C++', 'Linux Shell 脚本攻略']
+const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', '会和 ChatGpt 聊天 /doge']
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -41,21 +23,31 @@ const books = ['Clean C++', 'Linux Shell 脚本攻略']
   </ul>
   <p>他的一些 C++ 项目：</p>
   <ul>
-    {
-      projects.map((project) => (
-        <li>
-          <a href={project.link} target="_blank">
-            <em>{project.name}</em>
-          </a>
-
-          <p class="textGap">{project.desc}</p>
-        </li>
-      ))
-    }
+    <li>
+      <a href="https://github.com/kok-s0s/cxx_crud_file" target="_blank"><em>cxx_crud_file</em></a>
+      -
+      <a href="/posts/cxx_crud_file"><em>记一次「 包轮子 」的经历</em></a>
+      <p class="textGap">
+        以剔除 Qt 代码为目标而诞生的项目，UString 替换 QString，用 C++ 标准编写的 UFile 基类，基于 UFile 衍生出 JsonFile、IniFile 和 DatFile 来替换掉 Qt 的 QFile、QJson 和 QSetting 等。
+      </p>
+    </li>
+    <li>
+      <a href="https://github.com/kok-s0s/cxx_thread" target="_blank">
+        <em>cxx_thread</em>
+      </a>
+      <p class="textGap">根据实际业务需求而设计的线程基类，模仿了 Qt 的信号与槽机制，即一个信号 ID 与一个事件绑定，信号 ID 由一个队列维护。</p>
+    </li>
+    <li>
+      <a href="https://github.com/kok-s0s/socket_qt_dotNet" target="_blank">
+        <em>socket_qt_dotNet</em>
+      </a>
+      <p class="textGap">基于 Qt 和 .Net 的 Socket 通信，实现了客户端与服务端的通信，服务端可以同时与多个客户端通信。</p>
+    </li>
   </ul>
   <p>他目前阅览的书籍：</p>
   <ul>
-    {books.map((book) => <li class="book textGap">{book}</li>)}
+    <li class="book textGap">Clean C++</li>
+    <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGpt 生成脚本嘎嘎香！</li>
   </ul>
 </BaseLayout>
 
