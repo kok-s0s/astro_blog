@@ -5,12 +5,27 @@ const pageTitle = '零'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h3><em>𝓩𝓮𝓻𝓸-𝓞𝓷𝓮</em></h3>
+  <h3>
+    <em>𝓩𝓮𝓻𝓸-𝓞𝓷𝓮</em>
+  </h3>
   <img src="/images/moon.jpeg" alt="moon" id="moon" />
+  <blockquote id="space">
+    <a href="https://apod.nasa.gov/apod/astropix.html">Astronomy Picture of the Day</a>
+  </blockquote>
 </BaseLayout>
 
 <style>
   #moon {
     width: 50%;
+  }
+
+  #space {
+    display: none;
+  }
+
+  @media screen and (min-width: 636px) {
+    #space {
+      display: block;
+    }
   }
 </style>

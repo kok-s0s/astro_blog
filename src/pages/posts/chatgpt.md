@@ -1,13 +1,13 @@
 ---
 layout: ../../layouts/MarkdownPostLayout.astro
-title: 'Gpt 码农篇'
+title: 'ChatGpt 码农篇'
 pubDate: 2023-03-17
 description: '使用 Gpt 已经有一段时间，记录下在编写代码方面，它能帮到我什么，又不能帮到我什么。'
 author: 'kok-s0s'
 image:
   url: '/images/chatgpt.jpg'
-  alt: 'Astro'
-tags: ['AI', 'Code']
+  alt: 'ChatGpt'
+tags: ['AI', 'Code', 'Script', 'Settings']
 ---
 
 ## Easy
