@@ -11,7 +11,7 @@ tags: ['C++', 'Design Patterns', 'Creational Patterns']
 
 **Factory Method** is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.
 
-![](/images/cxx_design_patterns/Factory_Method/problem1-en.png)
+![](/images/cxx_design_patterns/Factory_Method/factory-method-en.png)
 
 ## Problem
 
