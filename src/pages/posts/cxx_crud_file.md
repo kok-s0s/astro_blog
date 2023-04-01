@@ -215,11 +215,11 @@ class IniFile : public UFile {
                               std::to_string(defaultVal).c_str());
 
     if (paramType[0] == 'i')
-      param = stoi(tempParam);
+      param = static_cast<T>(stoi(tempParam));
     else if (paramType[0] == 'f')
-      param = stof(tempParam);
+      param = static_cast<T>(stof(tempParam));
     else if (paramType[0] == 'd')
-      param = stod(tempParam);
+      param = static_cast<T>(stod(tempParam));
     else if (paramType[0] == 'b')
       if (tempParam == "false" || tempParam == "0")
         param = false;
@@ -247,13 +247,13 @@ class IniFile : public UFile {
 
       if (paramType[0] == 'i')
         for (int i = 0; i < tempParamArray.size(); ++i)
-          param[index++] = stoi(tempParamArray[i]);
+          param[index++] = static_cast<T>(stoi(tempParamArray[i]));
       else if (paramType[0] == 'f')
         for (int i = 0; i < tempParamArray.size(); ++i)
-          param[index++] = stof(tempParamArray[i]);
+          param[index++] = static_cast<T>(stof(tempParamArray[i]));
       else if (paramType[0] == 'd')
         for (int i = 0; i < tempParamArray.size(); ++i)
-          param[index++] = stod(tempParamArray[i]);
+          param[index++] = static_cast<T>(stod(tempParamArray[i]));
 
       while (index <= size - 1) {
         param[index] = defaultVal[index];
@@ -567,7 +567,7 @@ class BinFile : public UFile {
     }
 
     _data.insert(_data.end(), data.begin(), data.end());
-    _length = _data.size();
+    _length = (int)_data.size();
 
     file.write((const char *)_data.data(), _length);
 
