@@ -2,7 +2,7 @@
 layout: ../../layouts/MarkdownPostLayout.astro
 title: 'LeetCode'
 pubDate: 2023-03-12
-description: '开始康复训练，太忙了～，劳逸结合下'
+description: '记录下'
 author: 'kok-s0s'
 image:
   url: '/images/leetcode.png'
