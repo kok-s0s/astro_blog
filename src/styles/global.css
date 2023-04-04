@@ -28,6 +28,14 @@ h3 {
   padding-left: 0.5rem;
 }
 
+h4 {
+  padding-left: 1rem;
+}
+
+h5 {
+  padding-left: 1.5rem;
+}
+
 h3 em {
   color: #808080;
 }
@@ -247,7 +255,9 @@ html.dark {
 
 .dark h1,
 .dark h2,
-.dark h3 {
+.dark h3,
+.dark h4,
+.dark h5 {
   color: #fffffe;
 }
 
