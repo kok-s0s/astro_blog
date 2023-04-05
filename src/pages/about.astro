@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const pageTitle = '关于这个码仔'
+const pageTitle = '有关这个码仔'
 
 const selfInfo = [
-  '目前做着和 C++ 相关的工作，类比 Linux 中的管道概念，常做一些数据的输入输出的工作，做一个好的「 中转站 」，偶尔用用 Python 这个利器来辅助处理下数据。',
+  '目前主要做 C++ 开发，职责类似 Linux 中 pipe 的作用， 常对数据做些处理，做一个好的「 中转站 」；常用 Python 这个脚本利器来处理下数据。',
   '离不开 Code Format',
   '团队开发最喜欢 Code Review 环节 /doge',
 ]
-const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', '会和 ChatGpt 聊天 /doge']
+const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', '会和 ChatGPT 聊天 /doge']
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -32,8 +32,9 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
         <em>记一次「 包轮子 」的经历</em>
       </a>
       <p class="textGap">
-        以剔除 Qt 代码为目标而诞生的项目，UString 替换 QString，用 C++ 标准编写的 UFile 基类，基于 UFile 衍生出
-        JsonFile、IniFile 和 DatFile 来替换掉 Qt 的 QFile、QJson 和 QSetting 等。
+        以剔除 Qt 代码为目标而诞生的项目。用 UString 替换掉 QString 类型，用 <code>filesystem</code>
+        库编写个 UFile 基类，基于 UFile 衍生出 JsonFile、IniFile 来替换掉 Qt 的 QJson 和 QSetting 类；且衍生出 BinFile、TxtFile
+        和 BmpFile 来处理二进制文件、文本文件和 bmp 文件。
       </p>
     </li>
     <li>
@@ -57,7 +58,7 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
   <p>他目前阅览的书籍：</p>
   <ul>
     <li class="book textGap">Clean C++</li>
-    <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGpt 生成脚本嘎嘎香！</li>
+    <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGPT 生成脚本嘎嘎香！</li>
   </ul>
 </BaseLayout>
 
