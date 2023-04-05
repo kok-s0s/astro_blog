@@ -2,7 +2,7 @@
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '记一次「 包轮子 」的经历'
 pubDate: 2023-03-17
-description: '重新拾起 C++ 开发已经有 8 个月了，自己主导做的一件事情。三个看法，一是记住 C++ 能不造轮子，就别造轮子了；二是能做单元测试的东西，就要做单元测试；三是好好利用 ChatGpt 之类的东西来优化代码 -/- doge'
+description: '重新拾起 C++ 开发已经有 8 个月了，自己主导做的一件事情。三个看法，一是记住 C++ 能不造轮子，就别造轮子了；二是能做单元测试的东西，就要做单元测试；三是好好利用 ChatGPT 之类的东西来优化代码 -/- doge'
 author: 'kok-s0s'
 image:
   url: '/images/rocket.jpg'

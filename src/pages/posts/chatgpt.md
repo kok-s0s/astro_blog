@@ -6,7 +6,7 @@ description: '使用 ChatGPT 已经有一段时间，用文字记录点东西。
 author: 'kok-s0s'
 image:
   url: '/images/chatgpt.jpg'
-  alt: 'ChatGpt'
+  alt: 'ChatGPT'
 tags: ['AI', 'Future']
 ---
 
