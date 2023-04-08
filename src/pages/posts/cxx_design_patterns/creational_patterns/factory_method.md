@@ -259,3 +259,68 @@ int main() {
 ```
 
 </details>
+
+## 绘制不同形状的图形
+
+<details><summary>code</summary>
+
+```cpp
+#include <iostream>
+using namespace std;
+
+// 基类 Shape
+class Shape {
+public:
+  virtual void draw() = 0;
+};
+
+// 派生类 Circle
+class Circle : public Shape {
+public:
+  void draw() { cout << "Draw a circle" << endl; }
+};
+
+// 派生类 Square
+class Square : public Shape {
+public:
+  void draw() { cout << "Draw a square" << endl; }
+};
+
+// 派生类 Rectangle
+class Rectangle : public Shape {
+public:
+  void draw() { cout << "Draw a rectangle" << endl; }
+};
+
+// 工厂类 ShapeFactory
+class ShapeFactory {
+public:
+  static Shape *createShape(string shapeType) {
+    if (shapeType == "Circle") {
+      return new Circle();
+    } else if (shapeType == "Square") {
+      return new Square();
+    } else if (shapeType == "Rectangle") {
+      return new Rectangle();
+    } else {
+      return NULL;
+    }
+  }
+};
+
+// 主函数
+int main() {
+  Shape *circle = ShapeFactory::createShape("Circle");
+  circle->draw();
+
+  Shape *square = ShapeFactory::createShape("Square");
+  square->draw();
+
+  Shape *rectangle = ShapeFactory::createShape("Rectangle");
+  rectangle->draw();
+
+  return 0;
+}
+```
+
+</details>
