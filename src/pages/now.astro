@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const pageTitle = '当下'
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <blockquote>
+    <p>
+      本页用于记录当下我的生活 -
+      <a href="https://nownownow.com/about" target="_blank">页面灵感来源</a> - 4.11.2023 更新于汕头
+    </p>
+  </blockquote>
+
+  <h2>Life</h2>
+  <ul>
+    <li>
+      日常工作
+      <ul>
+        <li>主要是 C/C++ 开发</li>
+        <li>偶尔需要用 Qt 或者 Flutter 做些应用层的东西</li>
+        <li>业务项目推进</li>
+      </ul>
+    </li>
+    <li>
+      知识学习
+      <ul>
+        <li>零散时间看点书籍，阅读编程书籍喜欢边看边实际动手敲些代码</li>
+        <li>
+          逛论坛看帖子 - <a href="https://0xffff.one/" target="_blank">0xffff.one</a> |
+          <a href="https://www.reddit.com/" target="_blank">Reddit</a> |
+          <a href="https://medium.com/" target="_blank">Medium</a> | and so on.
+        </li>
+        <li>每日有空就打卡下 Duolingo</li>
+      </ul>
+    </li>
+    <li>
+      游戏 - 主社交，少单机
+      <ul>
+        <li>原神 - 日常割草</li>
+        <li>王者荣耀</li>
+        <li>Steam: Hades | Human:Fall Flat | FALLGUYS</li>
+      </ul>
+    </li>
+    <li>
+      增重和健身
+      <ul>
+        <li>胡吃海喝 - 每周去大众点评/小红书上推荐的店里恰顿饭</li>
+        <li>每周做三次 50 分钟的健身运动</li>
+        <li>周末天气佳 - 骑行代步一天大概 20 公里</li>
+      </ul>
+    </li>
+  </ul>
+</BaseLayout>
+
+<style>
+  h2 {
+    margin: 0.5rem 0 0.5rem 0;
+  }
+
+  ul {
+    padding-inline-start: 30px;
+    margin-top: 0;
+  }
+
+  ul ul {
+    list-style-type: disc;
+    padding: 0.5rem 0 0.5rem 0;
+    padding-inline-start: 20px;
+  }
+</style>
