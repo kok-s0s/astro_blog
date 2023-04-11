@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const pageTitle = '有关这个码仔'
+const pageTitle = '关于这个码仔'
 
 const selfInfo = [
-  '目前主要做 C++ 开发，职责类似 Linux 中 pipe 的作用，常对数据做些处理，做一个好的「 中转站 」；常用 Python 这个脚本利器来对数据做处理',
+  '目前主要做 C++ 开发，职责类似 Linux 中 pipe，做一个好的数据「 中转站 」',
+  '常用 Python 和 Shell 做些自动化的工作（多文本文件数据处理，定时任务等）',
   '离不开 Code Format',
   '团队开发最喜欢 Code Review 环节 /doge',
 ]
@@ -32,9 +33,9 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
         <em>记一次「 包轮子 」的经历</em>
       </a>
       <p class="textGap">
-        以剔除 Qt 代码为目标而诞生的项目。用 UString 替换掉 QString 类型，用 <code>filesystem</code>
-        库编写个 UFile 基类，基于 UFile 衍生出 JsonFile、IniFile 来替换掉 Qt 的 QJson 和 QSetting 类；且衍生出 BinFile、TxtFile
-        和 BmpFile 来处理二进制文件、文本文件和 bmp 文件。
+        以剔除 Qt 代码（读写功能和数据结构）为目标而诞生的项目。用 UString 替换掉 QString 类型，用 filesystem 库编写个
+        UFile 基类，基于它衍生出 JsonFile、IniFile 来替换掉 Qt 的 QJson 和 QSetting 类；用 BinFile、TxtFile 和 BmpFile
+        来处理二进制文件、文本文件和 bmp 文件。
       </p>
     </li>
     <li>
@@ -42,26 +43,24 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
         <em>cxx_thread</em>
       </a>
       <p class="textGap">
-        根据实际业务需求而设计的线程基类，模仿了 Qt 的信号与槽机制，即一个信号 ID 与一个事件绑定，信号 ID
-        由一个队列维护。
+        以剔除 Qt 的 QThread 为目标而诞生的项目。设计的线程基类有着类似 Qt 中信号与槽机制，且利用 C++
+        的互斥量和条件变量，让槽函数能够异步或同步运行，这样派生类能构建个定时器来做定时任务。
+      </p>
+    </li>
+    <li>
+      <a href="https://github.com/kok-s0s/flutter_ffi_opencv" target="_blank">
+        <em>flutter_ffi_opencv</em>
+      </a>
+      <p>
+        使用 flutter 生态的 FFI 库，可以轻松地将 Dart 代码与现有的 C/C++ 库进行交互，无需编写任何桥接代码，制成 flutter
+        生态下的一个插件，这样 flutter 应用就能接入用 C/C++ 所编写的功能模块。
       </p>
     </li>
     <li>
       <a href="https://github.com/kok-s0s/socket_qt_dotNet" target="_blank">
         <em>socket_qt_dotNet</em>
       </a>
-      <p class="textGap">
-        基于 Qt 和 .Net 的 Socket 通信，实现了客户端与服务端的通信，服务端可以同时与多个客户端通信。
-      </p>
-    </li>
-    <li>
-      <a href="" target="_blank">
-        <em>flutter_opencv_ffi</em>
-      </a>
-      <p>
-        使用 flutter 生态的 FFI 库，可以轻松地将 Dart 代码与现有的 C/C++ 库进行交互，无需编写任何桥接代码，制成 flutter
-        生态下的一个插件，这样 flutter 应用 就能使用到高性能的功能模块。
-      </p>
+      <p class="textGap">使用 Socket 通信技术，实现 Qt 应用和 C# 应用的通信。</p>
     </li>
   </ul>
   <p>他目前阅览的书籍：</p>
