@@ -249,6 +249,32 @@ a.back-to-top {
   display: none;
 }
 
+.underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px; /* 下划线高度 */
+  cursor: pointer; /* 鼠标指针为手型 */
+}
+
+.underline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px; /* 下划线宽度 */
+  background-color: #808080; /* 下划线颜色 */
+  transition: width 0.5s ease-out; /* 过渡动画效果 */
+}
+
+.underline:hover::before {
+  width: 100%; /* 鼠标移入时，下划线从左到右匀速生成 */
+}
+
+.underline:hover {
+  cursor: pointer; /* 鼠标指针为手型 */
+}
+
 html.dark {
   background-color: #16161a;
 }
