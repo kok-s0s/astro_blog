@@ -3,6 +3,23 @@ import Toc from '../components/Toc.astro'
 import BaseLayout from './BaseLayout.astro'
 
 const { frontmatter } = Astro.props
+
+const cleanCxxPosts = await Astro.glob('../pages/posts/clean_cxx/*.md')
+const cxxCreationalPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/creational_patterns/*.md')
+const cxxStructuralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/structural_patterns/*.md')
+const cxxBehavioralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/behavioral_patterns/*.md')
+const allPosts = cleanCxxPosts
+  .concat(cxxCreationalPatternsPosts)
+  .concat(cxxStructuralPatternsPosts)
+  .concat(cxxBehavioralPatternsPosts)
+let currentPostIndex = -1
+allPosts.forEach((post, index) => {
+  if (post.frontmatter.title === frontmatter.title) {
+    currentPostIndex = index
+  }
+})
+const previousPost = allPosts[(currentPostIndex - 1 + allPosts.length) % allPosts.length]
+const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
@@ -18,30 +35,8 @@ const { frontmatter } = Astro.props
   </div>
   <Toc />
   <slot />
+  <div id="previous-next-article">
+    <a href={previousPost.url} id="previous" class="underline">{previousPost.frontmatter.title}</a>
+    <a href={nextPost.url} id="next" class="underline">{nextPost.frontmatter.title}</a>
+  </div>
 </BaseLayout>
-<style>
-  .tag a {
-    color: #00539f !important;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: #f8fcfd;
-  }
-
-  @media screen and (min-width: 636px) {
-    .tag {
-      font-size: 1.15rem;
-    }
-  }
-</style>

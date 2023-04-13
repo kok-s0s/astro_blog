@@ -3,6 +3,16 @@ import Toc from '../components/Toc.astro'
 import BaseLayout from './BaseLayout.astro'
 
 const { frontmatter } = Astro.props
+
+const projectPosts = await Astro.glob('../pages/posts/*.md')
+let currentPostIndex = -1
+projectPosts.forEach((post, index) => {
+  if (post.frontmatter.title === frontmatter.title) {
+    currentPostIndex = index
+  }
+})
+const previousPost = projectPosts[(currentPostIndex - 1 + projectPosts.length) % projectPosts.length]
+const nextPost = projectPosts[(currentPostIndex + 1) % projectPosts.length]
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
@@ -21,34 +31,14 @@ const { frontmatter } = Astro.props
   </div>
   <Toc />
   <slot />
+  <div id="previous-next-article">
+    <a href={previousPost.url} id="previous" class="underline">{previousPost.frontmatter.title}</a>
+    <a href={nextPost.url} id="next" class="underline">{nextPost.frontmatter.title}</a>
+  </div>
 </BaseLayout>
+
 <style>
   img {
     margin-bottom: 0.5rem;
-  }
-
-  .tag a {
-    color: #00539f !important;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: #f8fcfd;
-  }
-
-  @media screen and (min-width: 636px) {
-    .tag {
-      font-size: 1.15rem;
-    }
   }
 </style>
