@@ -10,22 +10,14 @@ image:
 tags: ['Front-End']
 ---
 
-## [官方教程](https://docs.astro.build/en/tutorial/0-introduction/)走一遭
+> 先贴一个[官方教程](https://docs.astro.build/en/tutorial/0-introduction/)，本博客的搭建就是按照这个教程来的。
 
-### 目录结构说明
+## Why Astro?
 
-### .astro
+> [Why Astro?](https://docs.astro.build/en/concepts/why-astro/) - Astro 官方认为选择 Astro 这门技术的原因。
 
-### 堆积木
+这门技术为一个静态网站生成器，能将 markdown 文件渲染成 HTML，类似的有很多（Hexo、Hugo 和 Jekyll 等等），只不过它的构建相较其它生成器来说更透明。
 
-### markdown
+这个透明就是我更清楚其中的代码是怎么运行的。其它的生成器，前期一般只需设置好一些部署环境，然后部署即可运行。拿 [Hexo](https://hexo.io/zh-cn/docs/) 来说，作为内容创作者，仅需编写一些 markdown 文件，然后提交到 git 仓库，它会自动触发网页更新，markdown 被渲染为一个网页。这样的好处是，不需要关心网站的构建过程，只需要专注于内容的创作。
 
-## 杂谈
-
-### Git Submodule
-
-### CSS
-
-### JavaScript
-
-## End
+而 Astro
