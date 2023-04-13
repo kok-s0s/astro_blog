@@ -23,7 +23,7 @@ const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
-  <p>Written by: {frontmatter.author}</p>
+  <p>Written by - <b><em>{frontmatter.author}</em></b></p>
   <div class="tags">
     {
       frontmatter.tags.map((tag) => (
