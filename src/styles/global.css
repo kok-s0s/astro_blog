@@ -332,6 +332,26 @@ html.dark {
   text-align: right;
 }
 
+.octicon {
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.octicon-copy {
+  color: #768390;
+  vertical-align: text-bottom;
+}
+
+.octicon-check {
+  color: #008080;
+}
+
+.m-2 {
+  margin: var(--base-size-8, 8px) !important;
+}
+
 .dark h1,
 .dark h2,
 .dark h3,
