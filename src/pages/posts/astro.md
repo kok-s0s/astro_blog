@@ -75,7 +75,7 @@ tags: ['Front-End']
 
 ### markdown
 
-不仅能将 markdown 渲染成网页，Astro 还支持[语法高亮](https://docs.astro.build/zh-cn/guides/markdown-content/#%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE)（内置支持 Shiki 和 Prism），本博客用的是 prism 语法高亮模块，主题用的经典款 - `solarized-dark`。
+不仅能将 markdown 渲染成网页，Astro 还支持[语法高亮](https://docs.astro.build/zh-cn/guides/markdown-content/#%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE)（内置支持 Shiki 和 Prism），本博客用的是 prism 语法高亮模块，主题用的 `nord`。
 
 还有很多[其它功能](https://docs.astro.build/zh-cn/guides/markdown-content/)： 草稿功能、渲染 mdx 文件和[内容集合](https://docs.astro.build/zh-cn/guides/content-collections/)（多语言或拼接信息）等等，我都没用到。/doge
 
