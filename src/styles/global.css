@@ -171,6 +171,7 @@ table tbody tr td {
 
 .expanded {
   display: unset;
+  z-index: 999;
 }
 
 /* tags */
@@ -332,6 +333,7 @@ html.dark {
   text-align: right;
 }
 
+/* copy */
 .octicon {
   display: inline-block;
   overflow: visible !important;
