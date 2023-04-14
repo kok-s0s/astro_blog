@@ -18,6 +18,22 @@ tags: ['C++', 'Test', 'Concurrent Programming']
 
 ## 如何设计
 
-### 先明确需求
+**目标** -> 替换掉 `QThread`
 
-目标 -> 替换掉 `QThread`
+### 分析下 [QThread](https://doc.qt.io/qt-6/qthread.html)
+
+有两种使用 `QThread` 的方法。
+
+一种是写一个 `WorkThread` 类继承自 `QThread`，重写其 `run()` 方法，一般不推荐。
+
+一般使用 `moveToThread()` 这个方法。
+
+目前常用的写法如下：
+
+```cpp
+
+```
+
+> 想要仿造的点
+
+1. Qt 的信号与槽机制
