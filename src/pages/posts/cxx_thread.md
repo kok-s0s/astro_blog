@@ -2,7 +2,7 @@
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '造个 C++ 线程基类'
 pubDate: 2023-03-24
-description: '以剔除 Qt 的 QThread 为目标而诞生的项目。设计的线程基类能搭配有着类似 Qt 中信号与槽的机制来使用，且利用 C++ 的互斥量和条件变量，让函数能够同步或异步运行，这样派生类（某业务工作线程）能持有定时器（线程）来做些定时任务（异步）。'
+description: '以剔除 Qt 的 QThread 为目标而诞生的项目。设计的线程基类能搭配类似 Qt 中的信号与槽机制来使用，且利用现代 C++ 提供的互斥量和条件变量，让函数能够同步或异步运行，这样派生类（某业务工作线程）能持有定时器（线程）来做些定时任务（异步）。'
 author: 'kok-s0s'
 image:
   url: '/images/space.jpg'
@@ -108,7 +108,7 @@ Qt 有提供一些信号与槽的连接选项 [`Qt::ConnectionType`](https://doc
 
 ### 简单梳理需求
 
-1. 信号与槽机制以及管理信号的消息队列（生产者和消费者）
+1. 信号与槽机制以及管理信号的消息队列（要有生产者和消费者）
 
 2. 槽函数异步执行或同步执行
 
@@ -120,7 +120,11 @@ Qt 有提供一些信号与槽的连接选项 [`Qt::ConnectionType`](https://doc
 
 > 抱着网上可能已经有现成解决方案的心态去互联网上搜索 /doge
 
-[]()
+- [sigslot](https://github.com/palacaze/sigslot)
+
+- [std::static_pointer_cast](https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast)
+
+- [Concurrency support library](https://en.cppreference.com/w/cpp/thread)
 
 ### 信号与槽
 
