@@ -2,7 +2,7 @@
 layout: ../../layouts/MarkdownPostLayout.astro
 title: '造个 C++ 线程基类'
 pubDate: 2023-03-24
-description: '以剔除 Qt 的 QThread 为目标而诞生的项目。设计的线程基类有着类似 Qt 中信号与槽机制，且利用 C++ 的互斥量和条件变量，让槽函数能够异步或同步运行，这样派生类能构建个定时器来做定时任务。'
+description: '以剔除 Qt 的 QThread 为目标而诞生的项目。设计的线程基类能搭配有着类似 Qt 中信号与槽的机制来使用，且利用 C++ 的互斥量和条件变量，让函数能够同步或异步运行，这样派生类（某业务工作线程）能持有定时器（线程）来做些定时任务（异步）。'
 author: 'kok-s0s'
 image:
   url: '/images/space.jpg'
