@@ -98,7 +98,7 @@ void MyObject::startWorkInAThread()
 
 第二种是写子类继承自 `QThread`，然后重写 `run()` 函数，这样就可以在 `run()` 函数中写线程的逻辑。
 
-需要替换的 Qt 代码中使用 `QThread` 的方式为第一种。
+需要剔除 QThread 的代码中使用方式为第一种。
 
 > [Signals and Slots Across Threads](https://doc.qt.io/qt-6/threads-qobject.html#signals-and-slots-across-threads)
 
@@ -108,7 +108,7 @@ Qt 有提供一些信号与槽的连接选项 [`Qt::ConnectionType`](https://doc
 
 1. 信号与槽机制以及管理信号的消息队列（要有生产者和消费者）
 
-2. 槽函数异步执行或同步执行
+2. 槽函数 Async 异步执行或 Sync 同步执行
 
 3. 线程能够持续运行，直至被销毁
 
@@ -120,15 +120,15 @@ Qt 有提供一些信号与槽的连接选项 [`Qt::ConnectionType`](https://doc
 
 - [sigslot](https://github.com/palacaze/sigslot) -- 提供了如何处理参数传递的思路
 
-- [std::static_pointer_cast](https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast) -- 处理参数传递的方法
+- [std::static_pointer_cast](https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast) -- 转换类型的方法
 
 - [Concurrency support library](https://en.cppreference.com/w/cpp/thread) -- 有关 C++ 并行（多线程）开发知识，这里主要用到 `std::thread`、`std::mutex` 和 `std::condition_variable` 。
 
-### 信号与槽
+### 信号与槽机制
 
-看看需要剔除 `QThread` 的那份代码，业务线程自创建后便持续存在，等待着主线程发送一个指令（即调用业务线程的公有成员函数），当业务线程接受到主线程某一个指令后，业务线程能根据该指令（公有函数内部调用 `emit` 发送信号函数）去处理相对应的业务逻辑（调用对应的槽函数）。
+看看需要剔除 `QThread` 的那份代码，业务线程自创建后便持续存在，等待着主线程发送一个指令（即调用业务线程的公有成员函数），当业务线程接受到主线程某一个指令后，业务线程能根据该指令（被调用的公有函数内部再调用 `emit` 发送信号函数）去处理相对应的业务逻辑（调用对应的槽函数）。
 
-这样梳理下，需要有一张关系映射表去将主线程要调用的指令函数和对应的业务逻辑关联起来，即业务线程内部有一张将信号与槽函数关联起来的表。
+这样梳理下，即需要有一张关系映射表去将主线程要调用的指令函数和对应的业务逻辑关联起来，即业务线程内部有一张将信号与槽函数关联起来的表。
 
 那时立马想到的是维护一个 `std::map` 数据结构，即 `std::map<Signal, Slot>`，其中 `Signal` 为整型，`Slot` 为对应的槽函数，这样就能将一个信号与一个槽函数对应起来，但是需要考虑到函数参数传递的问题，以及可能一个信号会对应到多个槽函数的情况，会要把 `Slot` 设置成一个容器去包含多个槽函数，又要考虑到函数执行顺序的问题，这样就会变得很复杂。
 
@@ -170,11 +170,10 @@ struct SignalMsg {
 };
 ```
 
-会在业务线程内根据信号以及业务逻辑编写一些类似 Qt 中 `emit` 函数作用的公有成员函数，让主线程能够通过调用这些公有成员函数来发送消息（信号与参数数据），示例代码如下：
+在派生类中根据信号与其对应的槽函数所需参数来编写些公有成员函数，让主线程能够通过调用这些公有成员函数来发送消息（信号与参数数据），示例代码如下：
 
 ```cpp
 void Human::SendWillDoSignal(const std::string& doWhat) {
-  PLOGD << "SendWillDoSignal";
   std::shared_ptr<std::string> msgData = std::make_shared<std::string>(doWhat);
   std::shared_ptr<SignalMsg> signalMsg = std::make_shared<SignalMsg>(
       WillDo_Signal, std::static_pointer_cast<void>(msgData));
@@ -182,7 +181,6 @@ void Human::SendWillDoSignal(const std::string& doWhat) {
 }
 
 void Human::SendPlanToDoSignal(const Plan& plan) {
-  PLOGD << "SendPlanToDoSignal";
   std::shared_ptr<Plan> msgData = std::make_shared<Plan>(plan);
   std::shared_ptr<SignalMsg> signalMsg = std::make_shared<SignalMsg>(
       PlanToDo_Signal, std::static_pointer_cast<void>(msgData));
@@ -269,7 +267,7 @@ OK，这样生产者和消费者就有了。
 
 之后就需要有一个消息队列维护这些消息，这里使用 `std::queue` 类型来存储消息 `std::shared_ptr<SignalMsg>` 。
 
-这些通用的变量和函数都放在 `ThreadBase` 基类中，如下：
+通用的变量和函数都放在 `ThreadBase` 基类中，如下：
 
 ```cpp
 class ThreadBase {
@@ -318,9 +316,9 @@ void ThreadBase::Process() {
 
 业务线程可以持有定时器（线程）去做定时任务（另一些依附该业务而做的事情）。定时器被业务线程所持有，其创建与销毁都要通过调用业务线程提供的 `CreateTimer` 和 `DestroyTimer` 。且定时任务不阻塞主线程，不使用 `std::thread` 中提供的 [`detach`](https://en.cppreference.com/w/cpp/thread/thread/detach) 方法的情况下，定时任务应异步执行。
 
-同时，在主线程给业务线程发送一个指令后，须确保该指令对应的业务逻辑被执行后，主线程才可继续执行。
+同时，有时在主线程给业务线程发送一个指令后，须确保该指令对应的业务逻辑被执行后，主线程才可继续执行。
 
-即须确保包含业务逻辑的槽函数是可以同步执行的。
+即须确保包含业务逻辑的槽函数是能同步执行的。
 
 使用 C++ 提供的 `std::mutex` 互斥量和 `std::condition_variable` 条件变量来实现同步。
 
@@ -497,14 +495,14 @@ std::thread::id ThreadBase::GetCurrentThreadId() {
 
 ## End
 
-其实这类 `ThreadBase` 的实现网上一大把，但其实都是根据自己需要解决的业务场景而设计的，没有一个是万能的 /doge，还是需要根据自己的需求来设计。
+其实这类 `ThreadBase` 的实现网上一大把，但其实都是根据自己需要解决的业务场景而去设计的，没有一个是万能的 /doge，还是需要根据自己的需求来设计。
 
 自己这样造一个轮子，其实感觉思路并不难。前期就能快速有个雏形。
 
 > 我用 GoogleTest 做单元测试，TDD 开发，写测试，只有测试是通过的才能说明编写的代码能达到我的设计期望。
 
-有了雏形，之后就是不断重构，改命名，改写法，改数据结构等等，中间花费了大量时间去修改，试错，过程很混乱。好在 GoogleTest 能够快速的让我知道我改的对不对，TDD 很方便。
+有了雏形，之后就是不断重构，改命名，改写法，改数据结构等等，中间花费了大量时间去修改，试错。其间过程很混乱，好在有 GoogleTest 能够快速的让我知道我改的对不对，TDD 很方便。
 
 总的来说，重构的过程还是很有意思的，也是学习的过程。
 
-对于 C++11 提供的 `Concurrency support library` 以及类型转换 `cast` 这两个知识点也是更加熟练了。
+对于 C++11 提供的 `Concurrency support library` 以及类型转换 `cast` 这两个知识点也是熟练了些。
