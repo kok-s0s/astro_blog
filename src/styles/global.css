@@ -354,6 +354,15 @@ html.dark {
   margin: var(--base-size-8, 8px) !important;
 }
 
+/* normal */
+#normal {
+  color: #000000;
+}
+
+.dark #normal {
+  color: #94a1b2;
+}
+
 .dark h1,
 .dark h2,
 .dark h3,
