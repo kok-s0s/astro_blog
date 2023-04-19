@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Toc from '../components/Toc.astro'
 
-const pageTitle = '打卡 C++ 开发者之路'
+const pageTitle = 'C++ Dev RoadMap'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -10,51 +10,95 @@ const pageTitle = '打卡 C++ 开发者之路'
   <p>
     <a href="https://github.com/salmer/CppDeveloperRoadmap" target="_blank" class="underline">CppDeveloperRoadmap</a>
   </p>
+
   <ul>
-    <li>Junior - Green</li>
-    <li>Middle - Yellow</li>
-    <li>Senior - Red</li>
-    <li>Optional - Blue</li>
+    <li class="junior">Junior - rgb(112, 172, 112)</li>
+    <li class="middle">Middle - rgb(206, 206, 107)</li>
+    <li class="senior">Senior - rgb(183, 188, 233)</li>
+    <li class="optional">Optional - rgb(125, 160, 214)</li>
   </ul>
   <hr />
   <h2 id="Step One">Step One</h2>
-  <h3 id="Basic operations" class="first junior">Basic operations</h3>
-  <p class="second junior">Arithmetic operations</p>
-  <p class="second junior">Logical operations</p>
-  <p class="second junior">Loops: for/while</p>
-  <p class="second middle">Bitwise operations</p>
-  <br />
-  <h3 id="Functions" class="first junior">Functions</h3>
-  <p class="second middle">Operators</p>
-  <p class="second middle">lambda</p>
-  <br />
-  <h3 id="Data types" class="first junior">Data types</h3>
-  <p class="second middle">Static typing</p>
-  <p class="second middle">Dynamic typing</p>
-  <p class="third middle">RTTI</p>
-  <br />
-  <h3 id="Pointers & References" class="first junior">Pointers & References</h3>
-  <p class="second junior">References</p>
-  <p class="second junior">Smart pointer</p>
-  <p class="third junior">unique_ptr</p>
-  <p class="third junior">shared_ptr</p>
-  <p class="third middle">weak_ptr</p>
-  <p class="second junior">Memory model</p>
-  <p class="third junior">Lifetime of objects</p>
-  <p class="second junior">Raw pointers</p>
-  <p class="third junior">new/delete operators</p>
-  <p class="third junior">Memory leakage</p>
-  <br />
-  <h3 id="Codebase structuring" class="first junior">Codebase structuring</h3>
-  <p class="second junior">Code splitting into headers/cpp files</p>
-  <p class="third junior">Forward declaration</p>
-  <p class="second junior">Scope</p>
-  <p class="third junior">Namespaces</p>
-  <br />
+  <div>
+    <h3 id="Language syntax" class="junior">Language syntax</h3>
+    <div>
+      <h4 id="Basic operations" class="first junior">Basic operations</h4>
+      <div>
+        <p class="second junior">Arithmetic operations</p>
+        <p class="second junior">Logical operations</p>
+        <p class="second junior">Loops: for/while</p>
+        <p class="second middle">Bitwise operations</p>
+      </div>
+      <h4 id="Functions" class="first junior">Functions</h4>
+      <div>
+        <p class="second middle">Operators</p>
+        <p class="second middle">lambda</p>
+      </div>
+      <h4 id="Data types" class="first junior">Data types</h4>
+      <div>
+        <p class="second middle">Static typing</p>
+        <p class="second middle">Dynamic typing</p>
+        <p class="third middle">RTTI</p>
+      </div>
+      <h4 id="Pointers & References" class="first junior">Pointers & References</h4>
+      <div>
+        <p class="second junior">References</p>
+        <p class="second junior">Smart pointer</p>
+        <p class="third junior">unique_ptr</p>
+        <p class="third junior">shared_ptr</p>
+        <p class="third middle">weak_ptr</p>
+        <p class="second junior">Memory model</p>
+        <p class="third junior">Lifetime of objects</p>
+        <p class="second junior">Raw pointers</p>
+        <p class="third junior">new/delete operators</p>
+        <p class="third junior">Memory leakage</p>
+      </div>
+      <h4 id="Codebase structuring" class="first junior">Codebase structuring</h4>
+      <div>
+        <p class="second junior">Code splitting into headers/cpp files</p>
+        <p class="third junior">Forward declaration</p>
+        <p class="second junior">Scope</p>
+        <p class="third junior">Namespaces</p>
+      </div>
+    </div>
+    <h3 id="Language tools" class="junior">Language tools</h3>
+    <div>
+      <h4 id="Working with source code" class="first junior">Working with source code</h4>
+      <div>
+        <p class="second junior">Text editors</p>
+        <p class="second junior">IDE</p>
+        <p class="second junior">Code editors</p>
+        <p class="third junior">Knowledge of features and abilities (shortcuts, tools, plugins)</p>
+        <p class="second junior">Debugger</p>
+        <p class="third junior">Understanding of debugger messages</p>
+        <p class="third junior">Debugging symbols</p>
+        <p class="third optional">WinDbg</p>
+        <p class="third optional">GDB</p>
+        <p class="second middle">Linters</p>
+      </div>
+    </div>
+    <h3 id="Common skills" class="junior">Common skills</h3>
+    <div>
+      <h4 id="Computers Science" class="first junior">Computers Science</h4>
+      <div>
+        <p class="second junior">Data structures</p>
+        <p class="second junior">Boolean algebra</p>
+        <p class="second junior">Algorithms</p>
+        <p class="second junior">Finite-state machines</p>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
-  h3,
+  h3 {
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+    font-size: 1.6rem;
+    font-style: italic;
+  }
+
+  h4,
   p {
     margin-block-start: 0;
     margin-block-end: 0;
@@ -62,19 +106,19 @@ const pageTitle = '打卡 C++ 开发者之路'
   }
 
   .first {
-    padding-left: 0.5rem;
+    padding-left: 1.5rem;
     font-size: 1.35rem;
     font-weight: bolder;
   }
 
   .second {
-    padding-left: 1.5rem;
+    padding-left: 2.5rem;
     font-size: 1.25rem;
     font-weight: bold;
   }
 
   .third {
-    padding-left: 2.5rem;
+    padding-left: 3.5rem;
     font-size: 1.15rem;
     font-weight: bold;
   }
