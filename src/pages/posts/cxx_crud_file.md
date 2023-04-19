@@ -22,7 +22,7 @@ tags: ['C++', 'Test', 'Cross-platform']
 
 这份 Qt 编写的代码中有自己的文件读写工具类 `FileTools`（是根据实际业务产生的，即各种规定好的读写要求，怎么读取，怎么写入数据等等）。
 
-> 用 Qt 构建的 `FileTools` 类， 其代码长度大概为**两千行多左右**
+> 用 Qt 构建的 `FileTools` 类， 其代码长度大概为*两千多行左右*
 
 只不过这个类是基于 Qt 整个语言生态构造的，现在打算要去除 Qt 罢了。
 
@@ -36,13 +36,13 @@ tags: ['C++', 'Test', 'Cross-platform']
 
 且这个类里有蛮多方法其实可以继承复用的，阅读其中的代码，有点乱。
 
-我越开发，越能闻到那股代码的 「 坏味道 」。
+越开发，越能闻到代码传出的那股 「 坏味道 」。
 
 该换思路来做。
 
 ## 开始「 包轮子 」
 
-> 包包包，有现成的，优秀的，经过试验和测试的功能函数，我是绝对不会重复造轮子的，我是个**很懒**的开发者 /doge。
+> 包包包，有现成的，优秀的，经过试验和测试的功能函数，我是**绝对不会**重复造轮子的，我是个**很懒**的开发者 /doge。
 
 ### 测试驱动开发
 
@@ -56,7 +56,7 @@ tags: ['C++', 'Test', 'Cross-platform']
 
 ### UFile
 
-重新拾起 C++ 开发，看了蛮多 C++ 的书籍（《clean C++》、《Effective C++》等），以及看 `cppreference` [官网](https://en.cppreference.com/w/)内容，感觉我需要做的文件读写工作。一些功能函数可以基于 C++ 标准提供的 `<filesystem>` 文件系统库来做。
+重新拾起 C++ 开发，看了蛮多 C++ 的书籍（《clean C++》、《Effective C++》等），以及看 `cppreference` [官网](https://en.cppreference.com/w/)内容，感觉要做的文件读写工作。一些功能函数可以基于 C++ 标准提供的 `<filesystem>` 文件系统库来做。
 
 <details><summary>UFile 的全部代码</summary>
 
@@ -589,7 +589,7 @@ class BinFile : public UFile {
 
 2. img
 
-处理图像文件其实也是对二进制的处理；
+ 处理图像文件其实也是对二进制的处理；
 
 ## 小造轮子
 
@@ -695,8 +695,8 @@ class UString {
 
 ### Variant
 
-原先前辈在 Github 找的，软件组的大家在实际使用中，根据业务的需求，有做一些修改和 bug 修复，加了个 `wchar` 的处理。
+用于替代 Qt 中的 `QVariant`，处理不同数据类型之间的转换。
 
-算是直接借用，找不到其原本来源。
+前辈在 [CSDN](https://blog.csdn.net/WU9797/article/details/96768653) 上找的，软件组的大家在实际使用中，根据业务的需求，有做一些修改和 bug 修复。
 
 这个代码太长了，不展示出来，[看这里](https://github.com/kok-s0s/cxx_crud_file/blob/main/Variant.hpp)
