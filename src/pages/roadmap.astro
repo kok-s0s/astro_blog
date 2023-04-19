@@ -22,75 +22,111 @@ const pageTitle = 'C++ Dev RoadMap'
   <div>
     <h3 id="Language syntax" class="junior">Language syntax</h3>
     <div>
-      <h4 id="Basic operations" class="first junior">Basic operations</h4>
-      <div>
-        <p class="second junior">Arithmetic operations</p>
-        <p class="second junior">Logical operations</p>
-        <p class="second junior">Loops: for/while</p>
-        <p class="second middle">Bitwise operations</p>
-      </div>
-      <h4 id="Functions" class="first junior">Functions</h4>
-      <div>
-        <p class="second middle">Operators</p>
-        <p class="second middle">lambda</p>
-      </div>
-      <h4 id="Data types" class="first junior">Data types</h4>
-      <div>
-        <p class="second middle">Static typing</p>
-        <p class="second middle">Dynamic typing</p>
-        <p class="third middle">RTTI</p>
-      </div>
-      <h4 id="Pointers & References" class="first junior">Pointers & References</h4>
-      <div>
-        <p class="second junior">References</p>
-        <p class="second junior">Smart pointer</p>
-        <p class="third junior">unique_ptr</p>
-        <p class="third junior">shared_ptr</p>
-        <p class="third middle">weak_ptr</p>
-        <p class="second junior">Memory model</p>
-        <p class="third junior">Lifetime of objects</p>
-        <p class="second junior">Raw pointers</p>
-        <p class="third junior">new/delete operators</p>
-        <p class="third junior">Memory leakage</p>
-      </div>
-      <h4 id="Codebase structuring" class="first junior">Codebase structuring</h4>
-      <div>
-        <p class="second junior">Code splitting into headers/cpp files</p>
-        <p class="third junior">Forward declaration</p>
-        <p class="second junior">Scope</p>
-        <p class="third junior">Namespaces</p>
-      </div>
+      <details>
+        <summary class="first junior">Basic operations</summary>
+        <ul>
+          <li class="second junior">Arithmetic operations</li>
+          <li class="second junior">Logical operations</li>
+          <li class="second junior">Loops: for/while</li>
+          <li class="second middle">Bitwise operations</li>
+        </ul>
+      </details>
+      <details>
+        <summary class="first junior">Functions</summary>
+        <ul>
+          <li class="second middle">Operators</li>
+          <li class="second middle">lambda</li>
+        </ul>
+      </details>
+      <details>
+        <summary class="first junior">Data types</summary>
+        <ul>
+          <li class="second middle">Static typing</li>
+          <li class="second middle">Dynamic typing</li>
+          <ul>
+            <li class="third middle">RTTI</li>
+          </ul>
+        </ul>
+      </details>
+      <details>
+        <summary class="first junior">Pointers & References</summary>
+        <ul>
+          <li class="second junior">References</li>
+          <li class="second junior">Smart pointer</li>
+          <ul>
+            <li class="third junior">unique_ptr</li>
+            <li class="third junior">shared_ptr</li>
+            <li class="third middle">weak_ptr</li>
+          </ul>
+          <li class="second junior">Memory model</li>
+          <ul>
+            <li class="third junior">Lifetime of objects</li>
+          </ul>
+          <li class="second junior">Raw pointers</li>
+          <ul>
+            <li class="third junior">new/delete operators</li>
+            <li class="third junior">Memory leakage</li>
+          </ul>
+        </ul>
+      </details>
+      <details>
+        <summary id="Codebase structuring" class="first junior">Codebase structuring</summary>
+        <ul>
+          <li class="second junior">Code splitting into headers/cpp files</li>
+          <ul>
+            <li class="third junior">Forward declaration</li>
+          </ul>
+          <li class="second junior">Scope</li>
+          <ul>
+            <li class="third junior">Namespaces</li>
+          </ul>
+        </ul>
+      </details>
     </div>
     <h3 id="Language tools" class="junior">Language tools</h3>
     <div>
-      <h4 id="Working with source code" class="first junior">Working with source code</h4>
-      <div>
-        <p class="second junior">Text editors</p>
-        <p class="second junior">IDE</p>
-        <p class="second junior">Code editors</p>
-        <p class="third junior">Knowledge of features and abilities (shortcuts, tools, plugins)</p>
-        <p class="second junior">Debugger</p>
-        <p class="third junior">Understanding of debugger messages</p>
-        <p class="third junior">Debugging symbols</p>
-        <p class="third optional">WinDbg</p>
-        <p class="third optional">GDB</p>
-        <p class="second middle">Linters</p>
-      </div>
+      <details>
+        <summary id="Working with source code" class="first junior">Working with source code</summary>
+        <ul>
+          <li class="second junior">Text editors</li>
+          <li class="second junior">IDE</li>
+          <li class="second junior">Code editors</li>
+          <ul>
+            <li class="third junior">Knowledge of features and abilities (shortcuts, tools, plugins)</li>
+          </ul>
+          <li class="second junior">Debugger</li>
+          <ul>
+            <li class="third junior">Understanding of debugger messages</li>
+            <li class="third junior">Debugging symbols</li>
+            <li class="third optional">WinDbg</li>
+            <li class="third optional">GDB</li>
+          </ul>
+          <li class="second middle">Linters</li>
+        </ul>
+      </details>
     </div>
     <h3 id="Common skills" class="junior">Common skills</h3>
     <div>
-      <h4 id="Computers Science" class="first junior">Computers Science</h4>
-      <div>
-        <p class="second junior">Data structures</p>
-        <p class="second junior">Boolean algebra</p>
-        <p class="second junior">Algorithms</p>
-        <p class="second junior">Finite-state machines</p>
-      </div>
+      <details>
+        <summary id="Computers Science" class="first junior">Computers Science</summary>
+        <ul>
+          <li class="second junior">Data structures</li>
+          <li class="second junior">Boolean algebra</li>
+          <li class="second junior">Algorithms</li>
+          <li class="second junior">Finite-state machines</li>
+        </ul>
+      </details>
     </div>
   </div>
 </BaseLayout>
 
 <style>
+  summary::before {
+    content: '';
+    display: inline-block;
+    margin-right: 3.3px; /* add some space between the icon and the summary text */
+  }
+
   h3 {
     margin-block-start: 0.5rem;
     margin-block-end: 0.5rem;
@@ -98,7 +134,18 @@ const pageTitle = 'C++ Dev RoadMap'
     font-style: italic;
   }
 
-  h4,
+  details ul {
+    margin-block-start: 0.3rem;
+    margin-block-end: 0.3rem;
+    margin-left: 1rem;
+  }
+
+  details ul ul {
+    margin-block-start: 0.3rem;
+    margin-block-end: 0.3rem;
+    margin-left: 0rem;
+  }
+
   p {
     margin-block-start: 0;
     margin-block-end: 0;
@@ -106,19 +153,17 @@ const pageTitle = 'C++ Dev RoadMap'
   }
 
   .first {
-    padding-left: 1.5rem;
+    padding-left: 1rem;
     font-size: 1.35rem;
     font-weight: bolder;
   }
 
   .second {
-    padding-left: 2.5rem;
     font-size: 1.25rem;
     font-weight: bold;
   }
 
   .third {
-    padding-left: 3.5rem;
     font-size: 1.15rem;
     font-weight: bold;
   }
