@@ -122,7 +122,7 @@ Qt 有提供一些信号与槽的连接选项 [`Qt::ConnectionType`](https://doc
 
 - [std::static_pointer_cast](https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast) -- 转换类型的方法
 
-- [Concurrency support library](https://en.cppreference.com/w/cpp/thread) -- 有关 C++ 并行（多线程）开发知识，这里主要用到 `std::thread`、`std::mutex` 和 `std::condition_variable` 。
+- [Concurrency support library](https://en.cppreference.com/w/cpp/thread) / [CPP-Concurrency-In-Action-2ed-2019](https://github.com/xiaoweiChen/CPP-Concurrency-In-Action-2ed-2019) -- 有关 C++ 并行（多线程）开发的知识，这里主要用到 `std::thread`、`std::mutex` 和 `std::condition_variable` 。
 
 ### 信号与槽机制
 
