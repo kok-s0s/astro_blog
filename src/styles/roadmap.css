@@ -1,0 +1,84 @@
+summary {
+  cursor: pointer;
+}
+
+summary::before {
+  content: '';
+  display: inline-block;
+  margin-right: 3.3px;
+}
+
+h3 {
+  margin-block-start: 0.5rem;
+  margin-block-end: 0.5rem;
+  font-size: 1.6rem;
+  font-style: italic;
+}
+
+details ul {
+  margin-block-start: 0.3rem;
+  margin-block-end: 0.3rem;
+  margin-left: 1rem;
+}
+
+details ul ul {
+  margin-block-start: 0.3rem;
+  margin-block-end: 0.3rem;
+  margin-left: 0rem;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  font-style: italic;
+}
+
+.step {
+  margin-block-start: 0.3rem;
+  margin-block-end: 0.3rem;
+  font-size: 1.3rem;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.first {
+  padding-left: 1rem;
+  font-size: 1.35rem;
+  font-weight: bolder;
+}
+
+.second {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.third {
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+.fourth {
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+.fifth {
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+.junior {
+  color: rgb(112, 172, 112) !important;
+}
+
+.middle {
+  color: rgb(206, 206, 107) !important;
+}
+
+.senior {
+  color: rgb(183, 188, 233) !important;
+}
+
+.optional {
+  color: rgb(125, 160, 214) !important;
+}

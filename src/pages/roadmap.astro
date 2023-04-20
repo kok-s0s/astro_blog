@@ -1,186 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Toc from '../components/Toc.astro'
+import One from './roadmap/one.astro'
+import Two from './roadmap/two.astro'
+import '../styles/roadmap.css'
+import Three from './roadmap/three.astro'
+import Four from './roadmap/four.astro'
+import Five from './roadmap/five.astro'
 
 const pageTitle = 'C++ Dev RoadMap'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <Toc />
-  <p>
-    <a href="https://github.com/salmer/CppDeveloperRoadmap" target="_blank" class="underline">CppDeveloperRoadmap</a>
-  </p>
-
+  <blockquote>
+    <p>
+      <a href="https://github.com/salmer/CppDeveloperRoadmap" target="_blank" class="underline">CppDeveloperRoadmap</a>
+    </p>
+  </blockquote>
+  <One />
+  <Two />
+  <Three />
+  <Four />
+  <Five />
   <ul>
-    <li class="junior">Junior - rgb(112, 172, 112)</li>
-    <li class="middle">Middle - rgb(206, 206, 107)</li>
-    <li class="senior">Senior - rgb(183, 188, 233)</li>
-    <li class="optional">Optional - rgb(125, 160, 214)</li>
+    <li class="junior">Junior</li>
+    <li class="middle">Middle</li>
+    <li class="senior">Senior</li>
+    <li class="optional">Optional</li>
   </ul>
-  <hr />
-  <h2 id="Step One">Step One</h2>
-  <div>
-    <h3 id="Language syntax" class="junior">Language syntax</h3>
-    <div>
-      <details>
-        <summary class="first junior">Basic operations</summary>
-        <ul>
-          <li class="second junior">Arithmetic operations</li>
-          <li class="second junior">Logical operations</li>
-          <li class="second junior">Loops: for/while</li>
-          <li class="second middle">Bitwise operations</li>
-        </ul>
-      </details>
-      <details>
-        <summary class="first junior">Functions</summary>
-        <ul>
-          <li class="second middle">Operators</li>
-          <li class="second middle">lambda</li>
-        </ul>
-      </details>
-      <details>
-        <summary class="first junior">Data types</summary>
-        <ul>
-          <li class="second middle">Static typing</li>
-          <li class="second middle">Dynamic typing</li>
-          <ul>
-            <li class="third middle">RTTI</li>
-          </ul>
-        </ul>
-      </details>
-      <details>
-        <summary class="first junior">Pointers & References</summary>
-        <ul>
-          <li class="second junior">References</li>
-          <li class="second junior">Smart pointer</li>
-          <ul>
-            <li class="third junior">unique_ptr</li>
-            <li class="third junior">shared_ptr</li>
-            <li class="third middle">weak_ptr</li>
-          </ul>
-          <li class="second junior">Memory model</li>
-          <ul>
-            <li class="third junior">Lifetime of objects</li>
-          </ul>
-          <li class="second junior">Raw pointers</li>
-          <ul>
-            <li class="third junior">new/delete operators</li>
-            <li class="third junior">Memory leakage</li>
-          </ul>
-        </ul>
-      </details>
-      <details>
-        <summary id="Codebase structuring" class="first junior">Codebase structuring</summary>
-        <ul>
-          <li class="second junior">Code splitting into headers/cpp files</li>
-          <ul>
-            <li class="third junior">Forward declaration</li>
-          </ul>
-          <li class="second junior">Scope</li>
-          <ul>
-            <li class="third junior">Namespaces</li>
-          </ul>
-        </ul>
-      </details>
-    </div>
-    <h3 id="Language tools" class="junior">Language tools</h3>
-    <div>
-      <details>
-        <summary id="Working with source code" class="first junior">Working with source code</summary>
-        <ul>
-          <li class="second junior">Text editors</li>
-          <li class="second junior">IDE</li>
-          <li class="second junior">Code editors</li>
-          <ul>
-            <li class="third junior">Knowledge of features and abilities (shortcuts, tools, plugins)</li>
-          </ul>
-          <li class="second junior">Debugger</li>
-          <ul>
-            <li class="third junior">Understanding of debugger messages</li>
-            <li class="third junior">Debugging symbols</li>
-            <li class="third optional">WinDbg</li>
-            <li class="third optional">GDB</li>
-          </ul>
-          <li class="second middle">Linters</li>
-        </ul>
-      </details>
-    </div>
-    <h3 id="Common skills" class="junior">Common skills</h3>
-    <div>
-      <details>
-        <summary id="Computers Science" class="first junior">Computers Science</summary>
-        <ul>
-          <li class="second junior">Data structures</li>
-          <li class="second junior">Boolean algebra</li>
-          <li class="second junior">Algorithms</li>
-          <li class="second junior">Finite-state machines</li>
-        </ul>
-      </details>
-    </div>
-  </div>
 </BaseLayout>
-
-<style>
-  summary::before {
-    content: '';
-    display: inline-block;
-    margin-right: 3.3px; /* add some space between the icon and the summary text */
-  }
-
-  h3 {
-    margin-block-start: 0.5rem;
-    margin-block-end: 0.5rem;
-    font-size: 1.6rem;
-    font-style: italic;
-  }
-
-  details ul {
-    margin-block-start: 0.3rem;
-    margin-block-end: 0.3rem;
-    margin-left: 1rem;
-  }
-
-  details ul ul {
-    margin-block-start: 0.3rem;
-    margin-block-end: 0.3rem;
-    margin-left: 0rem;
-  }
-
-  p {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    font-style: italic;
-  }
-
-  .first {
-    padding-left: 1rem;
-    font-size: 1.35rem;
-    font-weight: bolder;
-  }
-
-  .second {
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-
-  .third {
-    font-size: 1.15rem;
-    font-weight: bold;
-  }
-
-  .junior {
-    color: rgb(112, 172, 112) !important;
-  }
-
-  .middle {
-    color: rgb(206, 206, 107) !important;
-  }
-
-  .senior {
-    color: rgb(183, 188, 233) !important;
-  }
-
-  .optional {
-    color: rgb(125, 160, 214) !important;
-  }
-</style>
