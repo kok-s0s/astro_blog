@@ -196,6 +196,7 @@ table tbody tr td {
 
 /* back to top*/
 .back-to-top {
+  display: inline;
   background-color: #fffffe;
   color: #ffffff;
   opacity: 0;
