@@ -13,8 +13,20 @@ export async function getStaticPaths() {
   const cxxCreationalPatternsTags = [...new Set(cxxCreationalPatternsPosts.map((post) => post.frontmatter.tags).flat())]
   const cxxStructuralPatternsTags = [...new Set(cxxStructuralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
   const cxxBehavioralPatternsTags = [...new Set(cxxBehavioralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
-  const uniqueTags = [...new Set([...projectTags, ...cleanCxxTags, ...cxxCreationalPatternsTags, ...cxxStructuralPatternsTags, ...cxxBehavioralPatternsTags])]
-  const allPosts = projectPosts.concat(cleanCxxPosts).concat(cxxCreationalPatternsPosts).concat(cxxStructuralPatternsPosts).concat(cxxBehavioralPatternsPosts)
+  const uniqueTags = [
+    ...new Set([
+      ...projectTags,
+      ...cleanCxxTags,
+      ...cxxCreationalPatternsTags,
+      ...cxxStructuralPatternsTags,
+      ...cxxBehavioralPatternsTags,
+    ]),
+  ]
+  const allPosts = projectPosts
+    .concat(cleanCxxPosts)
+    .concat(cxxCreationalPatternsPosts)
+    .concat(cxxStructuralPatternsPosts)
+    .concat(cxxBehavioralPatternsPosts)
 
   return uniqueTags.map((tag) => {
     const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag))

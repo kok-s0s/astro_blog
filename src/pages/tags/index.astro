@@ -11,7 +11,15 @@ const cleanCxxTags = [...new Set(cleanCxxPosts.map((post) => post.frontmatter.ta
 const cxxCreationalPatternsTags = [...new Set(cxxCreationalPatternsPosts.map((post) => post.frontmatter.tags).flat())]
 const cxxStructuralPatternsTags = [...new Set(cxxStructuralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
 const cxxBehavioralPatternsTags = [...new Set(cxxBehavioralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
-const uniqueTags = [...new Set([...projectTags, ...cleanCxxTags, ...cxxCreationalPatternsTags, ...cxxStructuralPatternsTags, ...cxxBehavioralPatternsTags])]
+const uniqueTags = [
+  ...new Set([
+    ...projectTags,
+    ...cleanCxxTags,
+    ...cxxCreationalPatternsTags,
+    ...cxxStructuralPatternsTags,
+    ...cxxBehavioralPatternsTags,
+  ]),
+]
 const pageTitle = '标签'
 ---
 
@@ -26,30 +34,3 @@ const pageTitle = '标签'
     }
   </div>
 </BaseLayout>
-<style>
-  a {
-    color: #00539f !important;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5rem;
-    padding: 0.3rem 0.6em;
-    font-size: 1rem;
-    background-color: #f8fcfd;
-  }
-
-  @media screen and (min-width: 636px) {
-    .tag {
-      padding: 0.5rem 1rem;
-      font-size: 1.15rem;
-    }
-  }
-</style>

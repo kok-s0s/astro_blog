@@ -2,60 +2,9 @@
 ---
 
 <div id="player">
-  <button id="play-btn"></button>
+  <button id="play-btn" title="play-btn"></button>
 </div>
 <audio id="music-player"></audio>
-
-<style>
-  #player {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: #808080;
-    position: relative;
-  }
-
-  #play-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #fff;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    cursor: pointer;
-  }
-
-  #play-btn:before {
-    content: '\25B6';
-  }
-
-  #play-btn.playing:before {
-    content: '\25AE';
-  }
-
-  #play-btn.paused:before {
-    content: '\25B6';
-  }
-
-  #player {
-    display: none;
-  }
-
-  @media screen and (min-width: 636px) {
-    #player {
-      display: block;
-    }
-  }
-
-  .dark #player {
-    background-color: #fff;
-  }
-
-  .dark #play-btn {
-    background-color: #333;
-  }
-</style>
 
 <script>
   const playBtn: any = document.getElementById('play-btn')
