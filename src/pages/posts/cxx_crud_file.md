@@ -614,7 +614,7 @@ class UString {
   explicit UString(const std::string &content) : _content(content) {}
   ~UString() {}
 
-  UString args(const std::string &substitution) {
+  UString arg(const std::string &substitution) {
     std::string upToDateContent = "";
     std::string suffix = "";
 
@@ -643,21 +643,28 @@ class UString {
     return UString(upToDateContent);
   }
 
-  UString args(const char *substitution) {
-    return args(std::string(substitution));
+  UString arg(const char *substitution) {
+    return arg(std::string(substitution));
   }
 
   template <typename T>
-  UString args(T substitution) {
-    return args(std::to_string(substitution));
+  UString arg(T substitution) {
+    return arg(std::to_string(substitution));
   }
 
   template <class T, class... Args>
-  UString args(T head, Args... rest) {
+  UString arg(T head, Args... rest) {
     UString result(_content);
-    result = result.args(head);
-    result = result.args(rest...);
+    result = result.arg(head);
+    result = result.arg(rest...);
     return result;
+  }
+
+  std::string to_string() { return _content; }
+
+  std::wstring to_wstring() {
+    std::wstring ws(_content.begin(), _content.end());
+    return ws;
   }
 
   operator std::string() { return _content; }
