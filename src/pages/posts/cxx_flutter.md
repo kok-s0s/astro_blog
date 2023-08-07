@@ -5,7 +5,7 @@ pubDate: 2023-04-23
 description: '记录下这两者之间搭建起来的转换链路'
 author: 'kok-s0s'
 image:
-  url: '/images/flutter.png'
+  url: '/images/cxx_flutter/flutter.png'
   alt: 'CPP Flutter'
 tags: ['C++', 'Flutter']
 ---

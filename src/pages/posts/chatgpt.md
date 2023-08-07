@@ -5,7 +5,7 @@ pubDate: 2023-03-31
 description: '使用 ChatGPT 已经有一段时间，用文字记录点东西。'
 author: 'kok-s0s'
 image:
-  url: '/images/chatgpt.jpg'
+  url: '/images/chatgpt/chatgpt.jpg'
   alt: 'ChatGPT'
 tags: ['AI', 'Future']
 ---
@@ -36,7 +36,7 @@ tags: ['AI', 'Future']
 
 ---
 
-![](/images/use_chatgpt.jpg)
+![](/images/chatgpt/use_chatgpt.jpg)
 
 网络上有关 ChatGPT 这类 AI 的应用有很多视频或文章，基本现在各大资讯渠道有关这方面的资讯应该不少。我这里只介绍我个人所用到的，谈谈使用感受。
 

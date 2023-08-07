@@ -5,7 +5,7 @@ pubDate: 2023-03-02
 description: '需要重复处理的文件过多了，就别 Ctrl C、Ctrl V 了,写点 Python 最合适了。'
 author: 'kok-s0s'
 image:
-  url: '/images/python_code.jpeg'
+  url: '/images/replace_the_macro/python_code.jpeg'
   alt: 'Python Code'
 tags: ['C++', 'Python', 'Cross-platform']
 ---

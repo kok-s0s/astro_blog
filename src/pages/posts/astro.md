@@ -5,7 +5,7 @@ pubDate: 2023-02-28
 description: '一个生成器，支持 markdown，能自己写 css 改样式，而且构建非常非常模块化，岛屿的概念有意思，这技术超适合我这种喜欢用 markdwon 记录的人，更何况我还做过一段时间的切图仔，用的很轻松，这里写篇文章记录下构建过程，以及说些使用感受。'
 author: 'kok-s0s'
 image:
-  url: '/images/astro.png'
+  url: '/images/astro/astro.png'
   alt: 'Astro'
 tags: ['Front-End']
 ---
@@ -57,7 +57,7 @@ tags: ['Front-End']
 
 这就是我看重它的地方，开箱即用。将 Astro 技术用于开发博客这类网站，能渲染 markdown 文件，相较其它的前端模板，能省去很多事；Astro 能根据文件的存放位置自动生成相应的路由，做导航功能就会很方便。
 
-且 Astro 提到的Astro群岛（又称组件群岛）概念蛮有意思。
+且 Astro 提到的 Astro 群岛（又称组件群岛）概念蛮有意思。
 
 ![island](/images/astro/island.png)
 
@@ -99,8 +99,20 @@ export async function getStaticPaths() {
   const cxxCreationalPatternsTags = [...new Set(cxxCreationalPatternsPosts.map((post) => post.frontmatter.tags).flat())]
   const cxxStructuralPatternsTags = [...new Set(cxxStructuralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
   const cxxBehavioralPatternsTags = [...new Set(cxxBehavioralPatternsPosts.map((post) => post.frontmatter.tags).flat())]
-  const uniqueTags = [...new Set([...projectTags, ...cleanCxxTags, ...cxxCreationalPatternsTags, ...cxxStructuralPatternsTags, ...cxxBehavioralPatternsTags])]
-  const allPosts = projectPosts.concat(cleanCxxPosts).concat(cxxCreationalPatternsPosts).concat(cxxStructuralPatternsPosts).concat(cxxBehavioralPatternsPosts)
+  const uniqueTags = [
+    ...new Set([
+      ...projectTags,
+      ...cleanCxxTags,
+      ...cxxCreationalPatternsTags,
+      ...cxxStructuralPatternsTags,
+      ...cxxBehavioralPatternsTags,
+    ]),
+  ]
+  const allPosts = projectPosts
+    .concat(cleanCxxPosts)
+    .concat(cxxCreationalPatternsPosts)
+    .concat(cxxStructuralPatternsPosts)
+    .concat(cxxBehavioralPatternsPosts)
 
   return uniqueTags.map((tag) => {
     const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag))
