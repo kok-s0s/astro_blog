@@ -7,31 +7,32 @@
 <audio id="music-player"></audio>
 
 <script>
-  const playBtn: any = document.getElementById('play-btn')
-  const musicPlayer: any = document.getElementById('music-player')
-  const musicFiles: any = ['/music/do_the_impossible.mp3']
+  const playBtn: HTMLElement | null = document.getElementById('play-btn')
+  const musicPlayer: HTMLAudioElement | null = document.getElementById('music-player') as HTMLAudioElement
+  const musicFiles: string[] = ['/music/do_the_impossible.mp3']
 
-  let currentTrack = 0
-  let isPlaying = false
+  let currentTrack: number = 0
+  let isPlaying: boolean = false
 
-  musicPlayer.addEventListener('ended', () => {
-    currentTrack = (currentTrack + 1) % musicFiles.length
-    musicPlayer.src = musicFiles[currentTrack]
-    musicPlayer.play()
-  })
-
-  playBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      musicPlayer.pause()
-      playBtn.classList.remove('playing')
-      playBtn.classList.add('paused')
-      isPlaying = false
-    } else {
+  if (musicPlayer && playBtn) {
+    musicPlayer.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % musicFiles.length
       musicPlayer.src = musicFiles[currentTrack]
       musicPlayer.play()
-      playBtn.classList.remove('paused')
-      playBtn.classList.add('playing')
-      isPlaying = true
-    }
-  })
+    })
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        musicPlayer.pause()
+        playBtn.classList.remove('playing')
+        playBtn.classList.add('paused')
+      } else {
+        musicPlayer.src = musicFiles[currentTrack]
+        musicPlayer.play()
+        playBtn.classList.remove('paused')
+        playBtn.classList.add('playing')
+      }
+      isPlaying = !isPlaying
+    })
+  }
 </script>
