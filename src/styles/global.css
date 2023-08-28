@@ -210,44 +210,21 @@ table tbody tr td {
 }
 
 /* music-player */
-#player {
-  width: 45px;
-  height: 45px;
+#player-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #fffffe;
-  position: relative;
-}
-
-#play-btn {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: #757474;
-  position: absolute;
-  top: 5px;
-  left: 5px;
+  color: #7f5af0;
+  box-shadow: 0 10px 20px rgba(255, 26, 26, 0.22);
   cursor: pointer;
 }
 
-#play-btn:before {
-  content: '\25B6';
-  position: relative;
-  top: 1.2px;
-  left: 0.57px;
-}
-
-#play-btn.playing:before {
-  content: '\25AE';
-  top: 0;
-  left: 0;
-}
-
-#play-btn.paused:before {
-  content: '\25B6';
-}
-
-#player {
-  display: none;
+#player-btn i {
+  font-size: 0.85rem;
 }
 
 /* back to top*/
@@ -438,9 +415,5 @@ a.back-to-top {
   .tag {
     padding: 0.5rem 1rem;
     font-size: 1.15rem;
-  }
-
-  #player {
-    display: block;
   }
 }

@@ -1,13 +1,15 @@
 ---
 ---
 
-<div id="player">
-  <button id="play-btn" title="play-btn"></button>
+<div id="player-btn">
+  <i class="fas fa-play" id="ctrl-icon"></i>
 </div>
+
 <audio id="music-player"></audio>
 
 <script>
-  const playBtn: HTMLElement | null = document.getElementById('play-btn')
+  const playBtn: HTMLElement | null = document.getElementById('player-btn')
+  const ctrlIcon: HTMLElement | null = document.getElementById('ctrl-icon')
   const musicPlayer: HTMLAudioElement | null = document.getElementById('music-player') as HTMLAudioElement
   const musicFiles: string[] = ['/music/do_the_impossible.mp3']
 
@@ -24,13 +26,13 @@
     playBtn.addEventListener('click', () => {
       if (isPlaying) {
         musicPlayer.pause()
-        playBtn.classList.remove('playing')
-        playBtn.classList.add('paused')
+        ctrlIcon.classList.remove('fa-pause')
+        ctrlIcon.classList.add('fa-play')
       } else {
         musicPlayer.src = musicFiles[currentTrack]
         musicPlayer.play()
-        playBtn.classList.remove('paused')
-        playBtn.classList.add('playing')
+        ctrlIcon.classList.remove('fa-play')
+        ctrlIcon.classList.add('fa-pause')
       }
       isPlaying = !isPlaying
     })
