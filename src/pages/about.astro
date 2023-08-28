@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const pageTitle = '关于这个码仔'
+const pageTitle = '关于这个开发者'
 
 const selfInfo = [
-  '目前主要做 C++ 开发，职责类似 Linux 中 pipe，做一个好的数据「 中转站 」',
-  '常用 Python 和 Shell 做些自动化的工作（多文本文件数据处理，定时任务等）',
+  '在程序开发，更喜欢给自己制定一个目标来驱动自己逐步完成它',
+  '并没有特别讨厌或者很喜欢的语言，在过往一年中，最常用的是 C/C++。现在对于各种语言的态度，更多是看我要去解决什么样的问题，以及我有多少时间去解决这个问题，根据这两点去选择合适的语言来解决问题',
+  '有点喜欢 Python 和 Shell 语言，能为我很多工作节省些许时间',
   '离不开 Code Format',
-  '团队开发最喜欢 Code Review 环节 /doge',
+  '团队开发最喜欢 Code Review 环节',
 ]
 const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', '会和 ChatGPT 聊天 /doge', '能将业务需求翻译成技术需求']
 ---
@@ -15,14 +16,13 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
 <BaseLayout pageTitle={pageTitle}>
   <p>他的一些信息：</p>
   <ul>
-    <li class="textGap">常用网名 <em>kok-s0s</em></li>
     {selfInfo.map((info) => <li class="textGap">{info}</li>)}
   </ul>
   <p>他认为程序员要熟练的<a href="/roadmap" id="normal">能力</a>：</p>
   <ul>
     {skills.map((skill) => <li class="skill textGap">{skill}</li>)}
   </ul>
-  <p>他的一些 C++ 项目：</p>
+  <p>他做过的一些 <em>Repository</em>：</p>
   <ul>
     <li>
       <a href="https://github.com/kok-s0s/cxx_crud_file" target="_blank" class="underline">
@@ -67,12 +67,7 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
       <p class="textGap">使用 Socket 通信技术，实现 Qt 应用和 C# 应用的通信。</p>
     </li>
   </ul>
-  <p>他目前阅览的书籍：</p>
-  <ul>
-    <li class="book textGap"><s>Clean C++</s> Done</li>
-    <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGPT 生成脚本嘎嘎香！</li>
-  </ul>
-  <p>他做过的一些 Lecture</p>
+  <p>他做过的一些 <em>Lecture</em></p>
   <ul>
     <li>
       <a href="https://qt-linux-dev.netlify.app" target="_blank" class="underline">
@@ -85,6 +80,18 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
       </a>
     </li>
   </ul>
+  <p>他目前阅览的书籍：</p>
+  <ul>
+    <li class="book textGap"><b>重构</b> 改善既有代码的设计</li>
+  </ul>
+  <p></p>
+  <details>
+    <summary>他阅览完的书籍：</summary>
+    <ul>
+      <li class="book textGap"><s>Clean C++</s> Done</li>
+      <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGPT 生成脚本嘎嘎香！</li>
+    </ul>
+  </details>
 </BaseLayout>
 
 <style>
