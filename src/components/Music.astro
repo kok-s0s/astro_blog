@@ -19,18 +19,20 @@
   const nextBtn = document.getElementById('next-btn') as HTMLElement
   const musicPlayer = document.getElementById('song') as HTMLAudioElement
   const musicFiles = [
+    '/music/朴树 - Forever Young (Live).mp3',
     '/music/do_the_impossible.mp3',
     '/music/BUMP OF CHICKEN - Hello,world!.mp3',
     '/music/不可思議／wonderboy - いつか来るその日のために.mp3',
-    '/music/朴树 - Forever Young (Live).mp3',
     '/music/林家谦 - 神奇的糊涂魔药.mp3',
   ]
 
   let currentTrack = 0
   let isPlaying = false
+  let playbackPosition = 0
 
   function playCurrentTrack(): void {
     musicPlayer.src = musicFiles[currentTrack]
+    musicPlayer.currentTime = playbackPosition // Set the saved playback position
     musicPlayer.play()
     ctrlIcon.classList.remove('fa-play')
     ctrlIcon.classList.add('fa-pause')
@@ -39,9 +41,16 @@
 
   function pauseCurrentTrack(): void {
     musicPlayer.pause()
+    playbackPosition = musicPlayer.currentTime // Save the current playback position
     ctrlIcon.classList.remove('fa-pause')
     ctrlIcon.classList.add('fa-play')
     isPlaying = false
+  }
+
+  function switchToTrack(trackIndex: number): void {
+    currentTrack = trackIndex
+    playbackPosition = 0 // Reset playback position when switching tracks
+    playCurrentTrack()
   }
 
   playBtn.addEventListener('click', () => {
@@ -53,16 +62,17 @@
   })
 
   prevBtn.addEventListener('click', () => {
-    currentTrack = (currentTrack - 1 + musicFiles.length) % musicFiles.length
-    playCurrentTrack()
+    const prevTrack = (currentTrack - 1 + musicFiles.length) % musicFiles.length
+    switchToTrack(prevTrack)
   })
 
   nextBtn.addEventListener('click', () => {
-    currentTrack = (currentTrack + 1) % musicFiles.length
-    playCurrentTrack()
+    const nextTrack = (currentTrack + 1) % musicFiles.length
+    switchToTrack(nextTrack)
   })
 
   musicPlayer.addEventListener('ended', () => {
-    nextBtn.click() // Move to the next track when the current one ends
+    const nextTrack = (currentTrack + 1) % musicFiles.length
+    switchToTrack(nextTrack) // Move to the next track when the current one ends
   })
 </script>
