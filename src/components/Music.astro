@@ -26,31 +26,36 @@
     '/music/林家谦 - 神奇的糊涂魔药.mp3',
   ]
 
-  let currentTrack = 0
-  let isPlaying = false
-  let playbackPosition = 0
+  let currentTrack = parseInt(localStorage.getItem('currentTrack')) || 0
+  let isPlaying = localStorage.getItem('isPlaying') === 'true'
+  let playbackPosition = parseFloat(localStorage.getItem('playbackPosition')) || 0
 
   function playCurrentTrack(): void {
     musicPlayer.src = musicFiles[currentTrack]
-    musicPlayer.currentTime = playbackPosition // Set the saved playback position
+    musicPlayer.currentTime = playbackPosition
     musicPlayer.play()
     ctrlIcon.classList.remove('fa-play')
     ctrlIcon.classList.add('fa-pause')
     isPlaying = true
+    localStorage.setItem('isPlaying', 'true')
   }
 
   function pauseCurrentTrack(): void {
     musicPlayer.pause()
-    playbackPosition = musicPlayer.currentTime // Save the current playback position
+    playbackPosition = musicPlayer.currentTime
     ctrlIcon.classList.remove('fa-pause')
     ctrlIcon.classList.add('fa-play')
     isPlaying = false
+    localStorage.setItem('isPlaying', 'false')
+    localStorage.setItem('playbackPosition', playbackPosition.toString())
   }
 
   function switchToTrack(trackIndex: number): void {
     currentTrack = trackIndex
-    playbackPosition = 0 // Reset playback position when switching tracks
+    playbackPosition = 0
     playCurrentTrack()
+    localStorage.setItem('currentTrack', currentTrack.toString())
+    localStorage.setItem('playbackPosition', playbackPosition.toString())
   }
 
   playBtn.addEventListener('click', () => {
@@ -73,6 +78,23 @@
 
   musicPlayer.addEventListener('ended', () => {
     const nextTrack = (currentTrack + 1) % musicFiles.length
-    switchToTrack(nextTrack) // Move to the next track when the current one ends
+    switchToTrack(nextTrack)
   })
+
+  function updatePlaybackProgress() {
+    setInterval(() => {
+      if (isPlaying) {
+        playbackPosition = musicPlayer.currentTime
+        localStorage.setItem('playbackPosition', playbackPosition.toString())
+      }
+    }, 300)
+  }
+
+  if (isPlaying) {
+    playCurrentTrack()
+  } else {
+    pauseCurrentTrack()
+  }
+
+  updatePlaybackProgress()
 </script>
