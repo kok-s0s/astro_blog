@@ -86,12 +86,14 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
   </ul>
   <p></p>
   <details>
-    <summary>他阅览完的书籍：</summary>
+    <summary>他近一年阅览完的书籍：</summary>
     <ul>
       <li class="book textGap"><s>Clean C++</s> Done</li>
       <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGPT 生成脚本嘎嘎香！</li>
     </ul>
   </details>
+  <p>他的书桌：</p>
+  <img src="/images/tech_books.jpg" alt="tech_books" id="tech-books"/>
 </BaseLayout>
 
 <style>
@@ -107,5 +109,12 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
   .skill,
   .book {
     letter-spacing: 1px;
+  }
+
+  #tech-books {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: block;
   }
 </style>
