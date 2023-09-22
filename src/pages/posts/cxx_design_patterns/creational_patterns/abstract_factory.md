@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Abstract Factory'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Creational Patterns']
@@ -47,7 +47,7 @@ Say the client wants a factory to produce a chair. The client doesn’t have to 
 
 There’s one more thing left to clarify: if the client is only exposed to the abstract interfaces, what creates the actual factory objects? Usually, the application creates a concrete factory object at the initialization stage. Just before that, the app must select the factory type depending on the configuration or the environment settings.
 
-##  Structure
+## Structure
 
 ![](/images/cxx_design_patterns/Abstract_Factory/structure.png)
 
@@ -88,7 +88,7 @@ There’s one more thing left to clarify: if the client is only exposed to the a
 ## Pros and Cons
 
 |                                                             Nice                                                              |                                                                   Bad                                                                    |
-|:-----------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------:|
+| :---------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
 |                You can be sure that the products you’re getting from a factory are compatible with each other.                | The code may become more complicated than it should be, since a lot of new interfaces and classes are introduced along with the pattern. |
 |                              You avoid tight coupling between concrete products and client code.                              |                                                                                                                                          |
 | Single Responsibility Principle. You can extract the product creation code into one place, making the code easier to support. |                                                                                                                                          |

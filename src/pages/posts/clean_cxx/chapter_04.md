@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
 title: 'C++ 代码整洁的基本规范'
 author: 'kok-s0s'
 tags: ['C++']

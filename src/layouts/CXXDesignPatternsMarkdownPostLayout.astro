@@ -4,14 +4,10 @@ import BaseLayout from './BaseLayout.astro'
 
 const { frontmatter } = Astro.props
 
-const cleanCxxPosts = await Astro.glob('../pages/posts/clean_cxx/*.md')
 const cxxCreationalPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/creational_patterns/*.md')
 const cxxStructuralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/structural_patterns/*.md')
 const cxxBehavioralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/behavioral_patterns/*.md')
-const allPosts = cleanCxxPosts
-  .concat(cxxCreationalPatternsPosts)
-  .concat(cxxStructuralPatternsPosts)
-  .concat(cxxBehavioralPatternsPosts)
+const allPosts = cxxCreationalPatternsPosts.concat(cxxStructuralPatternsPosts).concat(cxxBehavioralPatternsPosts)
 let currentPostIndex = -1
 allPosts.forEach((post, index) => {
   if (post.frontmatter.title === frontmatter.title) {

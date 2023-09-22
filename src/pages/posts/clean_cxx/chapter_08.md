@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
 title: '测试驱动开发'
 author: 'kok-s0s'
 tags: ['C++']

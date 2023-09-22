@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Prototype'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Creational Patterns']
@@ -94,7 +94,7 @@ Finally, replace the direct calls to the subclasses’ constructors with calls t
 ## Pros and Cons
 
 | Nice                                                                                               | Bad                                                                         |
-|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | You can clone objects without coupling to their concrete classes.                                  | Cloning complex objects that have circular references might be very tricky. |
 | You can get rid of repeated initialization code in favor of cloning pre-built prototypes.          |                                                                             |
 | You can produce complex objects more conveniently.                                                 |                                                                             |

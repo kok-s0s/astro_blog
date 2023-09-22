@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Bridge'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Structural Patterns']
@@ -13,7 +13,7 @@ tags: ['C++', 'Design Patterns', 'Structural Patterns']
 
 ## Problem
 
-*Abstraction? Implementation?* Sound scary? Stay calm and let’s consider a simple example.
+_Abstraction? Implementation?_ Sound scary? Stay calm and let’s consider a simple example.
 
 Say you have a geometric `Shape` class with a pair of subclasses: `Circle` and `Square`. You want to extend this class hierarchy to incorporate colors, so you plan to create `Red` and `Blue` shape subclasses. However, since you already have two subclasses, you’ll need to create four class combinations such as `BlueCircle` and `RedSquare`.
 
@@ -33,9 +33,9 @@ Following this approach, we can extract the color-related code into its own clas
 
 **Abstraction and Implementation**
 
-The GoF book introduces the terms *Abstraction* and *Implementation* as part of the Bridge definition. In my opinion, the terms sound too academic and make the pattern seem more complicated than it really is. Having read the simple example with shapes and colors, let’s decipher the meaning behind the GoF book’s scary words.
+The GoF book introduces the terms _Abstraction_ and _Implementation_ as part of the Bridge definition. In my opinion, the terms sound too academic and make the pattern seem more complicated than it really is. Having read the simple example with shapes and colors, let’s decipher the meaning behind the GoF book’s scary words.
 
-*Abstraction* (also called interface) is a high-level control layer for some entity. This layer isn’t supposed to do any real work on its own. It should delegate the work to the implementation layer (also called platform).
+_Abstraction_ (also called interface) is a high-level control layer for some entity. This layer isn’t supposed to do any real work on its own. It should delegate the work to the implementation layer (also called platform).
 
 Note that we’re not talking about interfaces or abstract classes from your programming language. These aren’t the same things.
 
@@ -115,12 +115,12 @@ The abstraction may list the same methods as the implementation, but usually the
 
 ## Pros and Cons
 
-|Nice|Bad|
-|-|-|
-|You can create platform-independent classes and apps.|You might make the code more complicated by applying the pattern to a highly cohesive class.|
-|The client code works with high-level abstractions. It isn’t exposed to the platform details.||
-|*Open/Closed* Principle. You can introduce new abstractions and implementations independently from each other.||
-|*Single Responsibility Principle*. You can focus on high-level logic in the abstraction and on platform details in the implementation.||
+| Nice                                                                                                                                   | Bad                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| You can create platform-independent classes and apps.                                                                                  | You might make the code more complicated by applying the pattern to a highly cohesive class. |
+| The client code works with high-level abstractions. It isn’t exposed to the platform details.                                          |                                                                                              |
+| _Open/Closed_ Principle. You can introduce new abstractions and implementations independently from each other.                         |                                                                                              |
+| _Single Responsibility Principle_. You can focus on high-level logic in the abstraction and on platform details in the implementation. |                                                                                              |
 
 ## Relations with Other Patterns
 

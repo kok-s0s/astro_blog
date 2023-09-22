@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
 title: '现代 C++ 的高级概念'
 author: 'kok-s0s'
 tags: ['C++']
@@ -202,7 +202,7 @@ NIH 综合症是许多组织的一个贬义词，它描述了对现有知识的�
 
 > 如果你想提高团队的代码质量，那么请用一个目标替换所有的编码指南：没有原始循环！ --- Sean Parent, Principal software architect with Adobe, at CppCon 2013
 
-C++ 标准库提供了 100 多种有用的算法，可以用于搜索、计数和操作1容器或序列中的元素，这些算法包含在 `<algorithm>` 头文件中
+C++ 标准库提供了 100 多种有用的算法，可以用于搜索、计数和操作 1 容器或序列中的元素，这些算法包含在 `<algorithm>` 头文件中
 
 ### 熟练使用 Boost
 
@@ -249,4 +249,3 @@ C++ 标准库提供了 100 多种有用的算法，可以用于搜索、计数�
 ### 值类型抛出，常量引用类型捕获
 
 ### 注意 catch 的正确顺序
-

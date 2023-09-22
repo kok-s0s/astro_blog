@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Iterator'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -66,7 +66,7 @@ All of these options—the random directions born in your head, the smartphone n
 4. **Concrete Collections** return new instances of a particular concrete iterator class each time the client requests one. You might be wondering, where’s the rest of the collection’s code? Don’t worry, it should be in the same class. It’s just that these details aren’t crucial to the actual pattern, so we’re omitting them.
 
 5. The **Client** works with both collections and iterators via their interfaces. This way the client isn’t coupled to concrete classes, allowing you to use various collections and iterators with the same client code.
-Typically, clients don’t create iterators on their own, but instead get them from collections. Yet, in certain cases, the client can create one directly; for example, when the client defines its own special iterator.
+   Typically, clients don’t create iterators on their own, but instead get them from collections. Yet, in certain cases, the client can create one directly; for example, when the client defines its own special iterator.
 
 ## Applicability
 
@@ -97,7 +97,7 @@ Typically, clients don’t create iterators on their own, but instead get them f
 ## Pros and Cons
 
 | Nice                                                                                                                                                    | Bad                                                                                                           |
-|---------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | _Single Responsibility Principle_. You can clean up the client code and the collections by extracting bulky traversal algorithms into separate classes. | Applying the pattern can be an overkill if your app only works with simple collections.                       |
 | _Open/Closed Principle_. You can implement new types of collections and iterators and pass them to existing code without breaking anything.             | Using an iterator may be less efficient than going through elements of some specialized collections directly. |
 | You can iterate over the same collection in parallel because each iterator object contains its own iteration state.                                     |                                                                                                               |

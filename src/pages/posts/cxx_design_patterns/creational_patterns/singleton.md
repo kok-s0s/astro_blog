@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Singleton'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Creational Patterns']
@@ -56,7 +56,7 @@ If your code has access to the Singleton class, then it’s able to call the Sin
 ## Pros and Cons
 
 | Nice                                                                             | Bad                                                                                                                                                                                                                                                                                                                                                                                                       |
-|----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | You can be sure that a class has only a single instance.                         | Violates the Single Responsibility Principle. The pattern solves two problems at the time.                                                                                                                                                                                                                                                                                                                |
 | You gain a global access point to that instance.                                 | The Singleton pattern can mask bad design, for instance, when the components of the program know too much about each other.                                                                                                                                                                                                                                                                               |
 | The singleton object is initialized only when it’s requested for the first time. | The pattern requires special treatment in a multithreaded environment so that multiple threads won’t create a singleton object several times.                                                                                                                                                                                                                                                             |
@@ -67,6 +67,7 @@ If your code has access to the Singleton class, then it’s able to call the Sin
 - A Facade class can often be transformed into a Singleton since a single facade object is sufficient in most cases.
 
 - Flyweight would resemble Singleton if you somehow managed to reduce all shared states of the objects to just one flyweight object. But there are two fundamental differences between these patterns:
+
   1. There should be only one Singleton instance, whereas a Flyweight class can have multiple instances with different intrinsic states.
   2. The Singleton object can be mutable. Flyweight objects are immutable.
 

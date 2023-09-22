@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
 title: '构建安全体系'
 author: 'kok-s0s'
 tags: ['C++']

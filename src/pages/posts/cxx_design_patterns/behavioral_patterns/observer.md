@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Observer'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -102,13 +102,14 @@ But there’s another option. Upon receiving a notification, the subscriber can 
 ## Pros and Cons
 
 | Nice                                                                                                                                                             | Bad                                       |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | Open/Closed Principle. You can introduce new subscriber classes without having to change the publisher’s code (and vice versa if there’s a publisher interface). | Subscribers are notified in random order. |
 | You can establish relations between objects at runtime.                                                                                                          |                                           |
 
 ## Relations with Other Patterns
 
 - Chain of Responsibility, Command, Mediator and Observer address various ways of connecting senders and receivers of requests:
+
   - Chain of Responsibility passes a request sequentially along a dynamic chain of potential receivers until one of them handles it.
   - Command establishes unidirectional connections between senders and receivers.
   - Mediator eliminates direct connections between senders and receivers, forcing them to communicate indirectly via a mediator object.

@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/SimpleMarkdownPostLayout.astro
+layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
 title: 'Template Method'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -83,7 +83,7 @@ Each building step, such as laying the foundation, framing, building walls, inst
 ## Pros and Cons
 
 | Nice                                                                                                                                                    | Bad                                                                                                              |
-|---------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | You can let clients override only certain parts of a large algorithm, making them less affected by changes that happen to other parts of the algorithm. | Some clients may be limited by the provided skeleton of an algorithm.                                            |
 | You can pull the duplicate code into a superclass.                                                                                                      | You might violate the Liskov Substitution Principle by suppressing a default step implementation via a subclass. |
 |                                                                                                                                                         | Template methods tend to be harder to maintain the more steps they have.                                         |
