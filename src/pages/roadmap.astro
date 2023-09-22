@@ -1,30 +1,31 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import One from './roadmap/one.astro'
-import Two from './roadmap/two.astro'
+import One from './cxx_roadmap/one.astro'
+import Two from './cxx_roadmap/two.astro'
+import Three from './cxx_roadmap/three.astro'
+import Four from './cxx_roadmap/four.astro'
+import Five from './cxx_roadmap/five.astro'
 import '../styles/roadmap.css'
-import Three from './roadmap/three.astro'
-import Four from './roadmap/four.astro'
-import Five from './roadmap/five.astro'
 
-const pageTitle = 'C++ Dev RoadMap'
+const pageTitle = 'Developer Roadmap'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <blockquote>
-    <p>
-      <a href="https://github.com/salmer/CppDeveloperRoadmap" target="_blank" class="underline">CppDeveloperRoadmap</a>
-    </p>
-  </blockquote>
+  <h2>C/C++ Roadmap</h2>
   <One />
   <Two />
   <Three />
   <Four />
   <Five />
-  <ul>
-    <li class="junior">Junior</li>
-    <li class="middle">Middle</li>
-    <li class="senior">Senior</li>
-    <li class="optional">Optional</li>
-  </ul>
+  <blockquote>
+    <p>
+      <a href="https://github.com/salmer/CppDeveloperRoadmap" target="_blank" class="underline">CppDeveloperRoadmap</a>
+    </p>
+    <p>
+      <span class="junior">Junior</span>
+      <span class="middle">Middle</span>
+      <span class="senior">Senior</span>
+      <span class="optional">Optional</span>
+    </p>
+  </blockquote>
 </BaseLayout>
