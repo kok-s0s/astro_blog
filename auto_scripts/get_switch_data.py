@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     session_token = sys.argv[1]
 
-    title_map = {"0100F2C0115B6000": "塞尔达传说 王国之泪"}
+    title_map = {"0100C2500FC20000": "斯普拉遁 3", "0100F2C0115B6000": "塞尔达传说 王国之泪"}
 
     play_histories = NS_GetPlayHistory(NS_GetAccessToken(client_id, session_token), ua)[
         "playHistories"

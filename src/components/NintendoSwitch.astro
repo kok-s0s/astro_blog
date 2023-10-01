@@ -2,28 +2,34 @@
 import ns_json from '../data/ns_data.json'
 ---
 
-{
-  ns_json.map(function (item) {
-    console.log(item)
-
-    return (
-      <div class="ns-container">
-        <img class="ns-img" src={item.imageUrl} alt={item.titleName} />
-        <div class="image-shadow" />
-        <div class="overlay-top-text">
-          <span>{item.titleName}</span>
-          <em>
-            <b>{item.totalPlayedHours} h</b>
-          </em>
+<div class="ns-container">
+  {
+    ns_json.map(function (item) {
+      return (
+        <div class="ns-item">
+          <img class="ns-img" src={item.imageUrl} alt={item.titleName} />
+          <div class="image-shadow" />
+          <div class="overlay-top-text">
+            <span>{item.titleName}</span>
+            <em>
+              <b>{item.totalPlayedHours} h</b>
+            </em>
+          </div>
+          <div class="overlay-bottom-text">{item.firstPlayedAt} 拥有</div>
         </div>
-        <div class="overlay-bottom-text">{item.firstPlayedAt} 拥有</div>
-      </div>
-    )
-  })
-}
+      )
+    })
+  }
+</div>
 
 <style>
   .ns-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .ns-item {
     position: relative;
     width: 180px;
   }
