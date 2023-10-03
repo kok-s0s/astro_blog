@@ -5,7 +5,7 @@ import pytz
 import sys
 
 
-def NS_GetAccessToken(client_id, session_token):
+def ns_get_access_token(client_id, session_token):
     session = requests.Session()
 
     body = (
@@ -23,7 +23,7 @@ def NS_GetAccessToken(client_id, session_token):
     return access_token
 
 
-def NS_GetPlayHistory(access_token, ua):
+def ns_get_play_history(access_token, ua):
     session = requests.Session()
 
     url = "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories"
@@ -68,23 +68,25 @@ if __name__ == "__main__":
 
     session_token = sys.argv[1]
 
-    title_map = {"0100C2500FC20000": "斯普拉遁 3", "0100F2C0115B6000": "塞尔达传说 王国之泪"}
+    settings = {
+        "0100C2500FC20000": {"titleName": "斯普拉遁 3", "firstPlayedAt": "2023-10-01"},
+        "0100F2C0115B6000": {"titleName": "塞尔达传说 王国之泪", "firstPlayedAt": "2023-09-21"},
+    }
 
-    play_histories = NS_GetPlayHistory(NS_GetAccessToken(client_id, session_token), ua)[
-        "playHistories"
-    ]
+    play_histories = ns_get_play_history(
+        ns_get_access_token(client_id, session_token), ua
+    )["playHistories"]
 
     for play_history in play_histories:
         title_id = play_history["titleId"]
-        if title_id in title_map:
-            play_history["titleName"] = title_map[title_id]
+        if title_id in settings:
+            play_history["titleName"] = settings[title_id]["titleName"]
+            play_history["firstPlayedAt"] = settings[title_id]["firstPlayedAt"]
 
-        play_history["firstPlayedAt"] = convert_timezone_to_string(
-            play_history["firstPlayedAt"], "Asia/Tokyo", "Asia/Shanghai"
-        )
         play_history["lastPlayedAt"] = convert_timezone_to_string(
             play_history["lastPlayedAt"], "Asia/Tokyo", "Asia/Shanghai"
         )
+
         play_history["totalPlayedHours"] = play_history["totalPlayedMinutes"] // 60
 
     with open("./src/data/ns_data.json", "w") as ns_json_file:
