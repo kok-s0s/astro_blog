@@ -7,20 +7,11 @@ const pageTitle = '当下'
 
 <BaseLayout pageTitle={pageTitle}>
   <blockquote>
-    <p>
-      本页用于记录当下我的生活 -
-      <a href="https://nownownow.com/about" target="_blank" class="underline">页面灵感来源</a> - 10.01.2023 更新于广州
-    </p>
+    <p>2023-10-05 · 更新于广州</p>
   </blockquote>
   <h2>Life</h2>
   <ul>
     <li>暂无工作 - 休养生息一段时间 - 然后继续打工搞钱</li>
-    <li>
-      优化本博客
-      <ul>
-        <li>移动端 / iPad 下的样式适配以及 MacOS、Windows 和 Linux 三平台下 PC 的显示调整，找到一个「 平衡点 」。</li>
-      </ul>
-    </li>
     <li>欠的几篇技术文章 - 懒得梳理 | 只写了个开头 | 争取下份工作开始前搞定</li>
     <li>
       知识学习
@@ -38,18 +29,16 @@ const pageTitle = '当下'
     <li>
       娱乐
       <ul>
-        <li>把这一年积攒的模型拼完</li>
-        <li>补番补剧 - 各个类型都看看，审美积累，将来不敲代码，能有个选择投身动漫或影视行业</li>
+        <li>追新番新剧</li>
         <li>
           Nintendo Switch
           <hr />
           <NintendoSwitch />
-          <hr />
         </li>
       </ul>
     </li>
     <li>
-      增重和健身 - 年末目标体重 60kg，目前 54 kg
+      增重和健身 - 年末目标体重 60kg，目前 54kg
       <ul>
         <li>基本健康（普通）饮食 - 出门恰饭或友人聚餐即为放纵餐</li>
         <li>无雨 - 则日常骑行代步 20 ~ 30 km</li>
@@ -67,17 +56,33 @@ const pageTitle = '当下'
   }
 
   ul {
-    padding-inline-start: 30px;
+    padding-inline-start: 15px;
     margin-top: 0;
   }
 
   ul ul {
-    list-style-type: disc;
     padding: 0.5rem 0 0.5rem 0;
-    padding-inline-start: 20px;
+    padding-inline-start: 10px;
+  }
+
+  blockquote {
+    margin-inline-start: 0rem;
   }
 
   hr {
     border-style: none;
+    margin: 0.2rem;
+  }
+
+  @media screen and (min-width: 636px) {
+    ul {
+      padding-inline-start: 30px;
+      margin-top: 0;
+    }
+
+    ul ul {
+      list-style-type: disc;
+      padding-inline-start: 20px;
+    }
   }
 </style>

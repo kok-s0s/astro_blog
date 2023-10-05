@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const pageTitle = '关于这个开发者'
+const pageTitle = '有关这个程序员'
 
 const selfInfo = [
   '在程序开发，更喜欢给自己制定一个目标来驱动自己逐步完成它',
@@ -80,26 +80,30 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
       </a>
     </li>
   </ul>
-  <p>他目前阅览的书籍：</p>
-  <ul>
-    <li class="book textGap"><b>重构</b> 改善既有代码的设计</li>
-  </ul>
+  <p>他目前阅览的书籍：暂无</p>
+  <ul></ul>
   <p></p>
   <details>
     <summary>他近一年阅览完的书籍：</summary>
     <ul>
+      <li class="book textGap"><s><b>重构</b> 改善既有代码的设计</s> Done</li>
       <li class="book textGap"><s>Clean C++</s> Done</li>
       <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGPT 生成脚本嘎嘎香！</li>
     </ul>
   </details>
+  <hr />
   <p>他的书桌：</p>
-  <img src="/images/tech_books.jpg" alt="tech_books" id="tech-books"/>
+  <img src="/images/tech_books.jpg" alt="tech_books" id="tech-books" />
 </BaseLayout>
 
 <style>
   p {
     margin-block-start: 0.3rem;
     margin-block-end: 0.3rem;
+  }
+
+  hr {
+    border: none;
   }
 
   .textGap {
