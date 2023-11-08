@@ -26,6 +26,10 @@ import ns_json from '../data/ns_data.json'
     overflow-x: scroll;
   }
 
+  .ns-container::-webkit-scrollbar {
+    height: 0;
+  }
+
   .ns-item {
     position: relative;
     width: 160px;
@@ -45,7 +49,8 @@ import ns_json from '../data/ns_data.json'
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fffffe;
-    padding: 0.5rem;
+    padding: 0.24rem;
+    text-align: center;
     font-size: 0.8rem;
   }
 
