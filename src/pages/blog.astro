@@ -25,26 +25,36 @@ const pageTitle = '博文'
     </ul>
   </details>
   <h2>搬运</h2>
-  <blockquote>
-    <p>
-      <a href="https://refactoring.guru/design-patterns" target="_blank" class="underline">DESIGN PATTERNS</a>
+  <details>
+    <summary>「 设计模式 」</summary>
+    <p class="source">
+      Article reprinted from <a href="https://refactoring.guru/design-patterns" target="_blank" class="underline"
+        >Refactoring.Guru</a
+      >
     </p>
-  </blockquote>
-  <p class="pattern">Creational Patterns</p>
-  <ul>
-    {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-  </ul>
-  <p class="pattern">Structural Patterns</p>
-  <ul>
-    {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-  </ul>
-  <p class="pattern">Behavioral Patterns</p>
-  <ul>
-    {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-  </ul>
+    <p class="pattern">Creational Patterns</p>
+    <ul>
+      {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+    </ul>
+    <p class="pattern">Structural Patterns</p>
+    <ul>
+      {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+    </ul>
+    <p class="pattern">Behavioral Patterns</p>
+    <ul>
+      {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+    </ul>
+  </details>
 </BaseLayout>
 
 <style>
+  .source {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
   .pattern {
     margin: 0;
     padding: 0 0 0 1rem;
@@ -54,6 +64,10 @@ const pageTitle = '博文'
   .pattern + ul {
     margin-top: 0.2rem;
     margin-bottom: 0.5rem;
+  }
+
+  details {
+    margin-left: 1rem;
   }
 
   details ul {
