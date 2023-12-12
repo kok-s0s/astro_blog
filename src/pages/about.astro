@@ -80,14 +80,10 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
       </a>
     </li>
   </ul>
-  <p>他目前阅览的书籍：</p>
-  <ul>
-    <li><b>活文档</b> 与代码共同演进</li>
-  </ul>
-  <p></p>
   <details>
-    <summary>他近一年阅览完的书籍：</summary>
+    <summary>他近一年阅览过的书籍：</summary>
     <ul>
+      <li class="book textGap"><s><b>活文档</b> 与代码共同演进</s> 浅读</li>
       <li class="book textGap"><s><b>重构</b> 改善既有代码的设计</s> Done</li>
       <li class="book textGap"><s>Clean C++</s> Done</li>
       <li class="book textGap"><s>Linux Shell 脚本攻略</s> 看一半弃了，用 ChatGPT 生成脚本嘎嘎香！</li>
@@ -103,6 +99,25 @@ const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', 
 
   hr {
     border: none;
+  }
+
+  summary::marker {
+    content: '';
+  }
+
+  summary:after {
+    content: '+';
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    margin: -2px 10px 0 0;
+    padding: 1px 0 3px 0;
+    text-align: center;
+    width: 14px;
+  }
+
+  details[open] summary:after {
+    content: '-';
   }
 
   .textGap {

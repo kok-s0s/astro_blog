@@ -13,7 +13,7 @@ const pageTitle = '博文'
 <BaseLayout pageTitle={pageTitle}>
   <h2>原创</h2>
   <blockquote>
-    <p>如果我写的内容，能对观看的你有帮助就好了。</p>
+    <p>如果我写的<a href="/tags/" id="normal">内容</a>，能对观看的你有帮助就好了。</p>
   </blockquote>
   <ul>
     {projectPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
