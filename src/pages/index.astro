@@ -5,24 +5,18 @@ const pageTitle = '零'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <blockquote>
-    <p><em>Do the Impossible, See the Invisible.</em></p>
-  </blockquote>
+  <p>
+    <em id="motto">「 無無無無_just4now 」</em>
+  </p>
   <img src="/images/moon.jpeg" alt="moon" id="moon" />
 </BaseLayout>
 
 <style>
+  #motto {
+    letter-spacing: 1.6px;
+  }
+
   #moon {
     width: 50%;
-  }
-
-  #space {
-    display: none;
-  }
-
-  @media screen and (min-width: 636px) {
-    #space {
-      display: block;
-    }
   }
 </style>
