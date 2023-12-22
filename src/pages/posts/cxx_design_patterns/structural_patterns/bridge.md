@@ -139,6 +139,9 @@ The abstraction may list the same methods as the implementation, but usually the
 <details><summary>Conceptual Example</summary>
 
 ```cpp
+#include <iostream>
+#include <string>
+
 /**
  * The Implementation defines the interface for all implementation classes. It
  * doesn't have to match the Abstraction's interface. In fact, the two
@@ -148,7 +151,7 @@ The abstraction may list the same methods as the implementation, but usually the
  */
 
 class Implementation {
- public:
+public:
   virtual ~Implementation() {}
   virtual std::string OperationImplementation() const = 0;
 };
@@ -158,13 +161,13 @@ class Implementation {
  * implements the Implementation interface using that platform's API.
  */
 class ConcreteImplementationA : public Implementation {
- public:
+public:
   std::string OperationImplementation() const override {
     return "ConcreteImplementationA: Here's the result on the platform A.\n";
   }
 };
 class ConcreteImplementationB : public Implementation {
- public:
+public:
   std::string OperationImplementation() const override {
     return "ConcreteImplementationB: Here's the result on the platform B.\n";
   }
@@ -180,15 +183,14 @@ class Abstraction {
   /**
    * @var Implementation
    */
- protected:
-  Implementation* implementation_;
+protected:
+  Implementation *implementation_;
 
- public:
-  Abstraction(Implementation* implementation) : implementation_(implementation) {
-  }
+public:
+  Abstraction(Implementation *implementation)
+      : implementation_(implementation) {}
 
-  virtual ~Abstraction() {
-  }
+  virtual ~Abstraction() {}
 
   virtual std::string Operation() const {
     return "Abstraction: Base operation with:\n" +
@@ -199,9 +201,9 @@ class Abstraction {
  * You can extend the Abstraction without changing the Implementation classes.
  */
 class ExtendedAbstraction : public Abstraction {
- public:
-  ExtendedAbstraction(Implementation* implementation) : Abstraction(implementation) {
-  }
+public:
+  ExtendedAbstraction(Implementation *implementation)
+      : Abstraction(implementation) {}
   std::string Operation() const override {
     return "ExtendedAbstraction: Extended operation with:\n" +
            this->implementation_->OperationImplementation();
@@ -214,7 +216,7 @@ class ExtendedAbstraction : public Abstraction {
  * the Abstraction class. This way the client code can support any abstraction-
  * implementation combination.
  */
-void ClientCode(const Abstraction& abstraction) {
+void ClientCode(const Abstraction &abstraction) {
   // ...
   std::cout << abstraction.Operation();
   // ...
@@ -225,8 +227,8 @@ void ClientCode(const Abstraction& abstraction) {
  */
 
 int main() {
-  Implementation* implementation = new ConcreteImplementationA;
-  Abstraction* abstraction = new Abstraction(implementation);
+  Implementation *implementation = new ConcreteImplementationA;
+  Abstraction *abstraction = new Abstraction(implementation);
   ClientCode(*abstraction);
   std::cout << std::endl;
   delete implementation;
@@ -241,6 +243,7 @@ int main() {
 
   return 0;
 }
+
 ```
 
 </details>

@@ -140,7 +140,7 @@ For instance, imagine that you have the following hierarchy of classes: the base
 
 [Factory Method in C++](https://refactoring.guru/design-patterns/factory-method/cpp/example)
 
-<details><summary>Example</summary>
+<details><summary>Conceptual Example</summary>
 
 ```cpp
 #include <iostream>

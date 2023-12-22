@@ -5,7 +5,7 @@ author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Structural Patterns']
 ---
 
-**Also known as:** Object Tree
+> **Also known as:** Object Tree
 
 ## Intent
 
@@ -104,9 +104,9 @@ Keep in mind that these operations can be declared in the component interface. T
 
 - Composite and Decorator have similar structure diagrams since both rely on recursive composition to organize an open-ended number of objects.
 
-A Decorator is like a Composite but only has one child component. There’s another significant difference: Decorator adds additional responsibilities to the wrapped object, while Composite just “sums up” its children’s results.
+> A Decorator is like a Composite but only has one child component. There’s another significant difference: Decorator adds additional responsibilities to the wrapped object, while Composite just “sums up” its children’s results.
 
-However, the patterns can also cooperate: you can use Decorator to extend the behavior of a specific object in the Composite tree.
+> However, the patterns can also cooperate: you can use Decorator to extend the behavior of a specific object in the Composite tree.
 
 - Designs that make heavy use of Composite and Decorator can often benefit from using Prototype. Applying the pattern lets you clone complex structures instead of re-constructing them from scratch.
 

@@ -77,7 +77,7 @@ If your code has access to the Singleton class, then it’s able to call the Sin
 
 [Singleton in C++](https://refactoring.guru/design-patterns/singleton/cpp/example#example-1)
 
-<details><summary>Example</summary>
+<details><summary>Conceptual Example</summary>
 
 ```cpp
 #include <iostream>

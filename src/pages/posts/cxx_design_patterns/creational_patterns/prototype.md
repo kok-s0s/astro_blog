@@ -120,7 +120,7 @@ Finally, replace the direct calls to the subclasses’ constructors with calls t
 
 [Prototype in C++](https://refactoring.guru/design-patterns/prototype/cpp/example)
 
-<details><summary>Example</summary>
+<details><summary>Conceptual Example</summary>
 
 ```cpp
 #include <iostream>

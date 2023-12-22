@@ -129,7 +129,7 @@ Now imagine a program where all components have become publishers, allowing dyna
 
 [Observer in C++](https://refactoring.guru/design-patterns/observer/cpp/example#example-0)
 
-<details><summary>Example</summary>
+<details><summary>Conceptual Example</summary>
 
 ```cpp
 /**

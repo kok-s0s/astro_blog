@@ -5,7 +5,7 @@ author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Structural Patterns']
 ---
 
-**Also known as:** Wrapper
+> **Also known as:** Wrapper
 
 ## Intent
 
@@ -127,13 +127,13 @@ Wearing clothes is an example of using decorators. When you’re cold, you wrap 
 
 - Chain of Responsibility and Decorator have very similar class structures. Both patterns rely on recursive composition to pass the execution through a series of objects. However, there are several crucial differences.
 
-The CoR handlers can execute arbitrary operations independently of each other. They can also stop passing the request further at any point. On the other hand, various Decorators can extend the object’s behavior while keeping it consistent with the base interface. In addition, decorators aren’t allowed to break the flow of the request.
+> The CoR handlers can execute arbitrary operations independently of each other. They can also stop passing the request further at any point. On the other hand, various Decorators can extend the object’s behavior while keeping it consistent with the base interface. In addition, decorators aren’t allowed to break the flow of the request.
 
 - Composite and Decorator have similar structure diagrams since both rely on recursive composition to organize an open-ended number of objects.
 
-A Decorator is like a Composite but only has one child component. There’s another significant difference: Decorator adds additional responsibilities to the wrapped object, while Composite just “sums up” its children’s results.
+> A Decorator is like a Composite but only has one child component. There’s another significant difference: Decorator adds additional responsibilities to the wrapped object, while Composite just “sums up” its children’s results.
 
-However, the patterns can also cooperate: you can use Decorator to extend the behavior of a specific object in the Composite tree.
+> However, the patterns can also cooperate: you can use Decorator to extend the behavior of a specific object in the Composite tree.
 
 - Designs that make heavy use of Composite and Decorator can often benefit from using Prototype. Applying the pattern lets you clone complex structures instead of re-constructing them from scratch.
 
@@ -148,12 +148,15 @@ However, the patterns can also cooperate: you can use Decorator to extend the be
 <details><summary>Conceptual Example</summary>
 
 ```cpp
+#include <iostream>
+#include <string>
+
 /**
  * The base Component interface defines operations that can be altered by
  * decorators.
  */
 class Component {
- public:
+public:
   virtual ~Component() {}
   virtual std::string Operation() const = 0;
 };
@@ -162,10 +165,8 @@ class Component {
  * might be several variations of these classes.
  */
 class ConcreteComponent : public Component {
- public:
-  std::string Operation() const override {
-    return "ConcreteComponent";
-  }
+public:
+  std::string Operation() const override { return "ConcreteComponent"; }
 };
 /**
  * The base Decorator class follows the same interface as the other components.
@@ -178,12 +179,11 @@ class Decorator : public Component {
   /**
    * @var Component
    */
- protected:
-  Component* component_;
+protected:
+  Component *component_;
 
- public:
-  Decorator(Component* component) : component_(component) {
-  }
+public:
+  Decorator(Component *component) : component_(component) {}
   /**
    * The Decorator delegates all work to the wrapped component.
    */
@@ -200,9 +200,8 @@ class ConcreteDecoratorA : public Decorator {
    * calling the wrapped object directly. This approach simplifies extension of
    * decorator classes.
    */
- public:
-  ConcreteDecoratorA(Component* component) : Decorator(component) {
-  }
+public:
+  ConcreteDecoratorA(Component *component) : Decorator(component) {}
   std::string Operation() const override {
     return "ConcreteDecoratorA(" + Decorator::Operation() + ")";
   }
@@ -212,9 +211,8 @@ class ConcreteDecoratorA : public Decorator {
  * wrapped object.
  */
 class ConcreteDecoratorB : public Decorator {
- public:
-  ConcreteDecoratorB(Component* component) : Decorator(component) {
-  }
+public:
+  ConcreteDecoratorB(Component *component) : Decorator(component) {}
 
   std::string Operation() const override {
     return "ConcreteDecoratorB(" + Decorator::Operation() + ")";
@@ -225,7 +223,7 @@ class ConcreteDecoratorB : public Decorator {
  * way it can stay independent of the concrete classes of components it works
  * with.
  */
-void ClientCode(Component* component) {
+void ClientCode(Component *component) {
   // ...
   std::cout << "RESULT: " << component->Operation();
   // ...
@@ -235,7 +233,7 @@ int main() {
   /**
    * This way the client code can support both simple components...
    */
-  Component* simple = new ConcreteComponent;
+  Component *simple = new ConcreteComponent;
   std::cout << "Client: I've got a simple component:\n";
   ClientCode(simple);
   std::cout << "\n\n";
@@ -245,8 +243,8 @@ int main() {
    * Note how decorators can wrap not only simple components but the other
    * decorators as well.
    */
-  Component* decorator1 = new ConcreteDecoratorA(simple);
-  Component* decorator2 = new ConcreteDecoratorB(decorator1);
+  Component *decorator1 = new ConcreteDecoratorA(simple);
+  Component *decorator2 = new ConcreteDecoratorB(decorator1);
   std::cout << "Client: Now I've got a decorated component:\n";
   ClientCode(decorator2);
   std::cout << "\n";
@@ -257,6 +255,7 @@ int main() {
 
   return 0;
 }
+
 ```
 
 </details>

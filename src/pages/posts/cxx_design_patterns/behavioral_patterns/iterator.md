@@ -117,7 +117,7 @@ All of these options—the random directions born in your head, the smartphone n
 
 [Iterator in C++](https://refactoring.guru/design-patterns/iterator/cpp/example)
 
-<details><summary>Example</summary>
+<details><summary>Conceptual Example</summary>
 
 ```cpp
 /**

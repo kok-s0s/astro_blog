@@ -112,15 +112,18 @@ There’s one more thing left to clarify: if the client is only exposed to the a
 
 [Factory Method in C++](https://refactoring.guru/design-patterns/abstract-factory/cpp/example)
 
-<details><summary>Example</summary>
+<details><summary>Conceptual Example</summary>
 
 ```cpp
+#include <iostream>
+#include <string>
+
 /**
  * Each distinct product of a product family should have a base interface. All
  * variants of the product must implement this interface.
  */
 class AbstractProductA {
- public:
+public:
   virtual ~AbstractProductA(){};
   virtual std::string UsefulFunctionA() const = 0;
 };
@@ -129,7 +132,7 @@ class AbstractProductA {
  * Concrete Products are created by corresponding Concrete Factories.
  */
 class ConcreteProductA1 : public AbstractProductA {
- public:
+public:
   std::string UsefulFunctionA() const override {
     return "The result of the product A1.";
   }
@@ -150,7 +153,7 @@ class AbstractProductB {
   /**
    * Product B is able to do its own thing...
    */
- public:
+public:
   virtual ~AbstractProductB(){};
   virtual std::string UsefulFunctionB() const = 0;
   /**
@@ -159,14 +162,15 @@ class AbstractProductB {
    * The Abstract Factory makes sure that all products it creates are of the
    * same variant and thus, compatible.
    */
-  virtual std::string AnotherUsefulFunctionB(const AbstractProductA &collaborator) const = 0;
+  virtual std::string
+  AnotherUsefulFunctionB(const AbstractProductA &collaborator) const = 0;
 };
 
 /**
  * Concrete Products are created by corresponding Concrete Factories.
  */
 class ConcreteProductB1 : public AbstractProductB {
- public:
+public:
   std::string UsefulFunctionB() const override {
     return "The result of the product B1.";
   }
@@ -175,14 +179,15 @@ class ConcreteProductB1 : public AbstractProductB {
    * Product A1. Nevertheless, it accepts any instance of AbstractProductA as an
    * argument.
    */
-  std::string AnotherUsefulFunctionB(const AbstractProductA &collaborator) const override {
+  std::string
+  AnotherUsefulFunctionB(const AbstractProductA &collaborator) const override {
     const std::string result = collaborator.UsefulFunctionA();
     return "The result of the B1 collaborating with ( " + result + " )";
   }
 };
 
 class ConcreteProductB2 : public AbstractProductB {
- public:
+public:
   std::string UsefulFunctionB() const override {
     return "The result of the product B2.";
   }
@@ -191,7 +196,8 @@ class ConcreteProductB2 : public AbstractProductB {
    * Product A2. Nevertheless, it accepts any instance of AbstractProductA as an
    * argument.
    */
-  std::string AnotherUsefulFunctionB(const AbstractProductA &collaborator) const override {
+  std::string
+  AnotherUsefulFunctionB(const AbstractProductA &collaborator) const override {
     const std::string result = collaborator.UsefulFunctionA();
     return "The result of the B2 collaborating with ( " + result + " )";
   }
@@ -206,7 +212,7 @@ class ConcreteProductB2 : public AbstractProductB {
  * another.
  */
 class AbstractFactory {
- public:
+public:
   virtual AbstractProductA *CreateProductA() const = 0;
   virtual AbstractProductB *CreateProductB() const = 0;
 };
@@ -218,7 +224,7 @@ class AbstractFactory {
  * while inside the method a concrete product is instantiated.
  */
 class ConcreteFactory1 : public AbstractFactory {
- public:
+public:
   AbstractProductA *CreateProductA() const override {
     return new ConcreteProductA1();
   }
@@ -231,7 +237,7 @@ class ConcreteFactory1 : public AbstractFactory {
  * Each Concrete Factory has a corresponding product variant.
  */
 class ConcreteFactory2 : public AbstractFactory {
- public:
+public:
   AbstractProductA *CreateProductA() const override {
     return new ConcreteProductA2();
   }
@@ -261,12 +267,14 @@ int main() {
   ClientCode(*f1);
   delete f1;
   std::cout << std::endl;
-  std::cout << "Client: Testing the same client code with the second factory type:\n";
+  std::cout
+      << "Client: Testing the same client code with the second factory type:\n";
   ConcreteFactory2 *f2 = new ConcreteFactory2();
   ClientCode(*f2);
   delete f2;
   return 0;
 }
+
 ```
 
 </details>
