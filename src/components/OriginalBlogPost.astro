@@ -10,7 +10,12 @@ const formattedPubDate = date
   .toString()
 ---
 
-<li><a href={url}>{title} <span class="time">{formattedPubDate}</span></a></li>
+<li>
+  <a href={url}>
+    <span class="title">{title}</span>
+    <span class="time">{formattedPubDate}</span>
+  </a>
+</li>
 
 <style>
   li {
@@ -24,11 +29,11 @@ const formattedPubDate = date
   }
 
   a:link,
-  a:hover,
   a:visited {
     color: #2cb67d;
   }
 
+  a:hover,
   a:active {
     color: #0a613d;
   }
