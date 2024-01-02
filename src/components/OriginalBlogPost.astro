@@ -1,0 +1,41 @@
+---
+const { title, url, pubDate } = Astro.props
+const date = new Date(pubDate)
+const formattedPubDate = date
+  .toLocaleDateString('en-GB', {
+    year: '2-digit',
+    month: 'short',
+    day: 'numeric',
+  })
+  .toString()
+---
+
+<li><a href={url}>{title} <span class="time">{formattedPubDate}</span></a></li>
+
+<style>
+  li {
+    line-height: 1.8;
+  }
+
+  a {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  a:link,
+  a:hover,
+  a:visited {
+    color: #2cb67d;
+  }
+
+  a:active {
+    color: #0a613d;
+  }
+
+  .time {
+    min-width: 74px;
+    text-align: right;
+    text-wrap: nowrap;
+  }
+</style>
