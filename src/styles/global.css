@@ -210,14 +210,14 @@ table tbody tr td {
 }
 
 /* music-player */
-.controls {
-  display: flex;
+#controls {
+  display: none;
   justify-content: center;
   align-items: center;
   gap: 1rem;
 }
 
-.controls div {
+#controls div {
   width: 30px;
   height: 30px;
   display: inline-flex;
@@ -227,7 +227,7 @@ table tbody tr td {
   cursor: pointer;
 }
 
-.controls div:nth-child(2) {
+#controls div:nth-child(2) {
   box-shadow: 0 10px 20px rgba(100, 255, 255, 0.22);
   border-radius: 50%;
   transform: scale(1.2);
@@ -432,5 +432,9 @@ a.back-to-top {
   .tag {
     padding: 0.5rem 1rem;
     font-size: 1.15rem;
+  }
+
+  #controls {
+    display: flex;
   }
 }

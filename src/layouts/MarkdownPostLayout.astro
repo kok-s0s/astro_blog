@@ -5,6 +5,7 @@ import BaseLayout from './BaseLayout.astro'
 const { frontmatter } = Astro.props
 
 const projectPosts = await Astro.glob('../pages/posts/*.md')
+projectPosts.sort((a, b) => (new Date(b.frontmatter.pubDate) as any) - (new Date(a.frontmatter.pubDate) as any))
 let currentPostIndex = -1
 projectPosts.forEach((post, index) => {
   if (post.frontmatter.title === frontmatter.title) {
