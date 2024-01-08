@@ -56,11 +56,11 @@ const booksRead = [
 <BaseLayout pageTitle={pageTitle}>
   <p>他的一些信息：</p>
   <ul>
-    {selfInfo.map((info) => <li class="textGap">{info}</li>)}
+    {selfInfo.map((info) => <li>{info}</li>)}
   </ul>
   <p>他认为程序员要熟练的<a href="/roadmap" id="normal">能力</a>：</p>
   <ul>
-    {skills.map((skill) => <li class="skill textGap">{skill}</li>)}
+    {skills.map((skill) => <li>{skill}</li>)}
   </ul>
   <p>他做过的一些 <em>Repository</em> ：</p>
   <ul id="repos">
@@ -73,7 +73,7 @@ const booksRead = [
                 <em>{repo.name}</em>
               </a>
             </summary>
-            <p class="textGap">{repo.description}</p>
+            <p>{repo.description}</p>
           </details>
         </li>
       ))
@@ -84,7 +84,7 @@ const booksRead = [
     <ul>
       {
         booksRead.map((book) => (
-          <li class="book textGap">
+          <li>
             <s>{book.name}</s> _ <span>{book.status}</span>
           </li>
         ))
@@ -106,8 +106,8 @@ const booksRead = [
     cursor: pointer;
   }
 
-  summary::marker {
-    content: '';
+  details > summary {
+    list-style: none;
   }
 
   summary:after {
@@ -123,15 +123,6 @@ const booksRead = [
 
   details[open] summary:after {
     content: '-';
-  }
-
-  .textGap {
-    line-height: 1.6;
-  }
-
-  .skill,
-  .book {
-    letter-spacing: 1px;
   }
 </style>
 
