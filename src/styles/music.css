@@ -1,0 +1,39 @@
+#controls {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#controls div {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f5af0;
+  cursor: pointer;
+}
+
+#controls div:nth-child(2) {
+  box-shadow: 0 10px 20px rgba(100, 255, 255, 0.22);
+  border-radius: 50%;
+  transform: scale(1.2);
+  background-color: #7f5af0;
+  color: #fffffe;
+}
+
+#ctrl-icon.fas {
+  font-size: 0.85rem;
+}
+
+#ctrl-icon.fas.fa-play {
+  position: relative;
+  left: 1px;
+}
+
+@media screen and (min-width: 636px) {
+  #controls {
+    display: flex;
+  }
+}

@@ -1,0 +1,49 @@
+.toc-H1 {
+  font-size: 1.05rem;
+}
+
+.toc-H2 {
+  line-height: 1.6;
+  padding-left: 0.6rem;
+}
+
+.toc-H3 {
+  line-height: 1.6;
+  padding-left: 1.3rem;
+}
+
+.toc-H4 {
+  line-height: 1.6;
+  padding-left: 2rem;
+}
+
+.toc-H5 {
+  line-height: 1.6;
+  padding-left: 2.7rem;
+}
+
+#toc {
+  position: fixed;
+  top: 16%;
+  right: -285.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0 auto;
+  width: 300px;
+  max-height: 70vh;
+  overflow: auto;
+  padding: 1rem;
+  background-color: #000000;
+  border: solid 1.3px #a1a1a1;
+  border-right: none;
+  z-index: 999;
+}
+
+#toc:hover {
+  right: 0;
+}
+
+#toc::-webkit-scrollbar {
+  display: none;
+}

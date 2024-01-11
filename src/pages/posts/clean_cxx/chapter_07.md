@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXPost.astro
 title: '函数式编程'
 author: 'kok-s0s'
 tags: ['C++']

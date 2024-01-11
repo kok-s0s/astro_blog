@@ -1,0 +1,16 @@
+<p id="sentence"></p>
+
+<script>
+  import sentence_json from '../data/sentence.json'
+
+  let sentences = []
+  sentence_json.forEach((item) => {
+    sentences.push(...item.li_texts)
+  })
+
+  let storedIndex = parseInt(localStorage.getItem('storedIndex')) || 0
+  if (document.getElementById('sentence') !== null)
+    document.getElementById('sentence').textContent = sentences[storedIndex]
+  storedIndex = (storedIndex + 1) % sentences.length
+  localStorage.setItem('storedIndex', storedIndex.toString())
+</script>

@@ -1,0 +1,21 @@
+.hamburger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.hamburger .line {
+  display: block;
+  width: 33px;
+  height: 5px;
+  background-color: #7f5af0;
+}
+
+@media screen and (min-width: 636px) {
+  .hamburger {
+    display: none;
+  }
+}

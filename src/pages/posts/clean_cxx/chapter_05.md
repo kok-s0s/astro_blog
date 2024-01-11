@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXPost.astro
 title: '现代 C++ 的高级概念'
 author: 'kok-s0s'
 tags: ['C++']

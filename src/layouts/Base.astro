@@ -2,6 +2,7 @@
 import '../styles/global.css'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
+import Top from '../components/Top.astro'
 
 const { pageTitle } = Astro.props
 ---
@@ -20,11 +21,9 @@ const { pageTitle } = Astro.props
     <h1>{pageTitle}</h1>
     <slot />
     <Footer />
-    <a href="#" id="back-to-top" class="back-to-top">Top</a>
+    <Top />
     <script>
-      import '../scripts/menu.js'
       import '../scripts/copy.js'
-      import '../scripts/back-to-top.js'
     </script>
     <script src="https://kit.fontawesome.com/094105c4c5.js" crossorigin="anonymous"></script>
   </body>

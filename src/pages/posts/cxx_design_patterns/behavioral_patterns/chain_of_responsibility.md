@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Chain of Responsibility'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -124,9 +124,9 @@ You can also implement the convenient default behavior for the handling method, 
 
 ## Pros and Cons
 
-| Nice                                                                                                                     | Bad                                 |
-| ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| You can control the order of request handling.                                                                           | Some requests may end up unhandled. |
+| Nice                                           | Bad                                 |
+|------------------------------------------------|-------------------------------------|
+| You can control the order of request handling. | Some requests may end up unhandled. |
 | _Single Responsibility Principle_. You can decouple classes that invoke operations from classes that perform operations. |
 | _Open/Closed Principle_. You can introduce new handlers into the app without breaking the existing client code.          |
 

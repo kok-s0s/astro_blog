@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Decorator'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Structural Patterns']
@@ -113,7 +113,7 @@ Wearing clothes is an example of using decorators. When you’re cold, you wrap 
 ## Pros and Cons
 
 | Nice                                                                                                                                                  | Bad                                                                                                                     |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
 | You can extend an object’s behavior without making a new subclass.                                                                                    | It’s hard to remove a specific wrapper from the wrappers stack.                                                         |
 | You can add or remove responsibilities from an object at runtime.                                                                                     | It’s hard to implement a decorator in such a way that its behavior doesn’t depend on the order in the decorators stack. |
 | You can combine several behaviors by wrapping an object into multiple decorators.                                                                     | The initial configuration code of layers might look pretty ugly.                                                        |

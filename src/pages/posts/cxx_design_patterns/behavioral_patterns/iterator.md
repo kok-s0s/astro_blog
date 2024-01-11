@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Iterator'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -97,7 +97,7 @@ All of these options—the random directions born in your head, the smartphone n
 ## Pros and Cons
 
 | Nice                                                                                                                                                    | Bad                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | _Single Responsibility Principle_. You can clean up the client code and the collections by extracting bulky traversal algorithms into separate classes. | Applying the pattern can be an overkill if your app only works with simple collections.                       |
 | _Open/Closed Principle_. You can implement new types of collections and iterators and pass them to existing code without breaking anything.             | Using an iterator may be less efficient than going through elements of some specialized collections directly. |
 | You can iterate over the same collection in parallel because each iterator object contains its own iteration state.                                     |                                                                                                               |

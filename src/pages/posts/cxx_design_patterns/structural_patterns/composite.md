@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Composite'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Structural Patterns']
@@ -86,7 +86,7 @@ Keep in mind that these operations can be declared in the component interface. T
 ## Pros and Cons
 
 | Nice                                                                                                                                                | Bad                                                                                                                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | You can work with complex tree structures more conveniently: use polymorphism and recursion to your advantage.                                      | It might be difficult to provide a common interface for classes whose functionality differs too much. In certain scenarios, you’d need to overgeneralize the component interface, making it harder to comprehend. |
 | _Open/Closed Principle_. You can introduce new element types into the app without breaking the existing code, which now works with the object tree. |                                                                                                                                                                                                                   |
 

@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Command'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -124,7 +124,7 @@ The paper order serves as a command. It remains in a queue until the chef is rea
 ## Pros and Cons
 
 | Nice                                                                                                                           | Bad                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+|--------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | _Single Responsibility Principle_. You can decouple classes that invoke operations from classes that perform these operations. | The code may become more complicated since you’re introducing a whole new layer between senders and receivers. |
 | _Open/Closed Principle_. You can introduce new commands into the app without breaking existing client code.                    |                                                                                                                |
 | You can implement undo/redo.                                                                                                   |                                                                                                                |

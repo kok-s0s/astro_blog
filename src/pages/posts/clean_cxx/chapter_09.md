@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXPost.astro
 title: '设计模式和习惯用法'
 author: 'kok-s0s'
 tags: ['C++']

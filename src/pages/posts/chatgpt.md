@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
+layout: ../../layouts/Post.astro
 title: 'ChatGPT'
 pubDate: 2023-03-31
 description: '使用 ChatGPT 已经有一段时间，用文字记录点东西。'

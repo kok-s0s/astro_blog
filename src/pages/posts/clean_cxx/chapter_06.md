@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXPost.astro
 title: '面向对象'
 author: 'kok-s0s'
 tags: ['C++']

@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Memento'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -126,7 +126,7 @@ The return type of the method should be of the interface you extracted in the pr
 ## Pros and Cons
 
 | Nice                                                                                                            | Bad                                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | You can produce snapshots of the object’s state without violating its encapsulation.                            | The app might consume lots of RAM if clients create mementos too often.                                                                    |
 | You can simplify the originator’s code by letting the caretaker maintain the history of the originator’s state. | Caretakers should track the originator’s lifecycle to be able to destroy obsolete mementos.                                                |
 |                                                                                                                 | Most dynamic programming languages, such as PHP, Python and JavaScript, can’t guarantee that the state within the memento stays untouched. |

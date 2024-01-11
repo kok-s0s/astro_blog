@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Builder'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Creational Patterns']
@@ -106,7 +106,7 @@ Don’t forget about implementing a method for fetching the result of the constr
 ## Pros and Cons
 
 | Nice                                                                                                                 | Bad                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+|----------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
 | You can construct objects step-by-step, defer construction steps or run steps recursively.                           | The overall complexity of the code increases since the pattern requires creating multiple new classes. |
 | You can reuse the same construction code when building various representations of products.                          |                                                                                                        |
 | _Single Responsibility Principle_. You can isolate complex construction code from the business logic of the product. |                                                                                                        |

@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Bridge'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Structural Patterns']
@@ -116,7 +116,7 @@ The abstraction may list the same methods as the implementation, but usually the
 ## Pros and Cons
 
 | Nice                                                                                                                                   | Bad                                                                                          |
-| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
 | You can create platform-independent classes and apps.                                                                                  | You might make the code more complicated by applying the pattern to a highly cohesive class. |
 | The client code works with high-level abstractions. It isn’t exposed to the platform details.                                          |                                                                                              |
 | _Open/Closed_ Principle. You can introduce new abstractions and implementations independently from each other.                         |                                                                                              |

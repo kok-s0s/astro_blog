@@ -1,25 +1,26 @@
 ---
 import Toc from '../components/Toc.astro'
-import BaseLayout from './BaseLayout.astro'
+import BaseLayout from './Base.astro'
 
 const { frontmatter } = Astro.props
 
-const cxxCreationalPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/creational_patterns/*.md')
-const cxxStructuralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/structural_patterns/*.md')
-const cxxBehavioralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/behavioral_patterns/*.md')
-const allPosts = cxxCreationalPatternsPosts.concat(cxxStructuralPatternsPosts).concat(cxxBehavioralPatternsPosts)
+const projectPosts = await Astro.glob('../pages/posts/*.md')
+projectPosts.sort((a, b) => (new Date(b.frontmatter.pubDate) as any) - (new Date(a.frontmatter.pubDate) as any))
 let currentPostIndex = -1
-allPosts.forEach((post, index) => {
+projectPosts.forEach((post, index) => {
   if (post.frontmatter.title === frontmatter.title) {
     currentPostIndex = index
   }
 })
-const previousPost = allPosts[(currentPostIndex - 1 + allPosts.length) % allPosts.length]
-const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
+const previousPost = projectPosts[(currentPostIndex - 1 + projectPosts.length) % projectPosts.length]
+const nextPost = projectPosts[(currentPostIndex + 1) % projectPosts.length]
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
+  <p>Created by - <b><em>{frontmatter.pubDate.slice(0, 10)}</em></b></p>
+  <p><em>{frontmatter.description}</em></p>
   <p>Written by - <b><em>{frontmatter.author}</em></b></p>
+  <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
   <div class="tags">
     {
       frontmatter.tags.map((tag) => (
@@ -36,3 +37,9 @@ const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
     <a href={nextPost.url} id="next" class="underline">{nextPost.frontmatter.title}</a>
   </div>
 </BaseLayout>
+
+<style>
+  img {
+    margin-bottom: 0.5rem;
+  }
+</style>

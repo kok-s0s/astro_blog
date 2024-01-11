@@ -1,5 +1,5 @@
 ---
-layout: ../../../../layouts/CXXDesignPatternsMarkdownPostLayout.astro
+layout: ../../../../layouts/DesignPatternsPost.astro
 title: 'Observer'
 author: 'RefactoringGuru'
 tags: ['C++', 'Design Patterns', 'Behavioral Patterns']
@@ -102,7 +102,7 @@ But there’s another option. Upon receiving a notification, the subscriber can 
 ## Pros and Cons
 
 | Nice                                                                                                                                                             | Bad                                       |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
 | Open/Closed Principle. You can introduce new subscriber classes without having to change the publisher’s code (and vice versa if there’s a publisher interface). | Subscribers are notified in random order. |
 | You can establish relations between objects at runtime.                                                                                                          |                                           |
 

@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
+layout: ../../layouts/Post.astro
 title: '做一个天气查询的 TUI 程序'
 pubDate: 2023-08-06
 description: '目标驱动 - 逐步逐步做成这个 TUI 程序'

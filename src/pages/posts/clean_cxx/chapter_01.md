@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/CleanCXXMarkdownPostLayout.astro
+layout: ../../../layouts/CleanCXXPost.astro
 title: '序章'
 author: 'kok-s0s'
 tags: ['C++']
