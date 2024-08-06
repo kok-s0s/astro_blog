@@ -1,12 +1,12 @@
 export const selfInfo = [
   '在程序开发，更喜欢给自己制定一个目标来驱动自己逐步完成它',
-  '并没有特别讨厌或者很喜欢的语言，在过往一年中，最常用的是 C/C++。现在对于各种语言的态度，更多是看要去解决什么样的问题，以及有多少时间去解决这个问题，根据这两点去选择合适的语言来解决问题',
+  '并没有特别讨厌或者很喜欢的语言，在过往一年中，最常用的是 C++ 和 Qt 这两门语言。现在对于各种语言的态度，更多是看要去解决什么样的问题，以及有多少时间去解决这个问题，根据这两点去选择合适的语言来解决问题',
   '有点喜欢 Python 和 Shell 语言，能在工作中节省些许时间',
   '离不开 Code Format',
   '团队开发最喜欢 Code Review 环节',
 ]
 
-export const skills = ['英语', '网络搜索技巧', '文档阅读能力', '调试', '会和 ChatGPT 聊天 /doge', '能将业务需求翻译成技术需求']
+export const skills = ['英语', '网络搜索技巧', '文档阅读能力', '程序调试能力', '复盘总结能力', '会和 ChatGPT 聊天 /doge', '能将业务需求翻译成技术需求']
 
 export const repos = [
   {
@@ -42,8 +42,9 @@ export const repos = [
 ]
 
 export const booksRead = [
-  { name: '活文档 与代码共同演进', status: '浅读' },
-  { name: '重构 改善既有代码的设计', status: 'Done' },
-  { name: 'Clean C++', status: 'Done' },
-  { name: 'Linux Shell 脚本攻略', status: '看一半弃了，用 ChatGPT 生成脚本嘎嘎香！' },
+  { status: false, name: 'Crafting Interpreters', description : '刚开始！'},
+  { status: true, name: '活文档 与代码共同演进', description: '浅读，不推荐！' },
+  { status: true, name: '重构 改善既有代码的设计', description: '翻完，推荐！' },
+  { status: true, name: 'Clean C++', description: '读完且记录，推荐！' },
+  { status: true, name: 'Linux Shell 脚本攻略', description: '看一半弃了，用 ChatGPT 生成脚本嘎嘎香！' }
 ]

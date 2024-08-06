@@ -33,12 +33,14 @@ const pageTitle = '关于'
     }
   </ul>
   <details>
-    <summary>他近一年阅览过的书籍：</summary>
+    <summary>阅览过的书籍：</summary>
     <ul>
       {
         booksRead.map((book) => (
           <li>
-            <s>{book.name}</s> _ <span>{book.status}</span>
+            {book.status == true ? <s>{book.name}</s> : <span>{book.name}</span>}
+            _
+            <span>{book.description}</span>
           </li>
         ))
       }
