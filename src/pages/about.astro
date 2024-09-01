@@ -11,7 +11,7 @@ const pageTitle = '关于'
   <ul>
     {selfInfo.map((info) => <li>{info}</li>)}
   </ul>
-  <p>他认为程序员要熟练的<a href="/roadmap" id="normal">能力</a>：</p>
+  <p>他认为程序员要熟练的<a href="#" id="normal">能力</a>：</p>
   <ul>
     {skills.map((skill) => <li>{skill}</li>)}
   </ul>
@@ -38,14 +38,21 @@ const pageTitle = '关于'
       {
         booksRead.map((book) => (
           <li>
-            {book.status == true ? <s>{book.name}</s> : <span>{book.name}</span>}
-            _
-            <span>{book.description}</span>
+            {book.status == true ? <s>{book.name}</s> : <span>{book.name}</span>}_<span>{book.description}</span>
           </li>
         ))
       }
     </ul>
   </details>
+
+  <div id="passwordModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" id="closeButton">&times;</span>
+      <p>请输入密码以查看内容：</p>
+      <input type="password" id="passwordInput" placeholder="请输入密码" />
+      <button id="submitPassword">提交</button>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
@@ -83,9 +90,89 @@ const pageTitle = '关于'
   details[open] summary:after {
     content: '-';
   }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    background-color: #16161a;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #7f5af0;
+    width: 300px;
+    text-align: center;
+  }
+
+  .close-button {
+    color: #808080;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* 输入框样式 */
+  #passwordInput {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  #passwordInput:focus {
+    border-color: #5b9bd5;
+    box-shadow: 0 0 5px rgba(91, 155, 213, 0.5);
+    outline: none;
+  }
+
+  /* 按钮样式 */
+  #submitPassword {
+    width: 100%;
+    padding: 10px;
+    background-color: #5b9bd5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  #submitPassword:hover {
+    background-color: #4a8bc2;
+  }
+
+  #submitPassword:active {
+    background-color: #3e79a8;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
 </style>
 
 <script>
+  // 处理details的互斥逻辑
   const reposList = document.getElementById('repos')
   const detailsElements = reposList.getElementsByTagName('details')
 
@@ -98,4 +185,37 @@ const pageTitle = '关于'
       }
     })
   }
+
+  // 验证弹窗逻辑
+  const normalLink = document.getElementById('normal')
+  const passwordModal = document.getElementById('passwordModal')
+  const closeButton = document.getElementById('closeButton')
+  const submitPassword = document.getElementById('submitPassword')
+
+  normalLink.addEventListener('click', (event) => {
+    event.preventDefault() // 阻止默认跳转行为
+    passwordModal.style.display = 'block' // 显示弹窗
+  })
+
+  closeButton.addEventListener('click', () => {
+    passwordModal.style.display = 'none' // 关闭弹窗
+  })
+
+  submitPassword.addEventListener('click', () => {
+    const correctPassword = 'kok-s0s' // 设置正确的密码
+    const inputPassword = (document.getElementById('passwordInput') as HTMLInputElement).value
+
+    if (inputPassword === correctPassword) {
+      window.location.href = '/roadmap' // 跳转到目标页面
+    } else {
+      alert('密码错误，请重试！')
+    }
+  })
+
+  // 点击窗口外部关闭弹窗
+  window.addEventListener('click', (event) => {
+    if (event.target === passwordModal) {
+      passwordModal.style.display = 'none'
+    }
+  })
 </script>
