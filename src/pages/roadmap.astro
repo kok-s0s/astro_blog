@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/Base.astro'
 import '../styles/roadmap.css'
 
 const pageTitle = '路'
+const knowledgeElementPosts = await Astro.glob('./posts/knowledge_element/*.md')
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -10,10 +11,54 @@ const pageTitle = '路'
   <blockquote>
     <p>虽说是工作，但我想找到乐趣</p>
   </blockquote>
+  <h2>知识元</h2>
+  <p>实际开发会常用到的一些知识点（不限语言）</p>
+  {
+    knowledgeElementPosts.map((post) => (
+      <details>
+        <summary>{post.frontmatter.title}</summary>
+        <div class="post-content">
+          <post.Content />
+        </div>
+      </details>
+    ))
+  }
 </BaseLayout>
 
 <style>
   #bird {
     width: 50%;
+  }
+
+  .post-content {
+    background-color: #16161a; /* 柔和的背景色 */
+    border: 1px solid #7f5af0; /* 细的边框 */
+    border-radius: 16px; /* 圆角边框 */
+    padding: 20px; /* 内边距 */
+    margin: 10px 0; /* 上下外边距 */
+    line-height: 1.6; /* 行高 */
+    font-family: 'Arial', sans-serif; /* 字体 */
+    color: #333; /* 字体颜色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微的阴影效果 */
+  }
+
+  .post-content h1,
+  .post-content h2,
+  .post-content h3 {
+    color: #555; /* 标题颜色 */
+  }
+
+  .post-content a {
+    color: #1e90ff; /* 链接颜色 */
+    text-decoration: none; /* 去掉下划线 */
+  }
+
+  .post-content a:hover {
+    text-decoration: underline; /* 悬停时添加下划线 */
+  }
+
+  .post-content img {
+    max-width: 100%; /* 图片宽度不超过容器宽度 */
+    border-radius: 4px; /* 图片圆角 */
   }
 </style>
