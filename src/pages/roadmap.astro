@@ -4,6 +4,7 @@ import '../styles/roadmap.css'
 
 const pageTitle = '路'
 const knowledgeElementPosts = await Astro.glob('./posts/knowledge_element/*.md')
+const scatteredPosts = await Astro.glob('./posts/scattered/*.md')
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -25,18 +26,40 @@ const knowledgeElementPosts = await Astro.glob('./posts/knowledge_element/*.md')
       ))
     }
   </div>
+  <p>无法说常存于大脑肌肉记忆中的（GPT生成）</p>
+  <div id="scattered">
+    {
+      scatteredPosts.map((post) => (
+        <details>
+          <summary>{post.frontmatter.title}</summary>
+          <div class="post-content">
+            <post.Content />
+          </div>
+        </details>
+      ))
+    }
+  </div>
 </BaseLayout>
 
 <script>
   // 处理details的互斥逻辑
   const reposList = document.getElementById('knowledge-element')
-  const detailsElements = reposList.getElementsByTagName('details')
+  const scatteredList = document.getElementById('scattered')
 
-  for (const details of detailsElements) {
-    details.addEventListener('click', () => {
-      for (const otherDetails of detailsElements) {
-        if (otherDetails !== details) {
-          otherDetails.removeAttribute('open')
+  // 合并两个列表中的所有 details 元素
+  const allDetailsElements = [
+    ...reposList.getElementsByTagName('details'),
+    ...scatteredList.getElementsByTagName('details'),
+  ]
+
+  // 处理互斥逻辑
+  for (const details of allDetailsElements) {
+    details.addEventListener('toggle', () => {
+      if (details.open) {
+        for (const otherDetails of allDetailsElements) {
+          if (otherDetails !== details) {
+            otherDetails.removeAttribute('open')
+          }
         }
       }
     })
