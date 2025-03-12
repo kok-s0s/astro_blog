@@ -1,7 +1,8 @@
 ---
 layout: ../../layouts/Post.astro
 title: '用 #ifndef 替换 #pragma once'
-pubDate: 2023-03-02
+pubDate: 2023-03-01
+updatedDate: 2023-03-02
 description: '需要重复处理的文件过多了，就别 Ctrl C、Ctrl V 了,写点 Python 最合适了。'
 author: 'kok-s0s'
 image:

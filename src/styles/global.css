@@ -60,6 +60,20 @@ p {
   line-height: 1.8;
 }
 
+p.time {
+  line-height: 1.4;
+}
+
+.time {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+}
+
+.time b {
+  text-align: right;
+}
+
 a {
   text-decoration: none;
 }
