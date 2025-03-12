@@ -42,7 +42,7 @@ export const repos = [
 ]
 
 export const booksRead = [
-  { status: false, name: 'Crafting Interpreters', description : '刚开始！'},
+  { status: false, name: 'Crafting Interpreters', description : '搁置中'},
   { status: true, name: '活文档 与代码共同演进', description: '浅读，不推荐！' },
   { status: true, name: '重构 改善既有代码的设计', description: '翻完，推荐！' },
   { status: true, name: 'Clean C++', description: '读完且记录，推荐！' },
