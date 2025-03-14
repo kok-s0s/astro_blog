@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: 'Qt Dev'
 pubDate: 2024-08-06
-updatedDate: 2024-03-09
+updatedDate: 2025-03-14
 description: '已经使用这门语言做过不少的项目了，写篇文章记录下一些，好吧，直接贴和 GPT 问答过来了 ~~~'
 author: 'kok-s0s'
 image:
@@ -341,6 +341,16 @@ void changeLanguage(const QString &lang) {
 ```sh
 git add translations/*.ts
 git commit -m "Update translations"
+```
+
+#### **（6）想要在生成的 .ts 文件中不显示 location 字段的数据**
+
+修改 `.pro` 文件，在项目的 `.pro` 文件中添加：
+
+```pro
+lupdate_only {
+    CONFIG += lrelease_no_location
+}
 ```
 
 ---
