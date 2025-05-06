@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: 'Qt Dev'
 pubDate: 2024-08-06
-updatedDate: 2025-03-14
+updatedDate: 2025-05-06
 description: '已经使用这门语言做过不少的项目了，写篇文章记录下一些，好吧，直接贴和 GPT 问答过来了 ~~~'
 author: 'kok-s0s'
 image:
@@ -11,6 +11,102 @@ image:
 tags: ['Qt', 'C++']
 ---
 
+## QT qmake 如何做到和 CMake 一样简洁明了
+
+在 Qt 项目开发中，`qmake` 虽然使用 `.pro` 文件看起来简单，但和现代的 `CMake` 相比，确实缺乏模块化、语义清晰、跨平台依赖自动化等特性。通过一些**结构优化和技巧**，可以让 qmake 的使用更接近 CMake 的整洁性和可维护性。
+
+### 1. **使用 `.pri` 文件进行模块划分（类似 CMake 的 `add_subdirectory()`）**
+
+将不同模块的源码、头文件、依赖、配置等放入各自的 `.pri` 文件，然后在主 `.pro` 中 `include()`：
+
+```qmake
+# main.pro
+TEMPLATE = app
+TARGET = my_app
+
+include(src/core/core.pri)
+include(src/gui/gui.pri)
+```
+
+例如 `core.pri`:
+
+```qmake
+HEADERS += \
+    $$PWD/core.h
+
+SOURCES += \
+    $$PWD/core.cpp
+```
+
+---
+
+### 2. **使用变量封装通用配置（模拟 CMake 的函数/宏）**
+
+```qmake
+defineReplace(pkgConfigLibs) {
+    return($$system(pkg-config --libs $$1))
+}
+
+LIBS += $$pkgConfigLibs(opencv4)
+```
+
+也可以写一个 `common.pri`：
+
+```qmake
+CONFIG += c++17
+DEFINES += QT_DEPRECATED_WARNINGS
+```
+
+---
+
+### 3. **简洁设置编译选项（兼容 MSVC / GCC）**
+
+```qmake
+QMAKE_CXXFLAGS += -Wall -Wextra
+win32:QMAKE_CXXFLAGS += /permissive- /W4
+```
+
+或者放进一个 `compiler_settings.pri` 里全局引用。
+
+---
+
+### 4. **统一资源管理（类似 CMake `target_sources()`）**
+
+```qmake
+RESOURCES += resources/app.qrc
+```
+
+或封装在模块 `.pri` 文件中。
+
+---
+
+### 5. **借助工具生成 `.pro` 文件（类似自动化 `CMakeLists.txt`）**
+
+可以写个 Python 脚本自动扫描目录，生成 `.pri` / `.pro` 文件结构，保持一致性。
+
+---
+
+### 6. **考虑迁移到 `qmake + cmake hybrid` 模式**
+
+Qt 5.15+ 已原生支持 CMake，若项目逐渐增大，推荐迁移：
+
+```cmake
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+target_link_libraries(my_app Qt5::Core Qt5::Widgets)
+```
+
+---
+
+### 总结
+
+| 功能     | qmake 实现方式       | 对应 CMake                     |
+| -------- | -------------------- | ------------------------------ |
+| 模块划分 | `.pri` + `include()` | `add_subdirectory()`           |
+| 通用配置 | `common.pri`         | `include()`                    |
+| 条件编译 | `win32:` 等          | `if(WIN32)`                    |
+| 外部库   | `pkg-config` 调用    | `find_package()`               |
+| 构建控制 | `CONFIG`, `DEFINES`  | `target_compile_definitions()` |
+
 ## Qt 应用在多语言环境下保持良好的 UI 体验
 
 在多语言支持中，不同语言的文本长度可能会导致界面显示不全的问题，通常可以通过以下几种方式处理：
@@ -18,31 +114,39 @@ tags: ['Qt', 'C++']
 ---
 
 ### **1. 使用 `QLayout` 自动调整布局**
+
 Qt 的 `QLayout`（如 `QVBoxLayout`、`QHBoxLayout`、`QGridLayout`）可以自动调整控件大小，避免文本被裁剪。
 
 ✅ **解决方案**：
+
 - **避免使用 `setFixedSize()`**，改用 `setMinimumSize()` 和 `setSizePolicy()`
 - **使用 `QSizePolicy::Expanding` 让控件自动扩展**
 
 **示例：**
+
 ```cpp
 label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 ```
+
 这样，`label` 在需要时会自动扩展，而不会固定大小导致内容裁剪。
 
 ---
 
 ### **2. 让 `QLabel` 自动换行**
+
 如果你的界面中有 `QLabel` 需要适应不同语言的文本长度，可以让它自动换行：
 
 ✅ **解决方案**：
+
 ```cpp
 label->setWordWrap(true);
 ```
+
 或者 QSS 方式：
+
 ```css
 QLabel {
-    qproperty-wordWrap: true;
+  qproperty-wordwrap: true;
 }
 ```
 
@@ -51,9 +155,11 @@ QLabel {
 ---
 
 ### **3. 适配不同语言的字体**
+
 不同语言的字体可能宽度不一样，比如日语/中文比英文更紧凑，而德语单词通常较长。
 
 ✅ **解决方案**：
+
 - **使用不同的字体**（例如 `Noto Sans` 系列支持多语言）
 - **动态调整字体大小**
 
@@ -68,9 +174,11 @@ if (currentLanguage == "zh") {
 ---
 
 ### **4. 允许 `QLabel` 省略超长文本**
+
 如果希望文本超出控件范围时显示省略号（`...`），可以使用 `setElideMode()`（仅适用于 `QLabel` 或 `QPushButton` 这样的控件）。
 
 ✅ **解决方案**：
+
 ```cpp
 label->setTextFormat(Qt::PlainText);
 label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -80,16 +188,19 @@ label->setText(elidedText);
 ```
 
 **QSS 方式**：
+
 ```css
 QLabel {
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 ```
 
 ---
 
 ### **5. 预留足够空间，并使用 `setMinimumWidth()`**
+
 如果某些语言的文本普遍较长，可以为 `QLabel`、`QPushButton` 预留更大的 `minimumWidth`，例如：
+
 ```cpp
 if (currentLanguage == "de") {
     label->setMinimumWidth(200);
@@ -97,26 +208,33 @@ if (currentLanguage == "de") {
     label->setMinimumWidth(150);
 }
 ```
+
 这样，德语界面自动比英文或中文界面更宽一些，避免内容溢出。
 
 ---
 
 ### **6. 允许界面伸缩**
+
 可以设置 `QWidget` 的 `setMinimumSize()`，让整个界面可以伸缩，以适应不同语言的长度：
+
 ```cpp
 this->setMinimumSize(800, 600);
 ```
+
 配合 `QLayout`，界面可以自动调整大小，而不是固定尺寸导致显示不全。
 
 ---
 
 ### **7. 让 `QPushButton` 自适应文本**
+
 如果按钮的文本因语言不同而长度不同，`QPushButton` 可能显示不全。可以使用 `adjustSize()` 让按钮自动适应内容：
+
 ```cpp
 button->adjustSize();
 ```
 
 **或者使用 `QSizePolicy`**：
+
 ```cpp
 button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 ```
@@ -124,7 +242,9 @@ button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 ---
 
 ### **8. 适配不同语言的 QSS**
+
 如果你使用 QSS，可以针对不同语言加载不同的样式：
+
 ```cpp
 QString qssFile = (currentLanguage == "zh") ? ":/styles/style_zh.qss" : ":/styles/style_en.qss";
 loadQss(qssFile);
@@ -133,14 +253,14 @@ loadQss(qssFile);
 ---
 
 ### **总结**
-| 问题 | 解决方案 |
-|------|--------|
-| 文字过长超出控件 | `setWordWrap(true)`（自动换行）或 `elidedText()`（省略号） |
-| 控件尺寸固定导致内容被裁剪 | 使用 `QSizePolicy::Expanding` 让控件自适应 |
-| 按钮文本过长显示不全 | `button->adjustSize();` 或 `setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred)` |
-| 不同语言字体不同影响布局 | `label->setFont(QFont(...))` 适配不同语言的字体 |
-| 整个窗口固定大小导致排版问题 | `setMinimumSize()` 允许窗口适应内容 |
 
+| 问题                         | 解决方案                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------ |
+| 文字过长超出控件             | `setWordWrap(true)`（自动换行）或 `elidedText()`（省略号）                                 |
+| 控件尺寸固定导致内容被裁剪   | 使用 `QSizePolicy::Expanding` 让控件自适应                                                 |
+| 按钮文本过长显示不全         | `button->adjustSize();` 或 `setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred)` |
+| 不同语言字体不同影响布局     | `label->setFont(QFont(...))` 适配不同语言的字体                                            |
+| 整个窗口固定大小导致排版问题 | `setMinimumSize()` 允许窗口适应内容                                                        |
 
 ## 有弹窗保持界面响应
 
