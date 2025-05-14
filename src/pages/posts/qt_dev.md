@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: 'Qt Dev'
 pubDate: 2024-08-06
-updatedDate: 2025-05-06
+updatedDate: 2025-05-14
 description: '已经使用这门语言做过不少的项目了，写篇文章记录下一些，好吧，直接贴和 GPT 问答过来了 ~~~'
 author: 'kok-s0s'
 image:
@@ -10,6 +10,86 @@ image:
   alt: 'Qt'
 tags: ['Qt', 'C++']
 ---
+
+## QWidget::update() 奔溃问题
+
+典型的“跨平台行为差异引发的非确定性崩溃”
+
+**Windows 与 Linux 下 Qt 信号与槽执行时机、控件重绘机制以及内存分配行为存在差异。**
+
+BUG 相关代码
+
+```cpp
+connect(ui->cmbWobjIndex, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int index) {
+    ...
+    this->update();
+    ...
+});
+```
+
+### 1. Qt 在不同平台上控件行为细节不同（尤其是 `QComboBox`）
+
+#### 在 **Windows** 下：
+
+- `QComboBox::clear()` + `addItem()` 会**自动选中第一个条目**
+- 但 **不会立即触发 `currentIndexChanged()`**（有一定延迟，或被 block）
+- 所以连接的槽函数不会立即执行
+
+#### 在 **Linux (特别是使用 X11 / Wayland)**：
+
+- 由于 Qt 使用的是更原始的图形系统（非原生控件），重建 combo box 条目时**很可能立即触发 `currentIndexChanged()`**
+- 这个时候的 lambda 会立即触发，**此时 UI 还在 rebuild，m_scene 中 item 也可能还未准备好或被清理中**
+
+**→ 导致在 `update()` 时访问了一个不完整状态下的 QWidget，直接导致 `SIGSEGV`。**
+
+---
+
+### 2. 内存布局行为不同
+
+Linux 下：
+
+- Qt 和底层的 `glibc` 分配策略不同，释放内存后指针更容易变成“野指针”
+- 内存没有被立即回收/置空，所以对已 delete 对象的访问行为**不是 crash 就是 UB（未定义行为）**
+
+Windows 下：
+
+- Visual C++ 的调试堆对 `delete` 后的指针有保护机制（如写入 `0xCCCCCCCC`）
+- 很多时候访问了释放对象的成员，虽然是 bug，但会“默默通过”，甚至没立即崩溃
+
+---
+
+### 3. Qt 的 `QWidget::update()` 在 Linux 平台更加依赖底层绘图栈
+
+Linux Qt 实现通常使用 `QXcbBackingStore`（X11）或 `QWaylandWindow`（Wayland）：
+
+- 这些窗口系统比 Windows 的 GDI 更“原始”
+- 如果触发 `update()` 的时候控件正在重建（尤其是 QGraphicsItem 在变更），很可能会造成 **绘图线程与 UI 操作冲突**
+
+### 结论总结
+
+| 平台    | 是否崩溃  | 原因                                                                         |
+| ------- | --------- | ---------------------------------------------------------------------------- |
+| Windows | ❌ 不崩溃 | `update()` 时对象虽然已析构，但未被立即访问或触发，行为未爆发                |
+| Linux   | ✅ 崩溃   | `clear()` 导致 `currentIndexChanged()` 被立即触发，`update()` 引用到悬空对象 |
+
+### 修复策略（跨平台安全）
+
+`currentIndexChanged` 信号 --> `activated`
+
+```cpp
+connect(ui->cmbWobjIndex, QOverload<int>::of(&QComboBox::activated), ...);
+```
+
+最实用和简洁的规避方法，**推荐**。
+
+#### 信号触发情况
+
+| 情况                                        | `activated()` | `currentIndexChanged()` |
+| ------------------------------------------- | ------------- | ----------------------- |
+| 用户点击选择项                              | ✅ 是         | ✅ 是                   |
+| 用户键盘选择项（确认）                      | ✅ 是         | ✅ 是                   |
+| 程序调用 `setCurrentIndex()`                | ❌ 否         | ✅ 是                   |
+| 执行 `clear()` / `addItem()` 导致选中项变化 | ❌ 否         | ✅ 是                   |
 
 ## QT qmake 如何做到和 CMake 一样简洁明了
 
