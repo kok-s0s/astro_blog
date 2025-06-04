@@ -59,3 +59,60 @@ tags: ['Code Review']
 
 - 在代码注释或 PR Review 中标注“此处涉及多线程访问，已加锁”。
 - 出现崩溃/偶现 bug 时，特别是访问数据内存相关的，可优先回顾是否涉及多线程共享数据访问。
+
+## Code Format && Git commit
+
+> 我现在有一个浅薄的观点，就是一个程序员吧，如果会 code format，且 Git 的 commit 信息写的条理清晰，就感觉已经超过 75% 左右的程序员了。
+
+### Code Format 体现基础素养
+
+统一的代码格式意味着：
+
+- 代码可读性高；
+
+- 减少了代码 review 的沟通成本；
+
+- 有助于长期维护；
+
+实际开发中，有太多人不关心这一点，或者仅仅依赖 IDE 的默认格式，导致团队代码风格混乱。
+
+会熟练使用 clang-format、.editorconfig 或 prettier 的人，真的不多。
+
+### Commit 信息清晰是协作力的体现
+
+清晰的 commit message（如遵循 Conventional Commits）能让团队成员快速理解每一次改动的目的。
+
+也体现了开发者的思考方式：是否有结构、有总结力、有文档意识。
+
+在大型团队或 CI/CD 中，良好的 commit 甚至直接影响上线节奏与回滚效率。
+
+> 上述这两个习惯是“可见的内功”，很多高级技能是“看不出来”的，比如底层优化、架构设计；
+> 而格式与 commit 这种，是你一打开 repo 就能看见的。
+
+### 举个栗子
+
+两个 PR：
+
+- **A：**
+
+  ```cpp
+  void foo(int x){if(x>0){bar(x);}}
+  ```
+
+  Commit: `fix bug`
+
+- **B：**
+
+  ```cpp
+  void foo(int x)
+  {
+      if (x > 0)
+      {
+          bar(x);
+      }
+  }
+  ```
+
+  Commit: `fix: call bar only when x > 0 to avoid crash (#134)`
+
+会更信任哪一个？毫无疑问是 B。
