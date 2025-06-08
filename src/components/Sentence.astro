@@ -8,6 +8,8 @@
     sentences.push(...item.li_texts)
   })
 
+  console.log(sentences)
+
   let storedIndex = parseInt(localStorage.getItem('storedIndex')) || 0
   if (document.getElementById('sentence') !== null)
     document.getElementById('sentence').textContent = sentences[storedIndex]
