@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: 'Code Review 也是一门技术活'
 pubDate: 2025-05-19
-updatedDate: 2025-05-19
+updatedDate: 2025-06-09
 description: '即将成为三年工作经验的码仔，记录下一些 Code Review 环节强烈建议做的事情，在开发阶段严格自查，是最经济的投入，如果到了实际产品上线后才暴漏，危已危已。'
 author: 'kok-s0s'
 image:
@@ -116,3 +116,57 @@ tags: ['Code Review']
   Commit: `fix: call bar only when x > 0 to avoid crash (#134)`
 
 会更信任哪一个？毫无疑问是 B。
+
+## 面向对象代码 Code Review Checklist（C++ / Qt）
+
+### 类设计与职责（Class Design）
+
+- 类是否只有一个清晰的职责？（SRP）
+- 类是否过于臃肿？是否应该拆分？
+- 类命名是否能直观表达其作用？
+
+### 封装与访问控制（Encapsulation）
+
+- 是否存在不必要的 `public` 成员？
+- 是否恰当地使用了 `private` / `protected`？
+- 数据成员是否隐藏在类内部，并通过 getter/setter 暴露？
+
+### 依赖管理与解耦（Dependency & Coupling）
+
+- 是否硬编码依赖其他类？是否可以通过接口或构造函数注入？
+- 是否存在隐藏的依赖（如全局单例、静态变量等）？
+- 是否便于 mock / 单元测试？
+
+### 继承 vs 组合（Inheritance vs Composition）
+
+- 当前的继承结构是否合理？是否遵循了 Liskov 替换原则（LSP）？
+- 是否可以使用组合替代继承？
+- Qt 中 QObject 的继承是否必要？是否破坏了 QObject 树？
+
+### 构造函数与资源管理（RAII）
+
+- 是否使用了智能指针或 Qt 的父子机制来管理资源？
+- 构造函数是否承担了过多初始化工作？
+- 是否正确实现了析构函数释放资源？
+
+### 可读性与命名
+
+- 命名是否清晰、表达明确？
+- 是否存在 `Helper`, `Utils`, `Manager` 等过于宽泛的类名？
+- 函数是否过长？是否可以拆分为小函数？
+
+### 结构与模块边界
+
+- 该类/模块是否有明确的输入输出边界？
+- 是否与 UI / 业务 / IO 层紧耦合？
+- 是否便于在单元测试或集成测试中使用？
+
+### Qt 特有建议
+
+- signal/slot 是否职责清晰？是否造成逻辑散乱？
+- 是否过度使用 lambda slot，导致调试困难？
+- 是否正确使用 Qt 的 parent 指针管理对象生命周期？
+
+---
+
+如果以上大部分都做到了，那么所编写的 OOP 代码就已经有很高的结构性和可维护性了。
