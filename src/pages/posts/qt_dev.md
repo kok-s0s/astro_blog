@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: 'Qt Dev'
 pubDate: 2024-08-06
-updatedDate: 2025-05-16
+updatedDate: 2025-09-22
 description: '已经使用这门语言做过不少的项目了，写篇文章记录下一些，好吧，直接贴和 GPT 问答过来了 ~~~'
 author: 'kok-s0s'
 image:
@@ -10,6 +10,226 @@ image:
   alt: 'Qt'
 tags: ['Qt', 'C++']
 ---
+
+## Qt Windows 唤起触摸键盘
+
+> 在 Windows 11 的桌面 Qt 应用中，点击 `QLineEdit`、`QTextEdit` 等输入框时，并不会自动唤起系统触摸键盘。
+> 解决这一问题，可以封装一个 `KeyboardMgr` 类，通过调用系统 **TabTip.exe** 来实现焦点进入时弹出键盘、焦点离开时关闭键盘。
+
+---
+
+### 1. 实现思路
+
+- **TabTip.exe** 是系统触摸键盘的进程，路径为：
+
+  ```
+  C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe
+  ```
+
+- 当输入框获得焦点时，启动 `TabTip.exe`，让触摸键盘弹出。
+
+- 当输入框失去焦点时，通过 `FindWindow` + `SendMessage` 查找并关闭触摸键盘。
+
+- 使用 Qt 的 **事件过滤器 (eventFilter)** 捕获 `FocusIn` 事件，结合控件类型判断是否需要弹出键盘。
+
+### 2. 代码实现
+
+<details><summary>keyboardmgr.h</summary>
+
+```cpp
+#ifndef KEYBOARDMGR_H
+#define KEYBOARDMGR_H
+
+#include <QObject>
+#include <QVector>
+
+class KeyboardMgr : public QObject {
+Q_OBJECT
+public:
+KeyboardMgr(void);
+
+// 添加需要支持键盘的控件基类名称（如 QLineEdit, QTextEdit）
+void addEditWidget(const QString \_className);
+
+protected:
+bool eventFilter(QObject _\_watched, QEvent _\_event);
+
+private:
+void showKeyboard(void);
+void hideKeyboard(void);
+void keyBoardCtrl(QObject \*\_obj);
+
+private:
+QVector<QString> widgets\_; // 存放要监听的控件类型
+};
+
+#endif // KEYBOARDMGR_H
+```
+
+</details>
+
+<details><summary>keyboardmgr.cpp</summary>
+
+```cpp
+#include "keyboardmgr.h"
+
+#include <Windows.h>
+#include <QApplication>
+#include <QEvent>
+
+#pragma comment(lib, "User32.lib")
+
+const char* k_TabTip = "IPTIP_Main_Window";
+const char* k_TabTipPath = "C:\\Program Files\\Common Files\\Microsoft Shared\\ink\\TabTip.exe";
+
+KeyboardMgr::KeyboardMgr(void) {
+  // 安装全局事件过滤器
+  qApp->installEventFilter(this);
+}
+
+void KeyboardMgr::addEditWidget(const QString _className) {
+  if (!_className.isEmpty()) {
+    widgets_.append(_className);
+  }
+}
+
+void KeyboardMgr::showKeyboard(void) {
+  QString command("open");
+  QString keyboardpath(k_TabTipPath);
+  ShellExecuteW(
+      nullptr,
+      reinterpret_cast<LPCWSTR>(command.utf16()),
+      reinterpret_cast<LPCWSTR>(keyboardpath.utf16()),
+      nullptr, NULL,
+      SW_SHOWNORMAL);
+}
+
+void KeyboardMgr::hideKeyboard(void) {
+  HWND hwnd = FindWindowW(reinterpret_cast<LPCWSTR>(QString::fromUtf8(k_TabTip).utf16()), nullptr);
+  if (hwnd != nullptr) {
+    SendMessage(hwnd, WM_SYSCOMMAND, SC_CLOSE, 0);
+  }
+}
+
+void KeyboardMgr::keyBoardCtrl(QObject* _obj) {
+  if (_obj == nullptr) {
+    return;
+  }
+
+  bool find = false;
+  foreach (const auto& widget, widgets_) {
+    if (_obj->isWidgetType() && _obj->inherits(widget.toLocal8Bit().data())) {
+      find = true;
+      break;
+    }
+  }
+
+  if (find) {
+    showKeyboard();
+  } else {
+    hideKeyboard();
+  }
+}
+
+bool KeyboardMgr::eventFilter(QObject* _watched, QEvent* _event) {
+  if (_event == nullptr) {
+    return false;
+  }
+
+  if (_watched->isWidgetType() && _event->type() == QEvent::FocusIn) {
+    keyBoardCtrl(_watched);
+  }
+  return QObject::eventFilter(_watched, _event);
+}
+```
+
+</details>
+
+### 3. 使用方法
+
+在 `main.cpp` 或主窗口初始化代码里添加：
+
+```cpp
+#include "keyboardmgr.h"
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    // 创建键盘管理器
+    KeyboardMgr mgr;
+    // 注册需要支持键盘的控件类型
+    mgr.addEditWidget("QLineEdit");
+    mgr.addEditWidget("QTextEdit");
+
+    MainWindow w;
+    w.show();
+
+    return app.exec();
+}
+```
+
+这样，当点击 `QLineEdit` 或 `QTextEdit` 时，系统触摸键盘会自动弹出；
+离开这些控件时，键盘自动关闭。
+
+### 4. 类图
+
+```mermaid
+classDiagram
+    class KeyboardMgr {
+        - QVector<QString> widgets_
+        + KeyboardMgr()
+        + void addEditWidget(QString className)
+        + bool eventFilter(QObject* watched, QEvent* event)
+        - void showKeyboard()
+        - void hideKeyboard()
+        - void keyBoardCtrl(QObject* obj)
+    }
+
+    QObject <|-- KeyboardMgr
+```
+
+### 5. 事件流程图
+
+```mermaid
+flowchart TD
+    A[应用启动] --> B[KeyboardMgr 安装全局事件过滤器]
+    B --> C[用户点击输入框]
+    C --> D{FocusIn 事件?}
+    D -- 否 --> E[忽略事件]
+    D -- 是 --> F[判断控件类型是否在 widgets_ 中]
+    F -- 否 --> G[调用 hideKeyboard() 关闭键盘]
+    F -- 是 --> H[调用 showKeyboard() 启动 TabTip.exe]
+    H --> I[系统触摸键盘弹出]
+```
+
+### 6. 使用场景时序图
+
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant Widget as QLineEdit
+    participant KeyboardMgr as KeyboardMgr
+    participant Windows as Windows 系统
+
+    User->>Widget: 点击输入框
+    Widget->>KeyboardMgr: 触发 FocusIn 事件
+    KeyboardMgr->>KeyboardMgr: 判断是否在 widgets_ 列表
+    alt 在列表中
+        KeyboardMgr->>Windows: ShellExecuteW 打开 TabTip.exe
+        Windows->>User: 显示触摸键盘
+    else 不在列表中
+        KeyboardMgr->>Windows: FindWindow + SendMessage 关闭键盘
+    end
+```
+
+### 7. 总结
+
+- `KeyboardMgr` 利用了 **事件过滤器** 捕获控件焦点变化。
+- 通过 Windows API 调用 `TabTip.exe`，实现了触摸键盘的显隐控制。
+- 可根据项目需要，向 `widgets_` 添加不同的可编辑控件类型。
+
+该方案适用于 **Qt5 桌面应用**，在 **Windows 10/11** 工业触摸屏环境下稳定可靠。
 
 ## 多线程操作数据而导致的奔溃问题
 
