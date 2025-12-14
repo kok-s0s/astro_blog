@@ -42,9 +42,10 @@ export const repos = [
 ]
 
 export const booksRead = [
-  { status: false, name: 'Crafting Interpreters', description : '搁置中'},
-  { status: true, name: '活文档 与代码共同演进', description: '浅读，不推荐！' },
-  { status: true, name: '重构 改善既有代码的设计', description: '翻完，推荐！' },
-  { status: true, name: 'Clean C++', description: '读完且记录，推荐！' },
-  { status: true, name: 'Linux Shell 脚本攻略', description: '看一半弃了，用 ChatGPT 生成脚本嘎嘎香！' }
+  { status: false, name: '《Designing Data-Intensive Application》', description: '不懂数据库的全栈工程师不是好架构师' },
+  { status: false, name: '《Crafting Interpreters》', description : '搁置中'},
+  { status: true, name: '《活文档 与代码共同演进》', description: '浅读，不推荐！' },
+  { status: true, name: '《重构 改善既有代码的设计》', description: '翻完，推荐！' },
+  { status: true, name: '《Clean C++》', description: '读完且记录，推荐！' },
+  { status: true, name: '《Linux Shell 脚本攻略》', description: '看一半弃了，用 ChatGPT 生成脚本嘎嘎香！' }
 ]
