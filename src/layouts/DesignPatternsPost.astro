@@ -4,9 +4,9 @@ import BaseLayout from './Base.astro'
 
 const { frontmatter } = Astro.props
 
-const cxxCreationalPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/creational_patterns/*.md')
-const cxxStructuralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/structural_patterns/*.md')
-const cxxBehavioralPatternsPosts = await Astro.glob('../pages/posts/cxx_design_patterns/behavioral_patterns/*.md')
+const cxxCreationalPatternsPosts = Object.values(import.meta.glob('../pages/posts/cxx_design_patterns/creational_patterns/*.md', { eager: true })) as any[]
+const cxxStructuralPatternsPosts = Object.values(import.meta.glob('../pages/posts/cxx_design_patterns/structural_patterns/*.md', { eager: true })) as any[]
+const cxxBehavioralPatternsPosts = Object.values(import.meta.glob('../pages/posts/cxx_design_patterns/behavioral_patterns/*.md', { eager: true })) as any[]
 const allPosts = cxxCreationalPatternsPosts.concat(cxxStructuralPatternsPosts).concat(cxxBehavioralPatternsPosts)
 let currentPostIndex = -1
 allPosts.forEach((post, index) => {

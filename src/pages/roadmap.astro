@@ -3,8 +3,8 @@ import BaseLayout from '../layouts/Base.astro'
 import '../styles/roadmap.css'
 
 const pageTitle = '路'
-const knowledgeElementPosts = await Astro.glob('./posts/knowledge_element/*.md')
-const scatteredPosts = await Astro.glob('./posts/scattered/*.md')
+const knowledgeElementPosts = Object.values(import.meta.glob('./posts/knowledge_element/*.md', { eager: true })) as any[]
+const scatteredPosts = Object.values(import.meta.glob('./posts/scattered/*.md', { eager: true })) as any[]
 ---
 
 <BaseLayout pageTitle={pageTitle}>

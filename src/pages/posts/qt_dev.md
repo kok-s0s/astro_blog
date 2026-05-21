@@ -1,4 +1,4 @@
----
+﻿---
 layout: ../../layouts/Post.astro
 title: 'Qt Dev'
 pubDate: 2024-08-06
@@ -405,7 +405,7 @@ connect(ui->cmbWobjIndex, QOverload<int>::of(&QComboBox::activated), ...);
 
 将不同模块的源码、头文件、依赖、配置等放入各自的 `.pri` 文件，然后在主 `.pro` 中 `include()`：
 
-```qmake
+```makefile
 # main.pro
 TEMPLATE = app
 TARGET = my_app
@@ -416,7 +416,7 @@ include(src/gui/gui.pri)
 
 例如 `core.pri`:
 
-```qmake
+```makefile
 HEADERS += \
     $$PWD/core.h
 
@@ -428,7 +428,7 @@ SOURCES += \
 
 ### 2. **使用变量封装通用配置（模拟 CMake 的函数/宏）**
 
-```qmake
+```makefile
 defineReplace(pkgConfigLibs) {
     return($$system(pkg-config --libs $$1))
 }
@@ -438,7 +438,7 @@ LIBS += $$pkgConfigLibs(opencv4)
 
 也可以写一个 `common.pri`：
 
-```qmake
+```makefile
 CONFIG += c++17
 DEFINES += QT_DEPRECATED_WARNINGS
 ```
@@ -447,7 +447,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 ### 3. **简洁设置编译选项（兼容 MSVC / GCC）**
 
-```qmake
+```makefile
 QMAKE_CXXFLAGS += -Wall -Wextra
 win32:QMAKE_CXXFLAGS += /permissive- /W4
 ```
@@ -458,7 +458,7 @@ win32:QMAKE_CXXFLAGS += /permissive- /W4
 
 ### 4. **统一资源管理（类似 CMake `target_sources()`）**
 
-```qmake
+```makefile
 RESOURCES += resources/app.qrc
 ```
 
@@ -945,7 +945,7 @@ lupdate MyProject.pro && lrelease MyProject.pro
 
 - 可以在 `pro` 文件中添加 `TRANSLATIONS` 变量，自动管理 `.ts` 文件：
 
-```pro
+```makefile
 TRANSLATIONS = translations/zh_CN.ts translations/en_US.ts
 ```
 
@@ -984,7 +984,7 @@ git commit -m "Update translations"
 
 修改 `.pro` 文件，在项目的 `.pro` 文件中添加：
 
-```pro
+```makefile
 lupdate_only {
     CONFIG += lrelease_no_location
 }

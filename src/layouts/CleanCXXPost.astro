@@ -4,8 +4,7 @@ import BaseLayout from './Base.astro'
 
 const { frontmatter } = Astro.props
 
-const cleanCxxPosts = await Astro.glob('../pages/posts/clean_cxx/*.md')
-const allPosts = cleanCxxPosts
+const allPosts = Object.values(import.meta.glob('../pages/posts/clean_cxx/*.md', { eager: true })) as any[]
 let currentPostIndex = -1
 allPosts.forEach((post, index) => {
   if (post.frontmatter.title === frontmatter.title) {

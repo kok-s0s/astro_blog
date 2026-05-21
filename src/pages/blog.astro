@@ -3,12 +3,12 @@ import BaseLayout from '../layouts/Base.astro'
 import OriginalBlogPost from '../components/OriginalBlogPost.astro'
 import BlogPost from '../components/BlogPost.astro'
 
-const projectPosts = await Astro.glob('./posts/*.md')
+const projectPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true })) as any[]
 projectPosts.sort((a, b) => (new Date(b.frontmatter.updatedDate) as any) - (new Date(a.frontmatter.updatedDate) as any))
-const cleanCxxPosts = await Astro.glob('./posts/clean_cxx/*.md')
-const cxxCreationalPatternsPosts = await Astro.glob('./posts/cxx_design_patterns/creational_patterns/*.md')
-const cxxStructuralPatternsPosts = await Astro.glob('./posts/cxx_design_patterns/structural_patterns/*.md')
-const cxxBehavioralPatternsPosts = await Astro.glob('./posts/cxx_design_patterns/behavioral_patterns/*.md')
+const cleanCxxPosts = Object.values(import.meta.glob('./posts/clean_cxx/*.md', { eager: true })) as any[]
+const cxxCreationalPatternsPosts = Object.values(import.meta.glob('./posts/cxx_design_patterns/creational_patterns/*.md', { eager: true })) as any[]
+const cxxStructuralPatternsPosts = Object.values(import.meta.glob('./posts/cxx_design_patterns/structural_patterns/*.md', { eager: true })) as any[]
+const cxxBehavioralPatternsPosts = Object.values(import.meta.glob('./posts/cxx_design_patterns/behavioral_patterns/*.md', { eager: true })) as any[]
 const pageTitle = '博文'
 ---
 

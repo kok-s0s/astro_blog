@@ -1,5 +1,5 @@
 {
-  "name": "@example/minimal",
+  "name": "astro-blog",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -11,10 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/preact": "3.1.0",
-    "astro": "4.1.1",
+    "@astrojs/preact": "^4.0.0",
+    "astro": "^5.0.0",
     "medium-zoom": "^1.1.0",
-    "preact": "^10.6.5",
+    "preact": "^10.25.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
   }
