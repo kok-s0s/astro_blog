@@ -1,0 +1,113 @@
+<canvas id="particles-canvas"></canvas>
+
+<style>
+  #particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement
+  const ctx = canvas.getContext('2d')!
+
+  function resize() {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+  }
+  resize()
+  window.addEventListener('resize', resize, { passive: true })
+
+  const COUNT = window.innerWidth < 768 ? 20 : 40
+  const isLight = () => document.documentElement.classList.contains('light')
+
+  interface P {
+    x: number; y: number; size: number
+    vx: number; vy: number; opacity: number
+  }
+
+  function spawn(light: boolean): P {
+    if (light) {
+      return {
+        x: Math.random() * canvas.width,
+        y: -10,
+        size: Math.random() * 2.5 + 1,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: Math.random() * 0.7 + 0.3,
+        opacity: Math.random() * 0.45 + 0.2,
+      }
+    }
+    return {
+      x: Math.random() * canvas.width,
+      y: canvas.height + 10,
+      size: Math.random() * 1.6 + 0.6,
+      vx: (Math.random() - 0.5) * 1.0,
+      vy: -(Math.random() * 1.1 + 0.5),
+      opacity: Math.random() * 0.55 + 0.25,
+    }
+  }
+
+  const particles: P[] = Array.from({ length: COUNT }, () => {
+    const p = spawn(isLight())
+    p.y = Math.random() * canvas.height
+    return p
+  })
+
+  let rafId: number
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    const light = isLight()
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i]
+      p.x += p.vx
+      p.y += p.vy
+
+      if (light) {
+        p.vx += (Math.random() - 0.5) * 0.04
+        if (p.y > canvas.height + 10) { particles[i] = spawn(true); continue }
+        ctx.save()
+        ctx.globalAlpha = p.opacity
+        ctx.fillStyle = '#cebff0'
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.restore()
+      } else {
+        p.opacity -= 0.0035
+        if (p.y < -10 || p.opacity <= 0) { particles[i] = spawn(false); continue }
+        ctx.save()
+        ctx.globalAlpha = p.opacity
+        ctx.shadowBlur = 5
+        ctx.shadowColor = '#e8722a'
+        ctx.fillStyle = '#e8722a'
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.restore()
+      }
+    }
+    rafId = requestAnimationFrame(tick)
+  }
+  tick()
+
+  // 主题切换时重置粒子位置
+  new MutationObserver(() => {
+    const light = isLight()
+    for (let i = 0; i < particles.length; i++) {
+      particles[i] = spawn(light)
+      particles[i].y = Math.random() * canvas.height
+    }
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId)
+    else tick()
+  })
+</script>

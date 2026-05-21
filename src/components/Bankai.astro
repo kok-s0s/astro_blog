@@ -1,0 +1,133 @@
+<div id="bankai-overlay" aria-hidden="true">
+  <div id="bankai-rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+  <div id="bankai-text"></div>
+</div>
+
+<style>
+  #bankai-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #bankai-overlay.active {
+    pointer-events: auto;
+    animation: bankai-fade 2.8s ease-in-out forwards;
+  }
+
+  @keyframes bankai-fade {
+    0%   { opacity: 0; }
+    8%   { opacity: 1; }
+    72%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  #bankai-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    opacity: 0;
+  }
+
+  #bankai-overlay.active .ring {
+    animation: ring-expand 2.8s ease-out forwards;
+  }
+
+  #bankai-overlay.active .ring:nth-child(2) { animation-delay: 0.15s; }
+  #bankai-overlay.active .ring:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes ring-expand {
+    0%   { width: 0;    height: 0;    opacity: 0.8; }
+    100% { width: 200vmax; height: 200vmax; opacity: 0; }
+  }
+
+  #bankai-text {
+    position: relative;
+    text-align: center;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  #bankai-overlay.active #bankai-text {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #bankai-text .main {
+    display: block;
+    font-size: clamp(4rem, 14vw, 9rem);
+    line-height: 1;
+  }
+
+  #bankai-text .sub {
+    display: block;
+    font-size: clamp(1rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.5em;
+    margin-top: 0.4em;
+    opacity: 0.85;
+  }
+</style>
+
+<script>
+  const overlay = document.getElementById('bankai-overlay')!
+  const textEl = document.getElementById('bankai-text')!
+  const rings = document.querySelectorAll<HTMLElement>('.ring')
+
+  let buffer = ''
+  let clearTimer: ReturnType<typeof setTimeout>
+
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return
+    if (e.key.length !== 1) return
+    buffer += e.key.toLowerCase()
+    buffer = buffer.slice(-6)
+    clearTimeout(clearTimer)
+    clearTimer = setTimeout(() => { buffer = '' }, 2000)
+    if (buffer.endsWith('bankai')) triggerBankai()
+  })
+
+  function triggerBankai() {
+    buffer = ''
+    const light = document.documentElement.classList.contains('light')
+    const accent = light ? '#6c3fb5' : '#e8722a'
+    const glow = light ? '#c5b8e0' : '#ff9248'
+    const bg = light
+      ? 'radial-gradient(ellipse at center, #ede8f5 0%, #faf6ff 60%, rgba(250,246,255,0.96) 100%)'
+      : 'radial-gradient(ellipse at center, #2a1a0e 0%, #0e0b0a 60%, rgba(14,11,10,0.97) 100%)'
+
+    overlay.style.background = bg
+    textEl.style.color = accent
+    textEl.style.textShadow = `0 0 30px ${glow}, 0 0 70px ${accent}`
+    rings.forEach((r) => { r.style.color = accent })
+
+    textEl.innerHTML = `
+      <span class="main">卍解</span>
+      <span class="sub">${light ? '袖　白　雪' : '天锁斩月'}</span>
+    `
+
+    overlay.classList.remove('active')
+    void overlay.offsetWidth
+    overlay.classList.add('active')
+    overlay.addEventListener('animationend', () => overlay.classList.remove('active'), { once: true })
+  }
+</script>

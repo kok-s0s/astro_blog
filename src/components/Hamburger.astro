@@ -2,14 +2,40 @@
 import '../styles/hamburger.css'
 ---
 
-<div class="hamburger">
+<button class="hamburger" aria-label="菜单" aria-expanded="false">
   <span class="line"></span>
   <span class="line"></span>
   <span class="line"></span>
-</div>
+</button>
 
 <script>
-  document.querySelector('.hamburger').addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.toggle('expanded')
+  const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')!
+  const navLinks = document.querySelector<HTMLElement>('.nav-links')!
+  const backdrop = document.getElementById('nav-backdrop')!
+
+  function openNav() {
+    navLinks.classList.add('expanded')
+    hamburger.classList.add('open')
+    hamburger.setAttribute('aria-expanded', 'true')
+    backdrop.classList.add('visible')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closeNav() {
+    navLinks.classList.remove('expanded')
+    hamburger.classList.remove('open')
+    hamburger.setAttribute('aria-expanded', 'false')
+    backdrop.classList.remove('visible')
+    document.body.style.overflow = ''
+  }
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.contains('expanded') ? closeNav() : openNav()
+  })
+
+  backdrop.addEventListener('click', closeNav)
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav()
   })
 </script>

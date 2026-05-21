@@ -1,53 +1,87 @@
-.nav-links {
-  width: 60%;
-  position: fixed;
-  top: 2rem;
-  left: 20%;
-  background-color: var(--nav-accent);
+/* ── 毛玻璃遮罩 ─────────────────────────────────── */
+#nav-backdrop {
   display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+#nav-backdrop.visible {
+  display: block;
+  opacity: 1;
+}
+
+/* ── 移动端：左侧抽屉 ────────────────────────────── */
+.nav-links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  width: 220px;
+  background-color: var(--toc-bg);
+  border-right: 1px solid var(--tag-border);
+  display: flex;
+  flex-direction: column;
+  padding: 4.5rem 1.2rem 2rem;
+  gap: 0.3rem;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links.expanded {
+  transform: translateX(0);
 }
 
 .nav-links a {
   display: block;
-  text-align: center;
-  padding: 10px 0;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: bold;
+  padding: 0.65rem 0.9rem;
+  font-size: 1rem;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--heading);
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
 }
 
 .nav-links a:hover,
 .nav-links a:focus {
   color: var(--accent);
+  background: var(--code-bg);
 }
 
-.nav-links.expanded a:hover,
-.nav-links.expanded a:focus {
-  background-color: var(--nav-accent);
-  color: #fffffe;
-}
-
-.expanded {
-  display: unset;
-  z-index: 999;
-}
-
+/* ── 桌面端：行内导航 ────────────────────────────── */
 @media screen and (min-width: 636px) {
+  #nav-backdrop {
+    display: none !important;
+  }
+
   .nav-links {
-    display: flex;
     position: static;
+    height: auto;
     width: auto;
     background: none;
-    align-items: center;
-    flex-wrap: nowrap;
+    border: none;
+    padding: 0;
+    flex-direction: row;
+    transform: none;
+    gap: 0;
   }
 
   .nav-links a {
-    display: inline-block;
     padding: 8px 12px;
     font-size: 1rem;
     white-space: nowrap;
+    border-radius: 0;
+  }
+
+  .nav-links a:hover {
+    background: none;
   }
 }

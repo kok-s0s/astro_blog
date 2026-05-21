@@ -1,18 +1,36 @@
 .hamburger {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  gap: 7px;
+  gap: 6px;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0.3rem;
+  z-index: 1001;
 }
 
 .hamburger .line {
   display: block;
-  width: 33px;
-  height: 5px;
-  background-color: var(--nav-accent);
-  transition: background-color 0.25s ease;
+  width: 24px;
+  height: 2px;
+  background-color: var(--heading);
+  border-radius: 2px;
+  transition: transform 0.28s ease, opacity 0.2s ease, background-color 0.25s ease;
+  transform-origin: center;
+}
+
+/* 变 X 动画 */
+.hamburger.open .line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger.open .line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.open .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 @media screen and (min-width: 636px) {
