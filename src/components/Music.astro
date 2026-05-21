@@ -14,7 +14,7 @@ import '../styles/music.css'
   </div>
 </div>
 
-<audio id="song"></audio>
+<audio id="song" preload="none"></audio>
 
 <script>
   const playBtn = document.getElementById('player-btn') as HTMLElement
@@ -34,7 +34,10 @@ import '../styles/music.css'
   let playbackPosition = parseFloat(localStorage.getItem('playbackPosition')) || 0
 
   function playCurrentTrack(): void {
-    musicPlayer.src = musicFiles[currentTrack]
+    if (musicPlayer.src !== location.origin + musicFiles[currentTrack]) {
+      musicPlayer.src = musicFiles[currentTrack]
+      musicPlayer.load()
+    }
     musicPlayer.currentTime = playbackPosition
     musicPlayer.play()
     ctrlIcon.classList.remove('fa-play')
