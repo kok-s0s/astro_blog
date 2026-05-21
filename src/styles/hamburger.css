@@ -11,7 +11,8 @@
   display: block;
   width: 33px;
   height: 5px;
-  background-color: #7f5af0;
+  background-color: var(--nav-accent);
+  transition: background-color 0.25s ease;
 }
 
 @media screen and (min-width: 636px) {

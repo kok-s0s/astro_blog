@@ -3,7 +3,7 @@
   position: fixed;
   top: 2rem;
   left: 20%;
-  background-color: #7f5af0;
+  background-color: var(--nav-accent);
   display: none;
 }
 
@@ -25,7 +25,7 @@
 
 .nav-links.expanded a:hover,
 .nav-links.expanded a:focus {
-  background-color: #7f5af0;
+  background-color: var(--nav-accent);
   color: #fffffe;
 }
 

@@ -2,30 +2,36 @@
   box-sizing: border-box;
 }
 
+/* ── 黑崎一护 · 暗色 ─────────────────────────────── */
 :root {
-  --bg: #16161a;
-  --heading: #fffffe;
-  --text: #94a1b2;
-  --muted: #808080;
-  --accent: #2cb67d;
-  --code-bg: #636e7b66;
-  --tag-bg: #f8fcfd;
-  --tag-border: #a1a1a1;
-  --border: #94a1b2;
-  --toc-bg: #0d0d0d;
+  --bg: #0e0b0a;
+  --heading: #f5ede0;
+  --text: #c8b8a2;
+  --muted: #7a6a5a;
+  --accent: #e8722a;
+  --accent-hover: #ff9248;
+  --code-bg: #1c1612;
+  --tag-bg: #1c1612;
+  --tag-border: #3a2e26;
+  --border: #3a2e26;
+  --toc-bg: #14100d;
+  --nav-accent: #e8722a;
 }
 
+/* ── 朽木露琪亚 · 亮色 ─────────────────────────────── */
 html.light {
-  --bg: #f5f5f0;
-  --heading: #1a1a1a;
-  --text: #4a5568;
-  --muted: #718096;
-  --accent: #2cb67d;
-  --code-bg: rgba(175, 184, 193, 0.25);
-  --tag-bg: #f0f4f8;
-  --tag-border: #c0c8d0;
-  --border: #c0c8d0;
-  --toc-bg: #efefec;
+  --bg: #faf6ff;
+  --heading: #2a0d4e;
+  --text: #3d2b5e;
+  --muted: #9182a8;
+  --accent: #6c3fb5;
+  --accent-hover: #4a2880;
+  --code-bg: #ede8f5;
+  --tag-bg: #ede8f5;
+  --tag-border: #c5b8e0;
+  --border: #c5b8e0;
+  --toc-bg: #ede8f5;
+  --nav-accent: #6c3fb5;
 }
 
 html {
@@ -34,7 +40,7 @@ html {
     'Apple Color Emoji', 'Segoe UI Emoji';
   line-height: 1.5;
   word-wrap: break-word;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 body {
@@ -109,6 +115,7 @@ a:link,
 a:visited {
   color: var(--muted);
 }
+
 a:hover,
 a:active {
   color: var(--accent);
@@ -184,7 +191,7 @@ table tbody tr td {
 
 /* tags */
 .tag a {
-  color: #00539f !important;
+  color: var(--accent) !important;
 }
 
 .tags {
@@ -223,10 +230,6 @@ table tbody tr td {
 
 .underline:hover::before {
   width: 100%;
-}
-
-.underline:hover {
-  cursor: pointer;
 }
 
 /* previous-next-article */
@@ -270,7 +273,6 @@ table tbody tr td {
   margin: var(--base-size-8, 8px) !important;
 }
 
-/* normal */
 #normal {
   color: var(--text);
 }

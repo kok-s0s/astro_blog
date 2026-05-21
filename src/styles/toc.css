@@ -57,5 +57,5 @@
 
 #toc a:hover,
 #toc a.active {
-  color: #2cb67d;
+  color: var(--accent);
 }

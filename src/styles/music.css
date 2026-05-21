@@ -11,7 +11,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #7f5af0;
+  color: var(--nav-accent);
   cursor: pointer;
 }
 
@@ -19,7 +19,7 @@
   box-shadow: 0 10px 20px rgba(100, 255, 255, 0.22);
   border-radius: 50%;
   transform: scale(1.2);
-  background-color: #7f5af0;
+  background-color: var(--nav-accent);
   color: #fffffe;
 }
 

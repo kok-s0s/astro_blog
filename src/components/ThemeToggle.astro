@@ -1,5 +1,5 @@
-<button id="theme-toggle" aria-label="切换主题" title="切换亮/暗模式">
-  <i id="theme-icon" class="fas fa-moon"></i>
+<button id="theme-toggle" aria-label="切换主题" title="切换主题（露琪亚 / 一护）">
+  <i id="theme-icon" class="fas fa-snowflake"></i>
 </button>
 
 <style>
@@ -25,7 +25,9 @@
 
   function applyTheme(theme: string) {
     document.documentElement.classList.toggle('light', theme === 'light')
-    icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'
+    // 亮色=露琪亚（冰雪），点击可切换到一护（暗），图标为火焰
+    // 暗色=一护（烈焰），点击可切换到露琪亚（亮），图标为雪花
+    icon.className = theme === 'light' ? 'fas fa-fire' : 'fas fa-snowflake'
   }
 
   const saved = localStorage.getItem('theme')
