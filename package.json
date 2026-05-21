@@ -7,15 +7,20 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "postbuild": "pagefind --site dist --output-path public/pagefind",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/preact": "^4.0.0",
+    "@astrojs/rss": "^4.0.18",
     "astro": "^5.0.0",
     "medium-zoom": "^1.1.0",
     "preact": "^10.25.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
   }
 }

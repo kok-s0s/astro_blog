@@ -3,30 +3,57 @@ import '../styles/global.css'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import Top from '../components/Top.astro'
+import ProgressBar from '../components/ProgressBar.astro'
 
-const { pageTitle } = Astro.props
+interface Props {
+  pageTitle: string
+  description?: string
+  ogImage?: string
+}
+
+const { pageTitle, description = '关于 C++、Qt、工具链和软件开发的技术博客', ogImage = '/images/moon.jpeg' } = Astro.props
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
-<html lang="en">
+<html lang="zh">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/zero.jpeg" />
     <link rel="stylesheet" href="/css/prism-nord.css" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <!-- 引入 KaTeX 样式 -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- SEO -->
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="kok-s0s · 博客" href="/rss.xml" />
+
+    <!-- KaTeX -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
       integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
       crossorigin="anonymous"
     />
+
     <title>{pageTitle}</title>
   </head>
   <body>
+    <ProgressBar />
     <Header />
-    <h1>{pageTitle}</h1>
-    <slot />
+    <main data-pagefind-body>
+      <h1>{pageTitle}</h1>
+      <slot />
+    </main>
     <Footer />
     <Top />
     <script>

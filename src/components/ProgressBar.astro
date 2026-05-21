@@ -1,0 +1,26 @@
+<div id="progress-bar"></div>
+
+<style>
+  #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background-color: #2cb67d;
+    z-index: 9999;
+    transition: width 0.08s linear;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const bar = document.getElementById('progress-bar') as HTMLElement
+  function updateProgress() {
+    const scrolled = window.scrollY
+    const total = document.documentElement.scrollHeight - window.innerHeight
+    bar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : '0%'
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true })
+  updateProgress()
+</script>

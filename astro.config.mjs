@@ -8,6 +8,7 @@ import rehypeKatex from 'rehype-katex'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://kok-s0s.netlify.app',
   integrations: [preact()],
   markdown: {
     // Can be 'shiki' (default), 'prism' or false to disable highlighting

@@ -38,6 +38,7 @@
   border: solid 1.3px #a1a1a1;
   border-right: none;
   z-index: 999;
+  transition: right 0.25s ease;
 }
 
 #toc:hover {
@@ -46,4 +47,15 @@
 
 #toc::-webkit-scrollbar {
   display: none;
+}
+
+#toc a {
+  font-size: 0.85rem;
+  color: #808080;
+  transition: color 0.15s ease;
+}
+
+#toc a:hover,
+#toc a.active {
+  color: #2cb67d;
 }

@@ -5,13 +5,31 @@ import '../styles/toc.css'
 <div id="toc"></div>
 
 <script>
-  let toc = document.querySelectorAll('h1, h2, h3, h4, h5')
-  let tocHtml = ''
-  toc.forEach((heading) => {
-    let id = heading.id
-    let text = (heading as HTMLElement).innerText
-    let level = heading.tagName
-    tocHtml += `<span class="toc-${level}"><a href="#${id}">${text}</a></span>`
-  })
-  if (document.getElementById('toc') !== null) document.getElementById('toc').innerHTML = tocHtml
+  const tocContainer = document.getElementById('toc')
+  const headings = Array.from(document.querySelectorAll('main h2, main h3, main h4, main h5')) as HTMLElement[]
+
+  if (tocContainer && headings.length > 0) {
+    tocContainer.innerHTML = headings
+      .map((h) => `<span class="toc-${h.tagName}"><a href="#${h.id}" data-id="${h.id}">${h.innerText}</a></span>`)
+      .join('')
+
+    function setActive(id: string) {
+      tocContainer!.querySelectorAll('a').forEach((a) => a.classList.remove('active'))
+      tocContainer!.querySelector<HTMLAnchorElement>(`a[data-id="${id}"]`)?.classList.add('active')
+    }
+
+    function updateActive() {
+      const threshold = window.innerHeight * 0.25
+      let current = headings[0]
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top < threshold) {
+          current = h
+        }
+      }
+      setActive(current.id)
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true })
+    updateActive()
+  }
 </script>

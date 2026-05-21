@@ -2,7 +2,12 @@
 import Toc from '../components/Toc.astro'
 import BaseLayout from './Base.astro'
 
-const { frontmatter } = Astro.props
+const { frontmatter, rawContent } = Astro.props
+
+const content = rawContent ? rawContent() : ''
+const chineseChars = (content.match(/[一-龥]/g) || []).length
+const englishWords = (content.match(/\b[a-zA-Z]+\b/g) || []).length
+const readingTime = Math.max(1, Math.ceil(chineseChars / 300 + englishWords / 200))
 
 const cxxCreationalPatternsPosts = Object.values(import.meta.glob('../pages/posts/cxx_design_patterns/creational_patterns/*.md', { eager: true })) as any[]
 const cxxStructuralPatternsPosts = Object.values(import.meta.glob('../pages/posts/cxx_design_patterns/structural_patterns/*.md', { eager: true })) as any[]
@@ -18,7 +23,8 @@ const previousPost = allPosts[(currentPostIndex - 1 + allPosts.length) % allPost
 const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
 ---
 
-<BaseLayout pageTitle={frontmatter.title}>
+<BaseLayout pageTitle={frontmatter.title} description={`Design Pattern: ${frontmatter.title}`}>
+  <p class="time">Read in<b><em>~{readingTime} min</em></b></p>
   <p>Written by - <b><em>{frontmatter.author}</em></b></p>
   <div class="tags">
     {

@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/Base.astro'
+
+const pageTitle = '搜索'
+---
+
+<BaseLayout pageTitle={pageTitle} description="全站文章搜索">
+  <p class="tip">全文搜索 · 覆盖所有博文（需先执行 npm run build）</p>
+  <div id="search"></div>
+</BaseLayout>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  new PagefindUI({
+    element: '#search',
+    showSubResults: true,
+    showImages: false,
+    translations: {
+      placeholder: '输入关键词...',
+      zero_results: '没有找到「[SEARCH_TERM]」相关内容',
+    },
+  })
+</script>
+
+<style>
+  .tip {
+    font-size: 0.9rem;
+    color: #808080;
+    margin-bottom: 1.5rem;
+  }
+
+  :root {
+    --pagefind-ui-scale: 0.9;
+    --pagefind-ui-primary: #2cb67d;
+    --pagefind-ui-text: #94a1b2;
+    --pagefind-ui-background: #16161a;
+    --pagefind-ui-border: #333;
+    --pagefind-ui-tag: #1e1e2a;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 6px;
+    --pagefind-ui-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+</style>

@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 # settings
 yarn.lock
+
+# generated search index
+public/pagefind/
+
+# local tool config
+.claude/
