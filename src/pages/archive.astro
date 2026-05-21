@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/Base.astro'
+
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true })) as any[]
+allPosts.sort((a, b) => new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime())
+
+const byYear: Record<string, any[]> = {}
+for (const post of allPosts) {
+  const year = new Date(post.frontmatter.pubDate).getFullYear().toString()
+  if (!byYear[year]) byYear[year] = []
+  byYear[year].push(post)
+}
+const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a))
+---
+
+<BaseLayout pageTitle="归档" description="所有文章按年份归档">
+  {
+    years.map((year) => (
+      <section class="year-section">
+        <h2>{year}</h2>
+        <ul>
+          {byYear[year].map((post) => (
+            <li>
+              <span class="date">{post.frontmatter.pubDate.slice(0, 10)}</span>
+              <a href={post.url}>{post.frontmatter.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .year-section h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+
+  li {
+    display: flex;
+    gap: 1.2rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px dashed var(--tag-border);
+  }
+
+  .date {
+    color: var(--muted);
+    font-size: 0.9rem;
+    min-width: 6.5rem;
+    flex-shrink: 0;
+  }
+</style>

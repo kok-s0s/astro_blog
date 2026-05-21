@@ -15,11 +15,16 @@
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--heading);
 }
 
 .nav-links a:hover,
 .nav-links a:focus {
+  color: var(--accent);
+}
+
+.nav-links.expanded a:hover,
+.nav-links.expanded a:focus {
   background-color: #7f5af0;
   color: #fffffe;
 }
@@ -31,15 +36,18 @@
 
 @media screen and (min-width: 636px) {
   .nav-links {
-    width: 100%;
-    display: block;
+    display: flex;
     position: static;
     width: auto;
     background: none;
+    align-items: center;
+    flex-wrap: nowrap;
   }
 
   .nav-links a {
     display: inline-block;
-    padding: 15px 20px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    white-space: nowrap;
   }
 }

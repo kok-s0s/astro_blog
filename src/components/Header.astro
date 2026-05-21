@@ -2,13 +2,23 @@
 import Hamburger from './Hamburger.astro'
 import Music from './Music.astro'
 import Navigation from './Navigation.astro'
+import ThemeToggle from './ThemeToggle.astro'
 ---
 
 <header>
   <nav id="header">
     <Hamburger />
     <Navigation />
-    <Music />
+    <div id="header-actions">
+      <a href="/search" class="icon-btn" aria-label="搜索" title="搜索 (Ctrl+K)">
+        <i class="fas fa-magnifying-glass"></i>
+      </a>
+      <a href="/rss.xml" class="icon-btn" aria-label="RSS 订阅" title="RSS 订阅">
+        <i class="fas fa-rss"></i>
+      </a>
+      <ThemeToggle />
+      <Music />
+    </div>
   </nav>
 </header>
 
@@ -17,6 +27,34 @@ import Navigation from './Navigation.astro'
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  #header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+    transition: color 0.2s;
+    line-height: 1;
+  }
+
+  .icon-btn:link,
+  .icon-btn:visited {
+    color: var(--muted);
+  }
+
+  .icon-btn:hover {
+    color: var(--accent);
   }
 </style>

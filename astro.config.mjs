@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config'
 
 // https://astro.build/config
 import preact from '@astrojs/preact'
+import sitemap from '@astrojs/sitemap'
 
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
@@ -9,7 +10,7 @@ import rehypeKatex from 'rehype-katex'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kok-s0s.netlify.app',
-  integrations: [preact()],
+  integrations: [preact(), sitemap()],
   markdown: {
     // Can be 'shiki' (default), 'prism' or false to disable highlighting
     syntaxHighlight: 'prism',

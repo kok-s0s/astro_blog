@@ -34,11 +34,11 @@
   max-height: 70vh;
   overflow: auto;
   padding: 1rem;
-  background-color: #000000;
-  border: solid 1.3px #a1a1a1;
+  background-color: var(--toc-bg);
+  border: solid 1.3px var(--tag-border);
   border-right: none;
   z-index: 999;
-  transition: right 0.25s ease;
+  transition: right 0.25s ease, background-color 0.2s ease;
 }
 
 #toc:hover {

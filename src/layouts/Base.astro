@@ -46,6 +46,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     />
 
     <title>{pageTitle}</title>
+    <!-- 防止主题切换闪烁 -->
+    <script is:inline>
+      ;(function () {
+        const saved = localStorage.getItem('theme')
+        const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        if ((saved ?? system) === 'light') document.documentElement.classList.add('light')
+      })()
+    </script>
   </head>
   <body>
     <ProgressBar />
@@ -59,6 +67,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <script>
       import '../scripts/copy.js'
       import '../scripts/zoom-images'
+
+      document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault()
+          window.location.href = '/search'
+        }
+      })
     </script>
     <script src="https://kit.fontawesome.com/094105c4c5.js" crossorigin="anonymous"></script>
   </body>

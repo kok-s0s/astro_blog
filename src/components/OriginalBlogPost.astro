@@ -1,13 +1,7 @@
 ---
 const { title, url, pubDate } = Astro.props
 const date = new Date(pubDate)
-const formattedPubDate = date
-  .toLocaleDateString('en-GB', {
-    year: '2-digit',
-    month: 'short',
-    day: 'numeric',
-  })
-  .toString()
+const formattedPubDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 ---
 
 <li>
@@ -25,21 +19,37 @@ const formattedPubDate = date
   a {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
   }
 
   a:link,
   a:visited {
-    color: #2cb67d;
+    color: var(--accent);
   }
 
   a:hover,
   a:active {
-    color: #0a613d;
+    color: var(--accent);
+    opacity: 0.75;
+  }
+
+  .title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .time {
-    text-align: right;
-    text-wrap: nowrap;
+    flex-shrink: 0;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  a:hover .time {
+    color: var(--muted);
   }
 </style>
