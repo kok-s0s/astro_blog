@@ -7,38 +7,44 @@ const pageTitle = '关于'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <p>他的一些信息：</p>
-  <ul>
+
+  <h2>个人</h2>
+  <ul class="info-list">
     {selfInfo.map((info) => <li>{info}</li>)}
   </ul>
-  <p>他认为程序员要熟练的<a href="#" id="normal">能力</a>：</p>
-  <ul>
+
+  <h2>能力</h2>
+  <p class="section-tip">他认为程序员要熟练的<a href="#" id="normal" class="tip-link">能力</a>：</p>
+  <ul class="skill-chips">
     {skills.map((skill) => <li>{skill}</li>)}
   </ul>
-  <p>他做过的一些 <em>Repository</em> ：</p>
-  <ul id="repos">
+
+  <h2>项目</h2>
+  <ul class="repo-list">
     {
       repos.map((repo) => (
-        <li class="none-style">
+        <li>
           <details>
             <summary>
-              <a href={repo.link} class="underline">
-                <em>{repo.name}</em>
+              <a href={repo.link} target="_blank" rel="noopener" class="underline">
+                {repo.name}
               </a>
             </summary>
-            <p>{repo.description}</p>
+            <p class="repo-desc">{repo.description}</p>
           </details>
         </li>
       ))
     }
   </ul>
-  <details>
-    <summary>阅览过的书籍：</summary>
-    <ul>
+
+  <details class="books-details">
+    <summary>阅览过的书籍</summary>
+    <ul class="book-list">
       {
         booksRead.map((book) => (
-          <li>
-            {book.status == true ? <s>{book.name}</s> : <span>{book.name}</span>}_<span>{book.description}</span>
+          <li class={book.status ? 'done' : 'pending'}>
+            <span class="book-name">{book.status ? <s>{book.name}</s> : book.name}</span>
+            <span class="book-desc">{book.description}</span>
           </li>
         ))
       }
@@ -53,169 +59,318 @@ const pageTitle = '关于'
       <button id="submitPassword">提交</button>
     </div>
   </div>
+
 </BaseLayout>
 
 <style>
-  #repos {
-    margin-left: -1rem;
+  /* ── 通用 section h2 ──────────────────────────────── */
+  h2 {
+    border-left: 3px solid var(--accent);
+    padding-left: 0.6rem;
+    margin-bottom: 0.5rem;
   }
 
-  ul li.none-style {
+  /* ── 个人信息列表 ─────────────────────────────────── */
+  .info-list {
     list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
   }
 
-  summary {
+  .info-list li {
+    padding: 0.55rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    line-height: 1.7;
+    border-radius: 5px;
+    transition: background 0.15s;
+  }
+
+  .info-list li:last-child {
+    border-bottom: none;
+  }
+
+  .info-list li:hover {
+    background: var(--code-bg);
+  }
+
+  /* ── 能力提示文字 ─────────────────────────────────── */
+  .section-tip {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+  }
+
+  .tip-link {
+    color: var(--accent) !important;
+  }
+
+  /* ── 技能 chip 标签 ───────────────────────────────── */
+  .skill-chips {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-chips li {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: var(--tag-bg);
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .skill-chips li:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── 项目列表 ─────────────────────────────────────── */
+  .repo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .repo-list li {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .repo-list li:has(details[open]) {
+    border-color: var(--accent);
+  }
+
+  .repo-list details {
+    padding: 0 0.75rem;
+  }
+
+  .repo-list details[open] {
+    padding-bottom: 0.75rem;
+  }
+
+  .repo-list summary {
+    padding: 0.65rem 0;
     cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  details > summary {
+  .repo-list summary::marker,
+  .repo-list summary::-webkit-details-marker {
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  .repo-list summary a {
+    color: var(--accent) !important;
+  }
+
+  .repo-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── 书籍列表 ─────────────────────────────────────── */
+  .books-details {
+    margin: 0 0 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 0.75rem;
+  }
+
+  .books-details[open] {
+    padding-bottom: 0.5rem;
+  }
+
+  .books-details > summary {
+    padding: 0.65rem 0 0.65rem 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .books-details > summary::marker,
+  .books-details > summary::-webkit-details-marker {
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .book-list {
     list-style: none;
+    padding: 0;
+    margin: 0.25rem 0;
   }
 
-  summary::-webkit-details-marker {
-    display: none;
+  .book-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.45rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    border-radius: 5px;
+    transition: background 0.15s;
   }
 
-  summary:after {
-    content: '+';
-    float: left;
-    font-size: 1em;
-    font-weight: bold;
-    margin: -2px 10px 0 0;
-    padding: 1px 0 3px 0;
-    text-align: center;
-    width: 14px;
+  .book-list li:last-child {
+    border-bottom: none;
   }
 
-  details[open] summary:after {
-    content: '-';
+  .book-list li:hover {
+    background: var(--code-bg);
   }
 
+  .book-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .book-list li.done .book-name {
+    color: var(--muted);
+  }
+
+  .book-desc {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 480px) {
+    .book-list li {
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .book-desc {
+      white-space: normal;
+    }
+  }
+
+  /* ── 密码弹窗 ─────────────────────────────────────── */
   .modal {
     display: none;
     position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
   }
 
   .modal-content {
-    background-color: #16161a;
+    background: var(--toc-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #7f5af0;
-    width: 300px;
+    padding: 1.5rem;
+    width: min(300px, 90vw);
     text-align: center;
   }
 
   .close-button {
-    color: #808080;
+    color: var(--muted);
     float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  .close-button:hover,
-  .close-button:focus {
-    color: white;
-    text-decoration: none;
+    font-size: 1.5rem;
+    line-height: 1;
     cursor: pointer;
+    transition: color 0.15s;
   }
 
-  /* 输入框样式 */
+  .close-button:hover {
+    color: var(--heading);
+  }
+
   #passwordInput {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    font-size: 1em;
-    transition:
-      border-color 0.3s,
-      box-shadow 0.3s;
+    padding: 0.5rem 0.75rem;
+    margin: 0.75rem 0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
   }
 
   #passwordInput:focus {
-    border-color: #5b9bd5;
-    box-shadow: 0 0 5px rgba(91, 155, 213, 0.5);
+    border-color: var(--accent);
     outline: none;
   }
 
-  /* 按钮样式 */
   #submitPassword {
     width: 100%;
-    padding: 10px;
-    background-color: #5b9bd5;
+    padding: 0.5rem;
+    background: var(--accent);
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    border-radius: 6px;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition:
-      background-color 0.3s,
-      box-shadow 0.3s;
+    transition: background 0.15s;
   }
 
   #submitPassword:hover {
-    background-color: #4a8bc2;
-  }
-
-  #submitPassword:active {
-    background-color: #3e79a8;
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+    background: var(--accent-hover);
   }
 </style>
 
 <script>
-  // 处理details的互斥逻辑
-  const reposList = document.getElementById('repos')
-  const detailsElements = reposList.getElementsByTagName('details')
-
-  for (const details of detailsElements) {
-    details.addEventListener('click', () => {
-      for (const otherDetails of detailsElements) {
-        if (otherDetails !== details) {
-          otherDetails.removeAttribute('open')
+  const reposList = document.querySelector('.repo-list')
+  if (reposList) {
+    const detailsElements = reposList.getElementsByTagName('details')
+    for (const details of detailsElements) {
+      details.addEventListener('click', () => {
+        for (const otherDetails of detailsElements) {
+          if (otherDetails !== details) otherDetails.removeAttribute('open')
         }
-      }
-    })
+      })
+    }
   }
 
-  // 验证弹窗逻辑
   const normalLink = document.getElementById('normal')
-  const passwordModal = document.getElementById('passwordModal')
+  const passwordModal = document.getElementById('passwordModal') as HTMLElement
   const closeButton = document.getElementById('closeButton')
   const submitPassword = document.getElementById('submitPassword')
 
-  normalLink.addEventListener('click', (event) => {
-    event.preventDefault() // 阻止默认跳转行为
-    passwordModal.style.display = 'block' // 显示弹窗
+  normalLink?.addEventListener('click', (event) => {
+    event.preventDefault()
+    passwordModal.style.display = 'block'
   })
 
-  closeButton.addEventListener('click', () => {
-    passwordModal.style.display = 'none' // 关闭弹窗
+  closeButton?.addEventListener('click', () => {
+    passwordModal.style.display = 'none'
   })
 
-  submitPassword.addEventListener('click', () => {
-    const correctPassword = 'kok-s0s' // 设置正确的密码
+  submitPassword?.addEventListener('click', () => {
+    const correctPassword = 'kok-s0s'
     const inputPassword = (document.getElementById('passwordInput') as HTMLInputElement).value
-
     if (inputPassword === correctPassword) {
-      window.location.href = '/roadmap' // 跳转到目标页面
+      window.location.href = '/roadmap'
     } else {
       alert('密码错误，请重试！')
     }
   })
 
-  // 点击窗口外部关闭弹窗
   window.addEventListener('click', (event) => {
-    if (event.target === passwordModal) {
-      passwordModal.style.display = 'none'
-    }
+    if (event.target === passwordModal) passwordModal.style.display = 'none'
   })
 </script>

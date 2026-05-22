@@ -1,12 +1,12 @@
 export const selfInfo = [
-  '在程序开发，更喜欢给自己制定一个目标来驱动自己逐步完成它',
-  '并没有特别讨厌或者很喜欢的语言，在过往一年中，最常用的是 C++ 和 Qt 这两门语言。现在对于各种语言的态度，更多是看要去解决什么样的问题，以及有多少时间去解决这个问题，根据这两点去选择合适的语言来解决问题',
-  '有点喜欢 Python 和 Shell 语言，能在工作中节省些许时间',
-  '离不开 Code Format',
-  '团队开发最喜欢 Code Review 环节',
+  '习惯用目标驱动自己，把一件事拆成可执行的步骤，逐步推进到完成',
+  '目前在一家机械臂公司从事客户端应用开发，所在行业是制造业。日常用 C/C++ 写性能敏感的核心逻辑，用 Qt 构建桌面 GUI，用 Python 处理自动化脚本和工具链',
+  '对语言没有偏执，选什么取决于要解决什么问题、有多少时间解决——工具服务于目标',
+  '在 Agent 编码工具普及的当下，把 AI 当结对编程的搭档，但最终的设计判断和代码审查还是自己来',
+  '离不开 Code Format，Code Review 是团队开发里最有价值的环节',
 ]
 
-export const skills = ['英语', '网络搜索技巧', '文档阅读能力', '程序调试能力', '复盘总结能力', '会和 ChatGPT 聊天 /doge', '能将业务需求翻译成技术需求']
+export const skills = ['英语', '信息检索与甄别', '文档阅读能力', '程序调试能力', '复盘总结能力', '善用 AI Agent 辅助编码', '能将业务需求翻译成技术需求', '跨领域沟通（软件 × 机械）']
 
 export const repos = [
   {
@@ -42,8 +42,8 @@ export const repos = [
 ]
 
 export const booksRead = [
-  { status: false, name: '《Designing Data-Intensive Application》', description: '不懂数据库的全栈工程师不是好架构师' },
-  { status: false, name: '《Crafting Interpreters》', description : '搁置中'},
+  { status: true, name: '《Designing Data-Intensive Application》', description: '不懂数据库的全栈工程师不是好架构师' },
+  { status: true, name: '《Crafting Interpreters》', description : '搁置，需有实际项目做验证'},
   { status: true, name: '《活文档 与代码共同演进》', description: '浅读，不推荐！' },
   { status: true, name: '《重构 改善既有代码的设计》', description: '翻完，推荐！' },
   { status: true, name: '《Clean C++》', description: '读完且记录，推荐！' },
