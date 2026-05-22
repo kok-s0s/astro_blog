@@ -599,27 +599,11 @@ const tracksForClient = tracks.map((t) => ({
       plArtist.textContent = t.artists.join(' / ')
       player.hidden = false
 
-      // 先停当前播放，显示加载中
+      // 通过 edge function 代理流式播放，绕过 CDN Referer 校验
       audio.pause()
-      audio.src = ''
-      setPlayIcon(false)
-      btnPlay.disabled = true
-
-      fetch('/.netlify/functions/ncm-url?id=' + t.id)
-        .then(function (res) { return res.json() })
-        .then(function (data) {
-          audio.src = data.url || ('https://music.163.com/song/media/outer/url?id=' + t.id)
-          audio.volume = volume.value / 100
-          btnPlay.disabled = false
-          return audio.play()
-        })
-        .catch(function () {
-          // 回退到公开直链（非会员歌曲仍可播）
-          audio.src = 'https://music.163.com/song/media/outer/url?id=' + t.id
-          audio.volume = volume.value / 100
-          btnPlay.disabled = false
-          audio.play().catch(function () {})
-        })
+      audio.src = '/api/ncm-stream?id=' + t.id
+      audio.volume = volume.value / 100
+      audio.play().catch(function () {})
     }
 
     audio.addEventListener('timeupdate', updateProgress)
