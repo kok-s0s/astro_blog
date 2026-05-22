@@ -1,6 +1,6 @@
 // Proxy NetEase Cloud Music song URL with VIP authentication.
 // Reads NETEASE_COOKIE from Netlify environment variables.
-exports.handler = async function (event) {
+export const handler = async function (event) {
   const id = (event.queryStringParameters || {}).id
   if (!id || !/^\d+$/.test(id)) {
     return {
@@ -48,7 +48,6 @@ exports.handler = async function (event) {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
-        // Signed CDN URLs expire ~20 min; don't cache too long
         'Cache-Control': 'private, max-age=900',
       },
       body: JSON.stringify({ url }),
