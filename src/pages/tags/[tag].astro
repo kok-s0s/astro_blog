@@ -42,8 +42,22 @@ const { posts } = Astro.props
 ---
 
 <BaseLayout pageTitle={tag}>
-  <p>Posts tagged with {tag}</p>
+  <p class="subtitle">{posts.length} 篇文章带有此标签</p>
   <ul>
     {posts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
   </ul>
 </BaseLayout>
+
+<style>
+  .subtitle {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

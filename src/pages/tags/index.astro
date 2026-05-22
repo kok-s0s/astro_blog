@@ -27,10 +27,41 @@ const pageTitle = '标签'
   <div class="tags">
     {
       uniqueTags.map((tag) => (
-        <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
-        </p>
+        <a href={`/tags/${tag}`} class="tag">{tag}</a>
       ))
     }
   </div>
 </BaseLayout>
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid var(--tag-border);
+    border-radius: 999px;
+    background: var(--tag-bg);
+    font-size: 0.875rem;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .tag:link,
+  .tag:visited {
+    color: var(--accent);
+  }
+
+  .tag:hover,
+  .tag:active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+</style>

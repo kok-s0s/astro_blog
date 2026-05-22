@@ -1,18 +1,14 @@
+---
+import sentenceJson from '../data/sentence.json'
+
+const sentences = sentenceJson.flatMap((item) => item.li_texts)
+---
+
 <p id="sentence"></p>
 
-<script>
-  import sentence_json from '../data/sentence.json'
-
-  let sentences = []
-  sentence_json.forEach((item) => {
-    sentences.push(...item.li_texts)
-  })
-
-  console.log(sentences)
-
-  let storedIndex = parseInt(localStorage.getItem('storedIndex')) || 0
-  if (document.getElementById('sentence') !== null)
-    document.getElementById('sentence').textContent = sentences[storedIndex]
-  storedIndex = (storedIndex + 1) % sentences.length
-  localStorage.setItem('storedIndex', storedIndex.toString())
+<script is:inline define:vars={{ sentences }}>
+  const storedIndex = parseInt(localStorage.getItem('storedIndex')) || 0
+  const el = document.getElementById('sentence')
+  if (el) el.textContent = sentences[storedIndex]
+  localStorage.setItem('storedIndex', String((storedIndex + 1) % sentences.length))
 </script>
