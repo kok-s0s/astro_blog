@@ -1,0 +1,408 @@
+---
+import BaseLayout from '../layouts/Base.astro'
+
+const UID = '28587643'
+const PAGE_SIZE = 10
+
+type AnimeItem = {
+  season_id: number
+  media_id: number
+  title: string
+  cover: string
+  total_count: number
+  is_finish: number
+  badge: string
+  evaluate: string
+  rating?: { score: number; count: number }
+  areas?: { id: number; name: string }[]
+  progress?: string
+}
+
+let animeList: AnimeItem[] = []
+let fetchError = ''
+
+async function fetchPage(pn: number): Promise<AnimeItem[]> {
+  const url = `https://api.bilibili.com/x/space/bangumi/follow/list?vmid=${UID}&type=1&pn=${pn}&ps=30`
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Referer: 'https://www.bilibili.com',
+    },
+  })
+  const data = await res.json()
+  if (data.code !== 0) throw new Error(data.message)
+  return data.data?.list ?? []
+}
+
+try {
+  const first = await fetchPage(1)
+  animeList = first
+  if (first.length === 30) {
+    const second = await fetchPage(2)
+    animeList = [...first, ...second]
+    if (second.length === 30) {
+      const third = await fetchPage(3)
+      animeList = [...animeList, ...third]
+    }
+  }
+} catch (e: any) {
+  fetchError = e.message ?? '获取追番列表失败'
+}
+
+function coverUrl(url: string) {
+  const clean = url.replace(/^https?:\/\//, '')
+  return `https://wsrv.nl/?url=${clean}&w=200&output=webp`
+}
+
+function bangumiUrl(mediaId: number) {
+  return `https://www.bilibili.com/bangumi/media/md${mediaId}/`
+}
+
+function metaLine(item: AnimeItem) {
+  const parts: string[] = ['番剧']
+  if (item.areas?.[0]) parts.push(item.areas[0].name)
+  if (item.total_count > 0) parts.push(`全 ${item.total_count} 话`)
+  if (item.rating) parts.push(`★ ${item.rating.score.toFixed(1)}`)
+  if (item.progress) parts.push(item.progress)
+  return parts.join(' · ')
+}
+
+const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
+---
+
+<BaseLayout pageTitle="追番" description="kok-s0s 的 B 站追番列表">
+  <p class="count-line">共追 <strong>{animeList.length}</strong> 部番剧</p>
+
+  {
+    fetchError ? (
+      <p class="fetch-error">获取失败：{fetchError}</p>
+    ) : (
+      <>
+        <div class="anime-grid" id="anime-grid">
+          {animeList.map((item, i) => (
+            <a
+              href={bangumiUrl(item.media_id)}
+              target="_blank"
+              rel="noopener"
+              class="card"
+              data-index={i}
+            >
+              <div class="cover-wrap">
+                <img src={coverUrl(item.cover)} alt={item.title} loading="lazy" data-no-zoom />
+                <span class={`status-badge ${item.is_finish ? 'finished' : 'airing'}`}>
+                  {item.is_finish ? '完结' : '连载中'}
+                </span>
+              </div>
+              <div class="info">
+                <p class="title">{item.title}</p>
+                {item.evaluate && <p class="desc">{item.evaluate}</p>}
+                <p class="meta">{metaLine(item)}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <nav class="pagination" id="pagination" aria-label="分页导航">
+          <button class="page-btn" id="prev-btn">&#8249;</button>
+          <div class="page-numbers" id="page-numbers">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button class={`page-btn num ${i === 0 ? 'active' : ''}`} data-page={i}>
+                {i + 1}
+              </button>
+            ))}
+          </div>
+          <span class="page-indicator" id="page-indicator">1 / {totalPages}</span>
+          <button class="page-btn" id="next-btn">&#8250;</button>
+        </nav>
+      </>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .count-line {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+  .count-line strong {
+    color: var(--accent);
+  }
+
+  .fetch-error {
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  /* 初始隐藏所有卡片，JS 接管后显示当前页 */
+  .card {
+    display: flex;
+    flex-direction: row;
+    gap: 0.85rem;
+    padding: 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--tag-bg);
+    transition: border-color 0.15s, background 0.15s;
+    text-decoration: none;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    background: var(--code-bg);
+  }
+  .card[hidden] {
+    display: none;
+  }
+
+  .cover-wrap {
+    position: relative;
+    flex: 0 0 100px;
+    width: 100px;
+    height: 140px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+  }
+  .cover-wrap img {
+    display: block;
+    width: 100px;
+    height: 140px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .card:hover .cover-wrap img {
+    transform: scale(1.06);
+  }
+
+  .status-badge {
+    position: absolute;
+    bottom: 0.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    font-weight: 700;
+    white-space: nowrap;
+    line-height: 1.6;
+  }
+  .status-badge.finished {
+    background: rgba(0, 0, 0, 0.6);
+    color: #bbb;
+  }
+  .status-badge.airing {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .info {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    overflow: hidden;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--heading);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    transition: color 0.15s;
+  }
+  .card:hover .title {
+    color: var(--accent);
+  }
+
+  .desc {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: calc(0.85rem * 1.6 * 3);
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .meta {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: auto;
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── 分页 ── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .page-btn {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    font-family: inherit;
+    line-height: 1;
+  }
+  .page-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .page-btn.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+  }
+  .page-btn.is-disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .page-indicator {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--muted);
+    min-width: 3.5rem;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 480px) {
+    .anime-grid {
+      grid-template-columns: 1fr;
+    }
+    .cover-wrap {
+      flex: 0 0 80px;
+      width: 80px;
+      height: 112px;
+    }
+    .cover-wrap img {
+      width: 80px;
+      height: 112px;
+    }
+    .desc {
+      -webkit-line-clamp: 2;
+    }
+    .page-numbers {
+      display: none;
+    }
+    .page-indicator {
+      display: block;
+    }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var PAGE_SIZE = 10
+    var page = 0
+
+    var grid = document.getElementById('anime-grid')
+    var pagination = document.getElementById('pagination')
+    var prevBtn = document.getElementById('prev-btn')
+    var nextBtn = document.getElementById('next-btn')
+    var indicator = document.getElementById('page-indicator')
+    var cards = grid ? Array.from(grid.getElementsByClassName('card')) : []
+    var numBtns = Array.from(document.querySelectorAll('#page-numbers .num'))
+    var totalPages = Math.ceil(cards.length / PAGE_SIZE)
+
+    if (!grid || !pagination) return
+
+    function goTo(p) {
+      p = Math.max(0, Math.min(p, totalPages - 1))
+      page = p
+
+      for (var i = 0; i < cards.length; i++) {
+        var show = i >= p * PAGE_SIZE && i < (p + 1) * PAGE_SIZE
+        cards[i].style.display = show ? '' : 'none'
+      }
+
+      for (var j = 0; j < numBtns.length; j++) {
+        var isActive = parseInt(numBtns[j].getAttribute('data-page'), 10) === p
+        numBtns[j].className = 'page-btn num' + (isActive ? ' active' : '')
+      }
+
+      if (indicator) indicator.textContent = (p + 1) + ' / ' + totalPages
+      if (prevBtn) prevBtn.className = 'page-btn' + (p === 0 ? ' is-disabled' : '')
+      if (nextBtn) nextBtn.className = 'page-btn' + (p === totalPages - 1 ? ' is-disabled' : '')
+
+      var url = new URL(location.href)
+      if (p === 0) url.searchParams.delete('page')
+      else url.searchParams.set('page', String(p + 1))
+      history.replaceState(null, '', url)
+
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    pagination.addEventListener('click', function (e) {
+      var btn = e.target
+      while (btn && btn !== pagination) {
+        if (btn.classList && btn.classList.contains('page-btn')) break
+        btn = btn.parentNode
+      }
+      if (!btn || btn === pagination) return
+      if (btn.classList.contains('is-disabled')) return
+
+      if (btn.id === 'prev-btn') goTo(page - 1)
+      else if (btn.id === 'next-btn') goTo(page + 1)
+      else {
+        var p = parseInt(btn.getAttribute('data-page'), 10)
+        if (!isNaN(p)) goTo(p)
+      }
+    })
+
+    var initP = parseInt(new URLSearchParams(location.search).get('page') || '1', 10) - 1
+    goTo(Math.max(0, Math.min(initP, totalPages - 1)))
+  })
+</script>
