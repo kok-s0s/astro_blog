@@ -4,7 +4,7 @@
 
 **记录所思，分享所得。**
 
-[![Live Site](https://img.shields.io/badge/Live-kok--s0s.netlify.app-e8722a?style=flat-square&logo=netlify&logoColor=white)](https://kok-s0s.netlify.app) [![Astro](https://img.shields.io/badge/Astro-5.x-e8722a?style=flat-square&logo=astro&logoColor=white)](https://astro.build) [![Netlify Status](https://api.netlify.com/api/v1/badges/f934a11e-6443-470a-9078-4b813ffba417/deploy-status)](https://app.netlify.com/projects/kok-s0s/deploys) [![License](https://img.shields.io/badge/License-MIT-e8722a?style=flat-square)](LICENSE)
+[![Live Site](https://img.shields.io/badge/Live-kok--s0s.netlify.app-e8722a?style=flat-square&logo=netlify&logoColor=white)](https://kok-s0s.netlify.app) [![Astro](https://img.shields.io/badge/Astro-5.x-e8722a?style=flat-square&logo=astro&logoColor=white)](https://astro.build) [![Netlify](https://img.shields.io/netlify/f934a11e-6443-470a-9078-4b813ffba417?style=flat-square&logo=netlify&logoColor=white&color=e8722a&label=netlify)](https://app.netlify.com/projects/kok-s0s/deploys) [![License](https://img.shields.io/badge/License-MIT-e8722a?style=flat-square)](LICENSE)
 
 </div>
 
