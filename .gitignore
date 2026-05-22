@@ -32,3 +32,4 @@ public/pagefind/
 
 # temp files
 tmp_*.json
+test-ncm.mjs

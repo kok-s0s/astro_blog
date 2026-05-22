@@ -143,6 +143,7 @@ const tracksForClient = tracks.map((t) => ({
 
   <!-- ── 播放器 ── -->
   <div id="player" class="player" hidden>
+    <div class="player-inner">
     <div class="pl-left">
       <img id="pl-cover" class="pl-cover" src="" alt="" data-no-zoom />
       <div class="pl-meta">
@@ -193,6 +194,7 @@ const tracksForClient = tracks.map((t) => ({
         </svg>
       </button>
       <input type="range" id="pl-volume" class="pl-range pl-vol-range" min="0" max="100" value="80" step="1" />
+    </div>
     </div>
   </div>
 
@@ -355,13 +357,20 @@ const tracksForClient = tracks.map((t) => ({
     background: var(--toc-bg);
     border-top: 1px solid var(--border);
     box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+  }
+  .player[hidden] { display: none; }
+
+  .player-inner {
+    width: 100%;
+    max-width: 80ch;
+    padding: 0 1.25rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0 1rem;
-    z-index: 200;
   }
-  .player[hidden] { display: none; }
 
   .pl-left {
     display: flex;
@@ -497,9 +506,11 @@ const tracksForClient = tracks.map((t) => ({
 
     .player {
       height: auto;
+    }
+    .player-inner {
       flex-direction: column;
       gap: 0.4rem;
-      padding: 0.6rem 0.75rem 0.5rem;
+      padding: 0.6rem 1.25rem 0.5rem;
     }
     .pl-left { width: 100%; }
     .pl-center { width: 100%; }
