@@ -13,11 +13,11 @@ const pageTitle = '博文'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>原创</h2>
   <blockquote>
-    <p>如果我写的<a href="/tags/" id="normal">内容</a>，能对观看的你有帮助就好了。</p>
+    <p>记录所思，分享所得。</p>
   </blockquote>
-  <ul>
+  <h2>原创</h2>
+  <ul class="posts-list">
     {
       projectPosts.map((post) => (
         <OriginalBlogPost url={post.url} title={post.frontmatter.title} pubDate={post.frontmatter.updatedDate} />
@@ -36,53 +36,112 @@ const pageTitle = '博文'
     <p class="source">
       Article reprinted from <a href="https://refactoring.guru/design-patterns" class="underline">Refactoring.Guru</a>
     </p>
-    <p class="pattern">Creational Patterns</p>
-    <ul>
-      {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-    </ul>
-    <p class="pattern">Structural Patterns</p>
-    <ul>
-      {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-    </ul>
-    <p class="pattern">Behavioral Patterns</p>
-    <ul>
-      {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-    </ul>
+    <details class="pattern-group">
+      <summary>Creational Patterns</summary>
+      <ul>
+        {cxxCreationalPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+      </ul>
+    </details>
+    <details class="pattern-group">
+      <summary>Structural Patterns</summary>
+      <ul>
+        {cxxStructuralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+      </ul>
+    </details>
+    <details class="pattern-group">
+      <summary>Behavioral Patterns</summary>
+      <ul>
+        {cxxBehavioralPatternsPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+      </ul>
+    </details>
   </details>
 </BaseLayout>
 
 <style>
-  .source {
-    margin: 0;
+  h2 {
+    border-left: 3px solid var(--accent);
+    padding-left: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
     padding: 0;
-    font-size: 0.8rem;
-    color: #666;
-  }
-
-  .pattern {
-    margin: 0;
-    padding: 0 0 0 1rem;
-    letter-spacing: 0.3px;
-  }
-
-  .pattern + ul {
-    margin-top: 0.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  details {
-    margin-left: 1rem;
-  }
-
-  details ul {
-    margin-top: 0.5rem;
+    margin: 0 0 1rem;
   }
 
   ul li {
     list-style: none;
   }
 
-  ul li:first-child div.pattern {
-    padding-top: 0;
+
+  /* 外层 details */
+  details {
+    margin: 0.5rem 0 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 0.75rem;
+  }
+
+  details[open] {
+    padding-bottom: 0.5rem;
+  }
+
+  details summary {
+    padding: 0.65rem 0 0.65rem 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  details summary::marker,
+  details summary::-webkit-details-marker {
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  details ul {
+    margin: 0.25rem 0;
+    padding: 0;
+  }
+
+  /* 嵌套 pattern-group */
+  details.pattern-group {
+    margin: 0.4rem 0 0;
+    border: none;
+    border-left: 2px solid var(--border);
+    border-radius: 0;
+    padding: 0 0 0 0.75rem;
+    background: none;
+  }
+
+  details.pattern-group[open] {
+    padding-bottom: 0;
+  }
+
+  details.pattern-group > summary {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.35rem 0;
+  }
+
+  details.pattern-group > summary::marker,
+  details.pattern-group > summary::-webkit-details-marker {
+    color: var(--muted);
+    font-size: 0.6rem;
+  }
+
+  details.pattern-group:last-child {
+    margin-bottom: 0.25rem;
+  }
+
+  .source {
+    margin: 0.25rem 0 0.5rem;
+    padding: 0;
+    font-size: 0.8rem;
+    color: var(--muted);
   }
 </style>

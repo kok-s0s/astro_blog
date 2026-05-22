@@ -2,20 +2,57 @@
 const { title, url } = Astro.props
 ---
 
-<li><a href={url}>{title}</a></li>
+<li>
+  <a href={url}>{title}</a>
+</li>
 
 <style>
   li {
-    line-height: 1.8;
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  li:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 5px;
+    border-left: 2px solid transparent;
+    transform: translateX(0);
+    transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  a::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.15s ease;
   }
 
   a:link,
   a:visited {
-    color: #2cb67d;
+    color: var(--accent);
   }
 
   a:hover,
   a:active {
-    color: #0a613d;
+    color: var(--accent-hover);
+    background: var(--code-bg);
+    border-left-color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  a:hover::before,
+  a:active::before {
+    background: var(--accent);
   }
 </style>

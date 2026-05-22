@@ -13,7 +13,13 @@ const formattedPubDate = `${date.getFullYear()}-${String(date.getMonth() + 1).pa
 
 <style>
   li {
-    line-height: 1.8;
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+
+  li:last-child {
+    border-bottom: none;
   }
 
   a {
@@ -21,6 +27,10 @@ const formattedPubDate = `${date.getFullYear()}-${String(date.getMonth() + 1).pa
     display: flex;
     align-items: baseline;
     gap: 0.75rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: 6px;
+    transform: translateX(0);
+    transition: background 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
   }
 
   a:link,
@@ -31,7 +41,9 @@ const formattedPubDate = `${date.getFullYear()}-${String(date.getMonth() + 1).pa
   a:hover,
   a:active {
     color: var(--accent);
-    opacity: 0.75;
+    background: var(--code-bg);
+    transform: translateX(4px);
+    opacity: 1;
   }
 
   .title {
@@ -49,7 +61,23 @@ const formattedPubDate = `${date.getFullYear()}-${String(date.getMonth() + 1).pa
     color: var(--muted);
   }
 
-  a:hover .time {
-    color: var(--muted);
+  /* 移动端：日期换行到标题下方 */
+  @media (max-width: 480px) {
+    a {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+      padding: 0.6rem 0.4rem;
+    }
+
+    .title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+    }
+
+    .time {
+      font-size: 0.78rem;
+    }
   }
 </style>
