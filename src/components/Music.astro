@@ -3,191 +3,29 @@ import '../styles/music.css'
 ---
 
 <div id="controls">
-  <div><i class="fas fa-backward" id="prev-btn"></i></div>
-  <div id="player-btn"><i class="fas fa-play" id="ctrl-icon"></i></div>
-  <div><i class="fas fa-forward" id="next-btn"></i></div>
-  <div id="lyrics-btn"><i class="fas fa-music"></i></div>
-</div>
-
-<div id="lyrics-panel" aria-hidden="true">
-  <div id="lyrics-header">
-    <span id="lyrics-track"></span>
-    <button id="lyrics-close" aria-label="关闭歌词"><i class="fas fa-xmark"></i></button>
-  </div>
-  <div id="lyrics-body"></div>
+  <div id="prev-btn">&#9664;&#9664;</div>
+  <div id="player-btn"><span id="ctrl-icon" class="play"></span></div>
+  <div id="next-btn">&#9654;&#9654;</div>
 </div>
 
 <audio id="song" preload="none"></audio>
 
-<style>
-  #lyrics-btn {
-    cursor: pointer;
-  }
-
-  /* 歌词面板 */
-  #lyrics-panel {
-    position: fixed;
-    bottom: -100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(480px, 94vw);
-    max-height: 60vh;
-    background: var(--toc-bg);
-    border: 1px solid var(--tag-border);
-    border-bottom: none;
-    border-radius: 12px 12px 0 0;
-    z-index: 2000;
-    display: flex;
-    flex-direction: column;
-    transition: bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35);
-  }
-
-  #lyrics-panel.open {
-    bottom: 0;
-  }
-
-  #lyrics-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 1.1rem;
-    border-bottom: 1px solid var(--tag-border);
-    flex-shrink: 0;
-  }
-
-  #lyrics-track {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 80%;
-  }
-
-  #lyrics-close {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--muted);
-    font-size: 1rem;
-    padding: 0.2rem 0.3rem;
-    transition: color 0.2s;
-    flex-shrink: 0;
-  }
-
-  #lyrics-close:hover {
-    color: var(--accent);
-  }
-
-  #lyrics-body {
-    overflow-y: auto;
-    padding: 1rem 1.4rem 1.5rem;
-    line-height: 2;
-    font-size: 0.92rem;
-    color: var(--text);
-    scrollbar-width: none;
-  }
-
-  #lyrics-body::-webkit-scrollbar {
-    display: none;
-  }
-
-  #lyrics-body p {
-    margin: 0;
-    line-height: 2;
-  }
-
-  #lyrics-body .blank {
-    height: 0.8rem;
-  }
-</style>
-
 <script>
-  /* ── 歌曲与歌词数据 ──────────────────────────────── */
   const TRACKS = [
-    {
-      file: '/music/do_the_impossible.mp3',
-      title: 'DO THE IMPOSSIBLE',
-      artist: 'Hiroyuki Sawano',
-      lyrics: [
-        'DO THE IMPOSSIBLE',
-        'SEE THE INVISIBLE',
-        'RAW! RAW! FIGHT THE POWER!',
-        '',
-        'TOUCH THE UNTOUCHABLE',
-        'BREAK THE UNBREAKABLE',
-        'RAW! RAW! FIGHT THE POWER!',
-        '',
-        '天元突破グレンラガン',
-        'Who the hell do you think I am?',
-      ],
-    },
-    {
-      file: '/music/BUMP OF CHICKEN - Hello,world!.mp3',
-      title: 'Hello, world!',
-      artist: 'BUMP OF CHICKEN',
-      lyrics: [
-        '新しい朝 いつものように',
-        '目が覚めたら そこにある',
-        '繰り返すたびに 積み重なって',
-        'ぼくの世界が 出来てくる',
-        '',
-        'Hello, world!',
-        '君に会えた',
-        'Hello, world!',
-        'ここにいるよ',
-        '',
-        '迷子になっても ここにいるよ',
-        '世界の果てまで 続いてるよ',
-      ],
-    },
-    {
-      file: '/music/不可思議／wonderboy - いつか来るその日のために.mp3',
-      title: 'いつか来るその日のために',
-      artist: '不可思議／wonderboy',
-      lyrics: [
-        'いつか来るその日のために',
-        '今日も歩き続けよう',
-        '',
-        '悲しみも 喜びも',
-        'すべて抱きしめて進もう',
-        '',
-        '君と出会えたこの奇跡を',
-        '忘れないでいたいから',
-        '',
-        'いつか来るその日まで',
-        'ずっと一緒にいよう',
-      ],
-    },
-    {
-      file: '/music/林家谦 - 神奇的糊涂魔药.mp3',
-      title: '神奇的糊涂魔药',
-      artist: '林家谦',
-      lyrics: [
-        '如果有一种神奇的魔药',
-        '可以让我忘掉所有烦恼',
-        '忘掉一切 忘掉你',
-        '轻轻松松过好每一天',
-        '',
-        '但我知道 没有魔药',
-        '只有自己才能救自己',
-        '带着伤痕 继续前行',
-        '这才是真正的勇气',
-      ],
-    },
+    { file: '/music/do_the_impossible.mp3' },
+    { file: '/music/BUMP OF CHICKEN - Hello,world!.mp3' },
+    { file: '/music/不可思議／wonderboy - いつか来るその日のために.mp3' },
+    { file: '/music/林家谦 - 神奇的糊涂魔药.mp3' },
   ]
 
-  /* ── 播放器逻辑 ──────────────────────────────────── */
-  const playBtn = document.getElementById('player-btn') as HTMLElement
-  const ctrlIcon = document.getElementById('ctrl-icon') as HTMLElement
-  const prevBtn = document.getElementById('prev-btn') as HTMLElement
-  const nextBtn = document.getElementById('next-btn') as HTMLElement
+  const playBtn     = document.getElementById('player-btn') as HTMLElement
+  const ctrlIcon    = document.getElementById('ctrl-icon') as HTMLElement
+  const prevBtn     = document.getElementById('prev-btn') as HTMLElement
+  const nextBtn     = document.getElementById('next-btn') as HTMLElement
   const musicPlayer = document.getElementById('song') as HTMLAudioElement
 
-  let currentTrack = parseInt(localStorage.getItem('currentTrack') ?? '0')
-  let isPlaying = localStorage.getItem('isPlaying') === 'true'
+  let currentTrack     = parseInt(localStorage.getItem('currentTrack') ?? '0')
+  let isPlaying        = localStorage.getItem('isPlaying') === 'true'
   let playbackPosition = parseFloat(localStorage.getItem('playbackPosition') ?? '0')
 
   function playCurrentTrack() {
@@ -198,7 +36,7 @@ import '../styles/music.css'
     }
     musicPlayer.currentTime = playbackPosition
     musicPlayer.play()
-    ctrlIcon.classList.replace('fa-play', 'fa-pause')
+    ctrlIcon.classList.remove('play')
     isPlaying = true
     localStorage.setItem('isPlaying', 'true')
   }
@@ -206,7 +44,7 @@ import '../styles/music.css'
   function pauseCurrentTrack() {
     musicPlayer.pause()
     playbackPosition = musicPlayer.currentTime
-    ctrlIcon.classList.replace('fa-pause', 'fa-play')
+    ctrlIcon.classList.add('play')
     isPlaying = false
     localStorage.setItem('isPlaying', 'false')
     localStorage.setItem('playbackPosition', String(playbackPosition))
@@ -215,10 +53,9 @@ import '../styles/music.css'
   function switchToTrack(idx: number) {
     currentTrack = idx
     playbackPosition = 0
-    playCurrentTrack()
-    localStorage.setItem('currentTrack', String(currentTrack))
+    localStorage.setItem('currentTrack', String(idx))
     localStorage.setItem('playbackPosition', '0')
-    updateLyricsPanel()
+    playCurrentTrack()
   }
 
   playBtn.addEventListener('click', () => isPlaying ? pauseCurrentTrack() : playCurrentTrack())
@@ -234,41 +71,5 @@ import '../styles/music.css'
   }, 300)
 
   if (isPlaying) playCurrentTrack()
-  else pauseCurrentTrack()
-
-  /* ── 歌词面板逻辑 ────────────────────────────────── */
-  const panel = document.getElementById('lyrics-panel')!
-  const lyricsBtn = document.getElementById('lyrics-btn')!
-  const closeBtn = document.getElementById('lyrics-close')!
-  const trackLabel = document.getElementById('lyrics-track')!
-  const lyricsBody = document.getElementById('lyrics-body')!
-
-  function updateLyricsPanel() {
-    const t = TRACKS[currentTrack]
-    trackLabel.textContent = `${t.title}  —  ${t.artist}`
-    lyricsBody.innerHTML = t.lyrics
-      .map((line) => line === '' ? '<div class="blank"></div>' : `<p>${line}</p>`)
-      .join('')
-  }
-
-  lyricsBtn.addEventListener('click', () => {
-    const isOpen = panel.classList.toggle('open')
-    panel.setAttribute('aria-hidden', String(!isOpen))
-    if (isOpen) updateLyricsPanel()
-  })
-
-  closeBtn.addEventListener('click', () => {
-    panel.classList.remove('open')
-    panel.setAttribute('aria-hidden', 'true')
-  })
-
-  // 点击面板外关闭
-  document.addEventListener('click', (e) => {
-    if (panel.classList.contains('open') &&
-        !panel.contains(e.target as Node) &&
-        !lyricsBtn.contains(e.target as Node)) {
-      panel.classList.remove('open')
-      panel.setAttribute('aria-hidden', 'true')
-    }
-  })
+  else ctrlIcon.classList.add('play')
 </script>

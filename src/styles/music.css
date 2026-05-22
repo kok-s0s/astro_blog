@@ -23,13 +23,39 @@
   color: #fffffe;
 }
 
-#ctrl-icon.fas {
-  font-size: 0.85rem;
+/* 暂停：两根竖条（默认状态） */
+#ctrl-icon {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  width: 11px;
+  height: 11px;
+}
+#ctrl-icon::before,
+#ctrl-icon::after {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 11px;
+  background: #fff;
+  border-radius: 1px;
+  flex-shrink: 0;
 }
 
-#ctrl-icon.fas.fa-play {
-  position: relative;
-  left: 1px;
+/* 播放：clip-path 三角形，视觉完全居中 */
+#ctrl-icon.play {
+  display: block;
+  width: 9px;
+  height: 11px;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  margin-left: 1px;
+  gap: 0;
+}
+#ctrl-icon.play::before,
+#ctrl-icon.play::after {
+  display: none;
 }
 
 @media screen and (min-width: 636px) {

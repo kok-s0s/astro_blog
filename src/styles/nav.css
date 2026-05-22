@@ -58,6 +58,7 @@
 
 /* ── 桌面端：行内导航 ────────────────────────────── */
 @media screen and (min-width: 636px) {
+  .nav-links a.nav-search-mobile { display: none; }
   #nav-backdrop {
     display: none !important;
   }
