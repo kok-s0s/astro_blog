@@ -90,6 +90,7 @@ const tracksForClient = tracks.map((t) => ({
 ---
 
 <BaseLayout pageTitle="音乐" description="kok-s0s 喜欢的音乐">
+  <meta slot="head" name="referrer" content="no-referrer" />
   <p class="count-line">
     共收藏 <strong>{tracks.length}</strong> 首 · 来自
     <a
@@ -599,11 +600,25 @@ const tracksForClient = tracks.map((t) => ({
       plArtist.textContent = t.artists.join(' / ')
       player.hidden = false
 
-      // 通过 edge function 代理流式播放，绕过 CDN Referer 校验
+      // 从 Netlify function 取到签名 CDN URL，浏览器直接播放
+      // meta[name=referrer]=no-referrer 确保不带 Referer，绕过 CDN 热链保护
       audio.pause()
-      audio.src = '/api/ncm-stream?id=' + t.id
-      audio.volume = volume.value / 100
-      audio.play().catch(function () {})
+      audio.src = ''
+      setPlayIcon(false)
+
+      fetch('/.netlify/functions/ncm-url?id=' + t.id)
+        .then(function (r) { return r.json() })
+        .then(function (d) {
+          if (!d.url) throw new Error('no url')
+          audio.src = d.url
+          audio.volume = volume.value / 100
+          return audio.play()
+        })
+        .catch(function () {
+          audio.src = 'https://music.163.com/song/media/outer/url?id=' + t.id
+          audio.volume = volume.value / 100
+          audio.play().catch(function () {})
+        })
     }
 
     audio.addEventListener('timeupdate', updateProgress)

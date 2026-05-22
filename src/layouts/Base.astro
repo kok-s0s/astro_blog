@@ -54,6 +54,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     />
 
     <title>{pageTitle}</title>
+    <slot name="head" />
     <!-- 防止主题切换闪烁 -->
     <script is:inline>
       ;(function () {

@@ -10,13 +10,17 @@ export const handler = async function (event) {
     }
   }
 
-  const cookie = process.env.NETEASE_COOKIE
+  let cookie = process.env.NETEASE_COOKIE || ''
   if (!cookie) {
     return {
       statusCode: 503,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: 'NETEASE_COOKIE not configured' }),
     }
+  }
+  // 兼容用户只存 hex 值（不含 MUSIC_U= 前缀）的情况
+  if (!cookie.startsWith('MUSIC_U=') && !cookie.includes('=')) {
+    cookie = 'MUSIC_U=' + cookie
   }
 
   try {
