@@ -34,7 +34,7 @@ export const handler = async function (event) {
     })
 
     const data = await res.json()
-    const url = data?.data?.[0]?.url
+    const url = data?.data?.[0]?.url?.replace(/^http:\/\//, 'https://')
 
     if (!url) {
       return {
