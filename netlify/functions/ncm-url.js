@@ -1,5 +1,7 @@
 // Proxy NetEase Cloud Music song URL with VIP authentication.
 // Reads NETEASE_COOKIE from Netlify environment variables.
+// Forwards the real client IP so NCM signs the CDN URL for the user's IP,
+// allowing the browser to fetch it directly without IP mismatch.
 export const handler = async function (event) {
   const id = (event.queryStringParameters || {}).id
   if (!id || !/^\d+$/.test(id)) {
@@ -23,19 +25,29 @@ export const handler = async function (event) {
     cookie = 'MUSIC_U=' + cookie
   }
 
+  // 获取用户真实 IP，转发给 NCM API，让签名与浏览器实际 IP 一致
+  const clientIp =
+    (event.headers['x-nf-client-connection-ip'] ||
+     event.headers['x-forwarded-for'] ||
+     '').split(',')[0].trim()
+
   try {
     const apiUrl =
       `https://music.163.com/api/song/enhance/player/url` +
       `?id=${id}&ids=%5B${id}%5D&br=320000`
 
-    const res = await fetch(apiUrl, {
-      headers: {
-        Cookie: cookie,
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        Referer: 'https://music.163.com/',
-      },
-    })
+    const apiHeaders = {
+      Cookie: cookie,
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Referer: 'https://music.163.com/',
+    }
+    if (clientIp) {
+      apiHeaders['X-Forwarded-For'] = clientIp
+      apiHeaders['X-Real-IP'] = clientIp
+    }
+
+    const res = await fetch(apiUrl, { headers: apiHeaders })
 
     const data = await res.json()
     const url = data?.data?.[0]?.url?.replace(/^http:\/\//, 'https://')
