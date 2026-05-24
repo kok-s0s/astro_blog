@@ -21,7 +21,7 @@ type AnimeItem = {
 let animeList: AnimeItem[] = []
 let fetchError = ''
 
-async function fetchPage(pn: number): Promise<AnimeItem[]> {
+async function fetchPage(pn: number): Promise<{ list: AnimeItem[]; total: number }> {
   const url = `https://api.bilibili.com/x/space/bangumi/follow/list?vmid=${UID}&type=1&pn=${pn}&ps=30`
   const res = await fetch(url, {
     headers: {
@@ -31,20 +31,18 @@ async function fetchPage(pn: number): Promise<AnimeItem[]> {
   })
   const data = await res.json()
   if (data.code !== 0) throw new Error(data.message)
-  return data.data?.list ?? []
+  return { list: data.data?.list ?? [], total: data.data?.total ?? 0 }
 }
 
 try {
-  const first = await fetchPage(1)
-  animeList = first
-  if (first.length === 30) {
-    const second = await fetchPage(2)
-    animeList = [...first, ...second]
-    if (second.length === 30) {
-      const third = await fetchPage(3)
-      animeList = [...animeList, ...third]
-    }
+  const { list: firstPage, total } = await fetchPage(1)
+  const totalPages = Math.ceil(total / 30)
+  const allPages = [firstPage]
+  for (let pn = 2; pn <= totalPages; pn++) {
+    const { list } = await fetchPage(pn)
+    allPages.push(list)
   }
+  animeList = allPages.flat()
 } catch (e: any) {
   fetchError = e.message ?? '获取追番列表失败'
 }
