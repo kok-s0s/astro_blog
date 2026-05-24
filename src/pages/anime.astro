@@ -102,13 +102,6 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
 
         <nav class="pagination" id="pagination" aria-label="分页导航">
           <button class="page-btn" id="prev-btn">&#8249;</button>
-          <div class="page-numbers" id="page-numbers">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button class={`page-btn num ${i === 0 ? 'active' : ''}`} data-page={i}>
-                {i + 1}
-              </button>
-            ))}
-          </div>
           <span class="page-indicator" id="page-indicator">1 / {totalPages}</span>
           <button class="page-btn" id="next-btn">&#8250;</button>
         </nav>
@@ -264,56 +257,38 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
   .pagination {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .page-numbers {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 1rem;
+    width: fit-content;
+    margin: 1.5rem auto 0;
   }
 
   .page-btn {
-    min-width: 2rem;
-    height: 2rem;
-    padding: 0 0.5rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--tag-bg);
+    background: none;
+    border: none;
     color: var(--muted);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s, background 0.15s;
-    font-family: inherit;
+    font-size: 1.25rem;
     line-height: 1;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    transition: color 0.15s;
+    font-family: inherit;
   }
-  .page-btn:hover:not(:disabled) {
-    border-color: var(--accent);
+  .page-btn:hover:not(.is-disabled) {
     color: var(--accent);
   }
-  .page-btn.active {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: #fff;
-    font-weight: 700;
-  }
   .page-btn.is-disabled {
-    opacity: 0.3;
+    opacity: 0.2;
     cursor: default;
     pointer-events: none;
   }
 
   .page-indicator {
-    display: none;
     font-size: 0.85rem;
     color: var(--muted);
-    min-width: 3.5rem;
+    letter-spacing: 0.05em;
+    font-variant-numeric: tabular-nums;
+    min-width: 4rem;
     text-align: center;
-    letter-spacing: 0.02em;
   }
 
   @media (max-width: 480px) {
@@ -332,12 +307,6 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
     .desc {
       -webkit-line-clamp: 2;
     }
-    .page-numbers {
-      display: none;
-    }
-    .page-indicator {
-      display: block;
-    }
   }
 </style>
 
@@ -352,7 +321,6 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
     var nextBtn = document.getElementById('next-btn')
     var indicator = document.getElementById('page-indicator')
     var cards = grid ? Array.from(grid.getElementsByClassName('card')) : []
-    var numBtns = Array.from(document.querySelectorAll('#page-numbers .num'))
     var totalPages = Math.ceil(cards.length / PAGE_SIZE)
 
     if (!grid || !pagination) return
@@ -364,11 +332,6 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
       for (var i = 0; i < cards.length; i++) {
         var show = i >= p * PAGE_SIZE && i < (p + 1) * PAGE_SIZE
         cards[i].style.display = show ? '' : 'none'
-      }
-
-      for (var j = 0; j < numBtns.length; j++) {
-        var isActive = parseInt(numBtns[j].getAttribute('data-page'), 10) === p
-        numBtns[j].className = 'page-btn num' + (isActive ? ' active' : '')
       }
 
       if (indicator) indicator.textContent = (p + 1) + ' / ' + totalPages

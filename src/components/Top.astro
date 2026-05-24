@@ -2,32 +2,27 @@
 import '../styles/top.css'
 ---
 
-<a href="#" id="back-to-top" class="back-to-top">Top</a>
+<button id="back-to-top" class="back-to-top" aria-label="回到顶部">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 12V4M4 7l4-4 4 4"/>
+  </svg>
+</button>
 
 <script>
-  var link = document.getElementById('back-to-top')
-  var amountScrolled = 250
+  ;(function () {
+    var btn = document.getElementById('back-to-top')
+    if (!btn) return
 
-  window.addEventListener('scroll', function (e) {
-    if (window.pageYOffset > amountScrolled) {
-      link.classList.add('show')
-    } else {
-      link.className = 'back-to-top'
-    }
-  })
-
-  link.addEventListener('click', function (e) {
-    e.preventDefault()
-
-    var distance = 0 - window.pageYOffset
-    var increments = distance / (500 / 16)
-    function animateScroll() {
-      window.scrollBy(0, increments)
-      if (window.pageYOffset <= document.body.offsetTop) {
-        clearInterval(runAnimation)
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 250) {
+        btn.classList.add('show')
+      } else {
+        btn.classList.remove('show')
       }
-    }
-    // Loop the animation function
-    var runAnimation = setInterval(animateScroll, 16)
-  })
+    })
+
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  })()
 </script>
