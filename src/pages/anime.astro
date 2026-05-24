@@ -333,7 +333,7 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
 </style>
 
 <script is:inline>
-  document.addEventListener('astro:page-load', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     var PAGE_SIZE = 10
     var page = 0
 
