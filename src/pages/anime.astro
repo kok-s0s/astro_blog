@@ -149,10 +149,32 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
+    position: relative;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: -120%;
+    width: 60%;
+    background: linear-gradient(
+      112deg,
+      transparent 20%,
+      var(--slash) 50%,
+      transparent 80%
+    );
+    transform: skewX(-18deg);
+    pointer-events: none;
   }
   .card:hover {
     border-color: var(--accent);
     background: var(--code-bg);
+  }
+  .card:hover::after {
+    animation: slash-sweep 0.5s ease-out forwards;
+  }
+  @keyframes slash-sweep {
+    to { left: 160%; }
   }
   .card[hidden] {
     display: none;
@@ -311,7 +333,7 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
 </style>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('astro:page-load', function () {
     var PAGE_SIZE = 10
     var page = 0
 

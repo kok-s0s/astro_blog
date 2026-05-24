@@ -2,7 +2,138 @@
 import BaseLayout from '../layouts/Base.astro'
 ---
 
-<BaseLayout pageTitle="404 · 页面不存在" description="页面不存在">
-  <p>找不到这个页面，它可能已被移动或删除。</p>
-  <p><a href="/">← 返回首页</a></p>
+<BaseLayout pageTitle="404" description="此灵魂已消散">
+  <div class="void">
+    <!-- 虚的面具 SVG -->
+    <svg class="mask" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="50" cy="62" rx="38" ry="52" class="mask-face" />
+      <!-- 左眼 -->
+      <path d="M28 52 Q34 43 40 52 Q34 63 28 52Z" class="mask-eye" />
+      <!-- 右眼 -->
+      <path d="M60 52 Q66 43 72 52 Q66 63 60 52Z" class="mask-eye" />
+      <!-- 嘴 -->
+      <path d="M30 85 Q50 95 70 85" class="mask-mouth" />
+      <line x1="40" y1="85" x2="38" y2="93" class="mask-tooth" />
+      <line x1="50" y1="87" x2="50" y2="95" class="mask-tooth" />
+      <line x1="60" y1="85" x2="62" y2="93" class="mask-tooth" />
+      <!-- 裂纹 -->
+      <path d="M50 10 Q53 28 49 44" class="mask-crack" />
+      <path d="M49 44 Q57 47 60 40" class="mask-crack" />
+      <path d="M60 40 Q63 35 58 30" class="mask-crack mask-crack--fine" />
+    </svg>
+
+    <p class="code">404</p>
+    <p class="message">此灵魂已消散</p>
+    <p class="sub">虚圈已将其吞噬，此处空无一物</p>
+    <a href="/" class="back">← 返回现世</a>
+  </div>
 </BaseLayout>
+
+<style>
+  /* 覆盖 BaseLayout 里的 h1，404 不需要标题 */
+  :global(main h1:first-child) {
+    display: none;
+  }
+
+  .void {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0 3rem;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  /* 面具 */
+  .mask {
+    width: 140px;
+    height: auto;
+    margin-bottom: 1rem;
+    animation: mask-float 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 18px var(--accent));
+  }
+
+  @keyframes mask-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+
+  .mask-face {
+    fill: var(--bg);
+    stroke: var(--heading);
+    stroke-width: 2;
+  }
+
+  .mask-eye {
+    fill: var(--heading);
+  }
+
+  .mask-mouth {
+    fill: none;
+    stroke: var(--heading);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .mask-tooth {
+    stroke: var(--heading);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+
+  .mask-crack {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    opacity: 0.8;
+  }
+
+  .mask-crack--fine {
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+
+  /* 文字 */
+  .code {
+    font-family: 'Bebas Neue', 'Noto Serif SC', serif;
+    font-size: clamp(5rem, 22vw, 9rem);
+    font-weight: 900;
+    color: var(--heading);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 0 40px var(--accent), 0 0 80px var(--slash);
+  }
+
+  .message {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    margin: 0;
+  }
+
+  .sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin: 0.2rem 0 1rem;
+  }
+
+  .back {
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    transition: color 0.15s;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+  }
+
+  .back:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+</style>
