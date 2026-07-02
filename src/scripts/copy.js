@@ -2,6 +2,9 @@ function addCopyButtonToPreElements() {
   const preElements = document.getElementsByTagName('pre')
 
   for (let item of preElements) {
+    if (item.dataset.copyReady) continue
+    item.dataset.copyReady = 'true'
+
     const copyButton = document.createElement('button')
     copyButton.style.cssText =
       'position: absolute; right: 1rem; top: 1rem; z-index: 555 !important; border-color: rgba(205,217,229,0.1); padding: 0; border-radius: 6px; cursor: pointer; background-color: #2e3440;'
@@ -68,4 +71,5 @@ function copyToClipboard(content) {
   }
 }
 
+document.addEventListener('astro:page-load', addCopyButtonToPreElements)
 addCopyButtonToPreElements()

@@ -6,7 +6,9 @@ import Top from '../components/Top.astro'
 import ProgressBar from '../components/ProgressBar.astro'
 import Particles from '../components/Particles.astro'
 import Bankai from '../components/Bankai.astro'
+import GlobalMusicPlayer from '../components/GlobalMusicPlayer.astro'
 import { withBase } from '../utils/path'
+import { ClientRouter } from 'astro:transitions'
 
 interface Props {
   pageTitle: string
@@ -56,6 +58,7 @@ const ogImageURL = new URL(withBase(ogImage), Astro.site)
     />
 
     <title>{pageTitle}</title>
+    <ClientRouter />
     <slot name="head" />
     <!-- 防止主题切换闪烁 -->
     <script is:inline>
@@ -77,6 +80,7 @@ const ogImageURL = new URL(withBase(ogImage), Astro.site)
     </main>
     <Footer />
     <Top />
+    <GlobalMusicPlayer />
     <script>
       import '../scripts/copy.js'
       import '../scripts/zoom-images'
