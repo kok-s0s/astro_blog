@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/Base.astro'
+import { withBase } from '../../utils/path'
 
 const projectPosts = Object.values(import.meta.glob('../posts/*.md', { eager: true })) as any[]
 const cleanCxxPosts = Object.values(import.meta.glob('../posts/clean_cxx/*.md', { eager: true })) as any[]
@@ -27,7 +28,7 @@ const pageTitle = '标签'
   <div class="tags">
     {
       uniqueTags.map((tag) => (
-        <a href={`/tags/${tag}`} class="tag">{tag}</a>
+        <a href={withBase(`/tags/${tag}`)} class="tag">{tag}</a>
       ))
     }
   </div>

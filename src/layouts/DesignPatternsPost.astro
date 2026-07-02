@@ -1,6 +1,7 @@
 ---
 import Toc from '../components/Toc.astro'
 import BaseLayout from './Base.astro'
+import { withBase } from '../utils/path'
 
 const { frontmatter, rawContent } = Astro.props
 
@@ -30,7 +31,7 @@ const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
     {
       frontmatter.tags.map((tag) => (
         <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
+          <a href={withBase(`/tags/${tag}`)}>{tag}</a>
         </p>
       ))
     }

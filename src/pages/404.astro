@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/Base.astro'
+import { withBase } from '../utils/path'
 ---
 
 <BaseLayout pageTitle="404" description="此灵魂已消散">
@@ -25,7 +26,7 @@ import BaseLayout from '../layouts/Base.astro'
     <p class="code">404</p>
     <p class="message">此灵魂已消散</p>
     <p class="sub">虚圈已将其吞噬，此处空无一物</p>
-    <a href="/" class="back">← 返回现世</a>
+    <a href={withBase('/')} class="back">← 返回现世</a>
   </div>
 </BaseLayout>
 

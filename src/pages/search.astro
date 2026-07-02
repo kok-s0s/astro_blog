@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/Base.astro'
+import { withBase } from '../utils/path'
 
 const pageTitle = '搜索'
 ---
@@ -9,8 +10,8 @@ const pageTitle = '搜索'
   <div id="search"></div>
 </BaseLayout>
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<link href={withBase('/pagefind/pagefind-ui.css')} rel="stylesheet" />
+<script is:inline src={withBase('/pagefind/pagefind-ui.js')}></script>
 <script is:inline>
   new PagefindUI({
     element: '#search',

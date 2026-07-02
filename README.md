@@ -4,7 +4,7 @@
 
 **记录所思，分享所得。**
 
-[![Live Site](https://img.shields.io/badge/Live-kok--s0s.netlify.app-e8722a?style=flat-square&logo=netlify&logoColor=white)](https://kok-s0s.netlify.app) [![Astro](https://img.shields.io/badge/Astro-5.x-e8722a?style=flat-square&logo=astro&logoColor=white)](https://astro.build) [![Netlify](https://img.shields.io/netlify/f934a11e-6443-470a-9078-4b813ffba417?style=flat-square&logo=netlify&logoColor=white&color=e8722a&label=netlify)](https://app.netlify.com/projects/kok-s0s/deploys) [![License](https://img.shields.io/badge/License-MIT-e8722a?style=flat-square)](LICENSE)
+[![Live Site](https://img.shields.io/badge/Live-GitHub%20Pages-e8722a?style=flat-square&logo=github&logoColor=white)](https://kok-s0s.github.io/astro_blog/) [![Deploy GitHub Pages](https://github.com/kok-s0s/astro_blog/actions/workflows/scheduled-build.yml/badge.svg)](https://github.com/kok-s0s/astro_blog/actions/workflows/scheduled-build.yml) [![Astro](https://img.shields.io/badge/Astro-5.x-e8722a?style=flat-square&logo=astro&logoColor=white)](https://astro.build) [![License](https://img.shields.io/badge/License-MIT-e8722a?style=flat-square)](LICENSE)
 
 </div>
 
@@ -24,6 +24,14 @@ AI 可以帮你生成代码，但它没有经历过你踩的那个坑、做的�
 - 制造业软件开发的日常（桌面 GUI、工业通信、跨平台）
 - 读书笔记与技术摘要
 - 偶尔的工具折腾记录
+
+## 部署
+
+站点由 GitHub Actions 构建并发布到 GitHub Pages：
+
+- push 到 `main` 时自动发布
+- 每天北京时间 10:00 定时重新发布
+- 也可以在 Actions 页面手动触发 `Deploy GitHub Pages`
 
 ---
 

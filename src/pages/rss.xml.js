@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss'
 
 export async function GET(context) {
+  const site = new URL(import.meta.env.BASE_URL || '/', context.site)
   const allPostModules = import.meta.glob('./posts/**/*.md', { eager: true })
   const posts = Object.values(allPostModules)
     .filter((post) => post.frontmatter?.title)
@@ -15,7 +16,7 @@ export async function GET(context) {
   return rss({
     title: 'kok-s0s · 博客',
     description: '关于 C++、Qt、工具链和软件开发的技术文章',
-    site: context.site,
+    site,
     items: posts,
     customData: '<language>zh-cn</language>',
   })

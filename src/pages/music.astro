@@ -600,25 +600,13 @@ const tracksForClient = tracks.map((t) => ({
       plArtist.textContent = t.artists.join(' / ')
       player.hidden = false
 
-      // 从 Netlify function 取到签名 CDN URL，浏览器直接播放
-      // meta[name=referrer]=no-referrer 确保不带 Referer，绕过 CDN 热链保护
       audio.pause()
       audio.src = ''
       setPlayIcon(false)
 
-      fetch('/.netlify/functions/ncm-url?id=' + t.id)
-        .then(function (r) { return r.json() })
-        .then(function (d) {
-          if (!d.url) throw new Error('no url')
-          audio.src = d.url
-          audio.volume = volume.value / 100
-          return audio.play()
-        })
-        .catch(function () {
-          audio.src = 'https://music.163.com/song/media/outer/url?id=' + t.id
-          audio.volume = volume.value / 100
-          audio.play().catch(function () {})
-        })
+      audio.src = 'https://music.163.com/song/media/outer/url?id=' + t.id
+      audio.volume = volume.value / 100
+      audio.play().catch(function () {})
     }
 
     audio.addEventListener('timeupdate', updateProgress)

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/Base.astro'
 import '../styles/roadmap.css'
+import { withBase } from '../utils/path'
 
 const pageTitle = '路'
 const knowledgeElementPosts = Object.values(import.meta.glob('./posts/knowledge_element/*.md', { eager: true })) as any[]
@@ -8,7 +9,7 @@ const scatteredPosts = Object.values(import.meta.glob('./posts/scattered/*.md', 
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <img src="/images/bird.jpg" alt="moon" id="bird" />
+  <img src={withBase('/images/bird.jpg')} alt="moon" id="bird" />
   <blockquote>
     <p>虽说是工作，但我想找到乐趣</p>
   </blockquote>

@@ -6,6 +6,7 @@ import Top from '../components/Top.astro'
 import ProgressBar from '../components/ProgressBar.astro'
 import Particles from '../components/Particles.astro'
 import Bankai from '../components/Bankai.astro'
+import { withBase } from '../utils/path'
 
 interface Props {
   pageTitle: string
@@ -15,13 +16,14 @@ interface Props {
 
 const { pageTitle, description = '关于 C++、Qt、工具链和软件开发的技术博客', ogImage = '/images/moon.jpeg' } = Astro.props
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const ogImageURL = new URL(withBase(ogImage), Astro.site)
 ---
 
 <html lang="zh">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/zero.jpeg" />
-    <link rel="stylesheet" href="/css/prism-nord.css" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/zero.jpeg')} />
+    <link rel="stylesheet" href={withBase('/css/prism-nord.css')} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
@@ -33,11 +35,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:image" content={ogImageURL} />
     <meta property="og:url" content={canonicalURL} />
 
     <!-- RSS -->
-    <link rel="alternate" type="application/rss+xml" title="kok-s0s · 博客" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="kok-s0s · 博客" href={withBase('/rss.xml')} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -82,7 +84,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
           e.preventDefault()
-          window.location.href = '/search'
+          const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+          window.location.href = `${base}search`
         }
       })
     </script>
