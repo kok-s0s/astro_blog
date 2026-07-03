@@ -8,21 +8,29 @@ import '../styles/top.css'
   </svg>
 </button>
 
-<script>
-  ;(function () {
+<script is:inline>
+  function initBackToTop() {
     var btn = document.getElementById('back-to-top')
     if (!btn) return
+    if (btn.dataset.ready === 'true') return
+    btn.dataset.ready = 'true'
 
-    window.addEventListener('scroll', function () {
+    function updateVisibility() {
       if (window.pageYOffset > 250) {
         btn.classList.add('show')
       } else {
         btn.classList.remove('show')
       }
-    })
+    }
+
+    window.addEventListener('scroll', updateVisibility, { passive: true })
+    updateVisibility()
 
     btn.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     })
-  })()
+  }
+
+  document.addEventListener('astro:page-load', initBackToTop)
+  initBackToTop()
 </script>
