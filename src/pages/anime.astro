@@ -333,7 +333,7 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
 </style>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initAnimePagination() {
     var PAGE_SIZE = 10
     var page = 0
 
@@ -346,6 +346,8 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
     var totalPages = Math.ceil(cards.length / PAGE_SIZE)
 
     if (!grid || !pagination) return
+    if (pagination.dataset.ready === 'true') return
+    pagination.dataset.ready = 'true'
 
     function goTo(p) {
       p = Math.max(0, Math.min(p, totalPages - 1))
@@ -387,5 +389,8 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
 
     var initP = parseInt(new URLSearchParams(location.search).get('page') || '1', 10) - 1
     goTo(Math.max(0, Math.min(initP, totalPages - 1)))
-  })
+  }
+
+  document.addEventListener('astro:page-load', initAnimePagination)
+  initAnimePagination()
 </script>
