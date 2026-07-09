@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/Base.astro'
+import fallbackAnimeList from '../data/anime-fallback.json'
 
 const UID = '28587643'
 const PAGE_SIZE = 10
@@ -28,7 +29,9 @@ async function fetchPage(pn: number): Promise<{ list: AnimeItem[]; total: number
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       Referer: 'https://www.bilibili.com',
     },
+    signal: AbortSignal.timeout(8000),
   })
+  if (!res.ok) throw new Error(`请求失败：${res.status}`)
   const data = await res.json()
   if (data.code !== 0) throw new Error(data.message)
   return { list: data.data?.list ?? [], total: data.data?.total ?? 0 }
@@ -44,6 +47,7 @@ try {
   }
   animeList = allPages.flat()
 } catch (e: any) {
+  animeList = fallbackAnimeList as AnimeItem[]
   fetchError = e.message ?? '获取追番列表失败'
 }
 
@@ -72,7 +76,7 @@ const totalPages = Math.ceil(animeList.length / PAGE_SIZE)
   <p class="count-line">共追 <strong>{animeList.length}</strong> 部番剧</p>
 
   {
-    fetchError ? (
+    fetchError && animeList.length === 0 ? (
       <p class="fetch-error">获取失败：{fetchError}</p>
     ) : (
       <>

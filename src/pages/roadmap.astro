@@ -4,8 +4,8 @@ import '../styles/roadmap.css'
 import { withBase } from '../utils/path'
 
 const pageTitle = '路'
-const knowledgeElementPosts = Object.values(import.meta.glob('./posts/knowledge_element/*.md', { eager: true })) as any[]
-const scatteredPosts = Object.values(import.meta.glob('./posts/scattered/*.md', { eager: true })) as any[]
+const knowledgeElementPosts = Object.values(import.meta.glob('../content/roadmap/knowledge_element/*.md', { eager: true })) as any[]
+const scatteredPosts = Object.values(import.meta.glob('../content/roadmap/scattered/*.md', { eager: true })) as any[]
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -47,22 +47,24 @@ const scatteredPosts = Object.values(import.meta.glob('./posts/scattered/*.md', 
   const reposList = document.getElementById('knowledge-element')
   const scatteredList = document.getElementById('scattered')
 
-  // 合并两个列表中的所有 details 元素
-  const allDetailsElements = [
-    ...reposList.getElementsByTagName('details'),
-    ...scatteredList.getElementsByTagName('details'),
-  ]
+  if (reposList && scatteredList) {
+    // 合并两个列表中的所有 details 元素
+    const allDetailsElements = [
+      ...reposList.getElementsByTagName('details'),
+      ...scatteredList.getElementsByTagName('details'),
+    ]
 
-  // 处理互斥逻辑
-  for (const details of allDetailsElements) {
-    details.addEventListener('toggle', () => {
-      if (details.open) {
-        for (const otherDetails of allDetailsElements) {
-          if (otherDetails !== details) {
-            otherDetails.removeAttribute('open')
+    // 处理互斥逻辑
+    for (const details of allDetailsElements) {
+      details.addEventListener('toggle', () => {
+        if (details.open) {
+          for (const otherDetails of allDetailsElements) {
+            if (otherDetails !== details) {
+              otherDetails.removeAttribute('open')
+            }
           }
         }
-      }
-    })
+      })
+    }
   }
 </script>

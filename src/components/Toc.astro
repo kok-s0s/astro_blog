@@ -5,6 +5,10 @@ import '../styles/toc.css'
 <div id="toc"></div>
 
 <script>
+  ;(() => {
+  if ((window as any).__tocReady) return
+  ;(window as any).__tocReady = true
+
   let updateTocActive: (() => void) | null = null
 
   function buildToc() {
@@ -49,4 +53,6 @@ import '../styles/toc.css'
   window.addEventListener('scroll', () => updateTocActive?.(), { passive: true })
   document.addEventListener('DOMContentLoaded', buildToc)
   document.addEventListener('astro:page-load', buildToc)
+  buildToc()
+  })()
 </script>

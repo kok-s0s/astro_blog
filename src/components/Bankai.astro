@@ -1,4 +1,4 @@
-<div id="bankai-overlay" aria-hidden="true">
+<div id="bankai-overlay" aria-hidden="true" transition:persist>
   <div id="bankai-rings">
     <div class="ring"></div>
     <div class="ring"></div>
@@ -89,6 +89,10 @@
 </style>
 
 <script>
+  ;(() => {
+  if ((window as any).__bankaiReady) return
+  ;(window as any).__bankaiReady = true
+
   const overlay = document.getElementById('bankai-overlay')!
   const textEl = document.getElementById('bankai-text')!
   const rings = document.querySelectorAll<HTMLElement>('.ring')
@@ -130,4 +134,5 @@
     overlay.classList.add('active')
     overlay.addEventListener('animationend', () => overlay.classList.remove('active'), { once: true })
   }
+  })()
 </script>

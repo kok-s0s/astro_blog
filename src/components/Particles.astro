@@ -1,4 +1,4 @@
-<canvas id="particles-canvas"></canvas>
+<canvas id="particles-canvas" transition:persist></canvas>
 
 <style>
   #particles-canvas {
@@ -13,6 +13,10 @@
 </style>
 
 <script>
+  ;(() => {
+  if ((window as any).__particlesReady) return
+  ;(window as any).__particlesReady = true
+
   const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement
   const ctx = canvas.getContext('2d')!
 
@@ -110,4 +114,5 @@
     if (document.hidden) cancelAnimationFrame(rafId)
     else tick()
   })
+  })()
 </script>

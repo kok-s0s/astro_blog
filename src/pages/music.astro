@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/Base.astro'
+import fallbackTracks from '../data/music-fallback.json'
 
 const UID = '467185512'
 
@@ -21,6 +22,15 @@ const HEADERS = {
   Referer: 'https://music.163.com/',
 }
 
+async function fetchJson(url: string, init: RequestInit = {}) {
+  const res = await fetch(url, {
+    ...init,
+    signal: AbortSignal.timeout(8000),
+  })
+  if (!res.ok) throw new Error(`请求失败：${res.status}`)
+  return res.json()
+}
+
 function formatDuration(ms: number): string {
   const s = Math.floor(ms / 1000)
   const m = Math.floor(s / 60)
@@ -37,29 +47,26 @@ function songUrl(id: number): string {
 }
 
 try {
-  const plRes = await fetch(
+  const plData = await fetchJson(
     `https://music.163.com/api/user/playlist?uid=${UID}&limit=1&offset=0`,
     { headers: HEADERS }
   )
-  const plData = await plRes.json()
   const playlistId: number = plData.playlist?.[0]?.id
   if (!playlistId) throw new Error('无法获取歌单 ID')
 
-  const detailRes = await fetch(
+  const detailData = await fetchJson(
     `https://music.163.com/api/v3/playlist/detail?id=${playlistId}&n=500`,
     { headers: HEADERS }
   )
-  const detailData = await detailRes.json()
   const trackIds: number[] = (detailData.playlist?.trackIds ?? []).map((t: any) => t.id)
   if (trackIds.length === 0) throw new Error('歌单为空')
 
   const idsStr = '[' + trackIds.join(',') + ']'
-  const songRes = await fetch('https://music.163.com/api/song/detail', {
+  const songData = await fetchJson('https://music.163.com/api/song/detail', {
     method: 'POST',
     headers: { ...HEADERS, 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `ids=${encodeURIComponent(idsStr)}`,
   })
-  const songData = await songRes.json()
 
   const songMap = new Map<number, any>((songData.songs ?? []).map((s: any) => [s.id, s]))
 
@@ -78,6 +85,7 @@ try {
     })
     .filter(Boolean) as Track[]
 } catch (e: any) {
+  tracks = fallbackTracks as Track[]
   fetchError = e.message ?? '获取音乐列表失败'
 }
 
@@ -102,7 +110,7 @@ const tracksForClient = tracks.map((t) => ({
   </p>
 
   {
-    fetchError ? (
+    fetchError && tracks.length === 0 ? (
       <p class="fetch-error">获取失败：{fetchError}</p>
     ) : (
       <ul class="track-list" id="track-list">

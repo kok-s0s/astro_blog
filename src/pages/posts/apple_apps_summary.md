@@ -6,7 +6,7 @@ updatedDate: 2026-07-02
 description: '联网翻了下自己 GitHub 上近期几个 Apple 手机软件项目，做一次阶段性记录：从生活碎片、物品日耗到日语词汇学习。'
 author: 'kok-s0s'
 image:
-  url: '/images/apple_apps_summary/cover.png'
+  url: '/images/apple_apps_summary/cover.webp'
   alt: 'iOS App development desk'
 tags: ['iOS', 'SwiftUI', 'SwiftData']
 ---
