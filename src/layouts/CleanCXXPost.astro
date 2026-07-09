@@ -36,7 +36,7 @@ const nextPost = allPosts[(currentPostIndex + 1) % allPosts.length]
   <Toc />
   <slot />
   <div id="previous-next-article">
-    <a href={previousPost.url} id="previous" class="underline">{previousPost.frontmatter.title}</a>
-    <a href={nextPost.url} id="next" class="underline">{nextPost.frontmatter.title}</a>
+    <a href={withBase(previousPost.url)} id="previous" class="underline">{previousPost.frontmatter.title}</a>
+    <a href={withBase(nextPost.url)} id="next" class="underline">{nextPost.frontmatter.title}</a>
   </div>
 </BaseLayout>

@@ -1,11 +1,13 @@
 ---
+import { withBase } from '../utils/path'
+
 const { title, url, pubDate } = Astro.props
 const date = new Date(pubDate)
 const formattedPubDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 ---
 
 <li>
-  <a href={url}>
+  <a href={withBase(url)}>
     <span class="title">{title}</span>
     <span class="time">{formattedPubDate}</span>
   </a>

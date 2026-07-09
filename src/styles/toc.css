@@ -26,7 +26,7 @@
   position: fixed;
   top: 16%;
   right: -285.5px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0.15rem;
   margin: 0 auto;
@@ -39,6 +39,10 @@
   border-right: none;
   z-index: 999;
   transition: right 0.25s ease, background-color 0.2s ease;
+}
+
+#toc[data-ready='true'] {
+  display: flex;
 }
 
 #toc:hover {

@@ -1,9 +1,11 @@
 ---
+import { withBase } from '../utils/path'
+
 const { title, url } = Astro.props
 ---
 
 <li>
-  <a href={url}>{title}</a>
+  <a href={withBase(url)}>{title}</a>
 </li>
 
 <style>

@@ -5,20 +5,34 @@ import '../styles/toc.css'
 <div id="toc"></div>
 
 <script>
-  const tocContainer = document.getElementById('toc')
-  const headings = Array.from(document.querySelectorAll('main h2, main h3, main h4, main h5')) as HTMLElement[]
+  let updateTocActive: (() => void) | null = null
 
-  if (tocContainer && headings.length > 0) {
+  function buildToc() {
+    const tocContainer = document.getElementById('toc')
+    if (!tocContainer) return
+
+    const headings = Array.from(document.querySelectorAll('main h2, main h3, main h4, main h5')).filter(
+      (h): h is HTMLElement => h instanceof HTMLElement && h.id.length > 0,
+    )
+
+    if (headings.length === 0) {
+      tocContainer.innerHTML = ''
+      tocContainer.removeAttribute('data-ready')
+      updateTocActive = null
+      return
+    }
+
     tocContainer.innerHTML = headings
       .map((h) => `<span class="toc-${h.tagName}"><a href="#${h.id}" data-id="${h.id}">${h.innerText}</a></span>`)
       .join('')
+    tocContainer.setAttribute('data-ready', 'true')
 
     function setActive(id: string) {
-      tocContainer!.querySelectorAll('a').forEach((a) => a.classList.remove('active'))
-      tocContainer!.querySelector<HTMLAnchorElement>(`a[data-id="${id}"]`)?.classList.add('active')
+      tocContainer.querySelectorAll('a').forEach((a) => a.classList.remove('active'))
+      tocContainer.querySelector<HTMLAnchorElement>(`a[data-id="${CSS.escape(id)}"]`)?.classList.add('active')
     }
 
-    function updateActive() {
+    updateTocActive = () => {
       const threshold = window.innerHeight * 0.25
       let current = headings[0]
       for (const h of headings) {
@@ -29,7 +43,10 @@ import '../styles/toc.css'
       setActive(current.id)
     }
 
-    window.addEventListener('scroll', updateActive, { passive: true })
-    updateActive()
+    updateTocActive()
   }
+
+  window.addEventListener('scroll', () => updateTocActive?.(), { passive: true })
+  document.addEventListener('DOMContentLoaded', buildToc)
+  document.addEventListener('astro:page-load', buildToc)
 </script>
