@@ -1,16 +1,76 @@
 ---
 import '../styles/nav.css'
 import { withBase } from '../utils/path'
+
+const basePath = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+const rawPathname = Astro.url.pathname.replace(/\/$/, '') || '/'
+const pathname =
+  basePath && basePath !== '/' && (rawPathname === basePath || rawPathname.startsWith(`${basePath}/`))
+    ? rawPathname.slice(basePath.length) || '/'
+    : rawPathname
+
+const navItems = [
+  { label: 'Home', href: '/', match: ['/'] },
+  { label: 'About', href: '/about', match: ['/about'] },
+  { label: 'Blog', href: '/blog', match: ['/blog', '/posts', '/tags'] },
+  { label: 'Archive', href: '/archive', match: ['/archive'] },
+  { label: 'Anime', href: '/anime', match: ['/anime'] },
+  { label: 'Music', href: '/music', match: ['/music'] },
+]
+
+const isActive = (matches: string[]) =>
+  matches.some((match) => (match === '/' ? pathname === '/' : pathname === match || pathname.startsWith(`${match}/`)))
 ---
 
 <div id="nav-backdrop"></div>
 
 <nav class="nav-links">
-  <a href={withBase('/')}>Home</a>
-  <a href={withBase('/about')}>About</a>
-  <a href={withBase('/blog')}>Blog</a>
-  <a href={withBase('/archive')}>Archive</a>
-  <a href={withBase('/anime')}>Anime</a>
-  <a href={withBase('/music')}>Music</a>
+  {
+    navItems.map((item) => {
+      const active = isActive(item.match)
+      return (
+        <a href={withBase(item.href)} class:list={{ active }} aria-current={active ? 'page' : undefined} data-match={item.match.join(',')}>
+          {item.label}
+        </a>
+      )
+    })
+  }
   <a href={withBase('/search')} class="nav-search-mobile">Search</a>
 </nav>
+
+<script>
+  const basePath = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+
+  function normalizePath(pathname: string) {
+    const withoutTrailingSlash = pathname.replace(/\/$/, '') || '/'
+    if (basePath && basePath !== '/' && (withoutTrailingSlash === basePath || withoutTrailingSlash.startsWith(`${basePath}/`))) {
+      return withoutTrailingSlash.slice(basePath.length) || '/'
+    }
+    return withoutTrailingSlash
+  }
+
+  function matchNav(pathname: string, matches: string[]) {
+    return matches.some((match) => (match === '/' ? pathname === '/' : pathname === match || pathname.startsWith(`${match}/`)))
+  }
+
+  function syncActiveNav() {
+    const pathname = normalizePath(window.location.pathname)
+    document.querySelectorAll<HTMLAnchorElement>('.nav-links a[data-match]').forEach((link) => {
+      const matches = link.dataset.match?.split(',') ?? []
+      const active = matchNav(pathname, matches)
+      link.classList.toggle('active', active)
+      if (active) {
+        link.setAttribute('aria-current', 'page')
+      } else {
+        link.removeAttribute('aria-current')
+      }
+    })
+  }
+
+  if (!(window as any).__navActiveReady) {
+    ;(window as any).__navActiveReady = true
+    document.addEventListener('astro:page-load', syncActiveNav)
+  }
+
+  syncActiveNav()
+</script>

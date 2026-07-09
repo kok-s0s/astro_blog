@@ -253,25 +253,65 @@ table tbody tr td {
   text-align: right;
 }
 
-/* copy */
-.octicon {
-  display: inline-block;
-  overflow: visible !important;
-  vertical-align: text-bottom;
+/* code block */
+.code-block {
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--toc-bg) 82%, var(--bg));
+}
+
+.code-block-lang {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.code-copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.18rem 0.45rem;
+  background: var(--tag-bg);
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.code-copy-button:hover,
+.code-copy-button.copied {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.code-copy-button .octicon {
+  width: 0.82rem;
+  height: 0.82rem;
   fill: currentColor;
 }
 
-.octicon-copy {
-  color: #768390;
-  vertical-align: text-bottom;
-}
-
-.octicon-check {
-  color: #008080;
-}
-
-.m-2 {
-  margin: var(--base-size-8, 8px) !important;
+.code-block pre {
+  clear: none;
+  margin: 0;
+  border-radius: 0;
 }
 
 #normal {

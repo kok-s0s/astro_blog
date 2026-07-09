@@ -52,7 +52,8 @@
 }
 
 .nav-links a:hover,
-.nav-links a:focus {
+.nav-links a:focus,
+.nav-links a.active {
   color: var(--accent);
   background: var(--code-bg);
 }
@@ -83,7 +84,12 @@
     border-radius: 0;
   }
 
-  .nav-links a:hover {
+  .nav-links a:hover,
+  .nav-links a.active {
     background: none;
+  }
+
+  .nav-links a.active {
+    color: var(--accent);
   }
 }

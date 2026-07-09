@@ -6,16 +6,14 @@ import '../styles/toc.css'
 
 <script>
   ;(() => {
-  if ((window as any).__tocReady) return
-  ;(window as any).__tocReady = true
-
   let updateTocActive: (() => void) | null = null
+  let headings: HTMLElement[] = []
 
   function buildToc() {
     const tocContainer = document.getElementById('toc')
     if (!tocContainer) return
 
-    const headings = Array.from(document.querySelectorAll('main h2, main h3, main h4, main h5')).filter(
+    headings = Array.from(document.querySelectorAll('main h2, main h3, main h4, main h5')).filter(
       (h): h is HTMLElement => h instanceof HTMLElement && h.id.length > 0,
     )
 
@@ -30,6 +28,16 @@ import '../styles/toc.css'
       .map((h) => `<span class="toc-${h.tagName}"><a href="#${h.id}" data-id="${h.id}">${h.innerText}</a></span>`)
       .join('')
     tocContainer.setAttribute('data-ready', 'true')
+    tocContainer.querySelectorAll<HTMLAnchorElement>('a').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault()
+        const id = link.dataset.id
+        if (!id) return
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        history.replaceState(null, '', `#${id}`)
+        setActive(id)
+      })
+    })
 
     function setActive(id: string) {
       tocContainer.querySelectorAll('a').forEach((a) => a.classList.remove('active'))
@@ -37,7 +45,7 @@ import '../styles/toc.css'
     }
 
     updateTocActive = () => {
-      const threshold = window.innerHeight * 0.25
+      const threshold = Math.min(window.innerHeight * 0.28, 220)
       let current = headings[0]
       for (const h of headings) {
         if (h.getBoundingClientRect().top < threshold) {
@@ -50,9 +58,14 @@ import '../styles/toc.css'
     updateTocActive()
   }
 
-  window.addEventListener('scroll', () => updateTocActive?.(), { passive: true })
-  document.addEventListener('DOMContentLoaded', buildToc)
-  document.addEventListener('astro:page-load', buildToc)
+  if (!(window as any).__tocReady) {
+    ;(window as any).__tocReady = true
+    window.addEventListener('scroll', () => updateTocActive?.(), { passive: true })
+    window.addEventListener('resize', () => updateTocActive?.())
+    document.addEventListener('DOMContentLoaded', buildToc)
+    document.addEventListener('astro:page-load', buildToc)
+  }
+
   buildToc()
   })()
 </script>
