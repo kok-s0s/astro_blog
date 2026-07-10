@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/Base.astro'
 import BlogPost from '../../components/BlogPost.astro'
+import { withBase } from '../../utils/path'
 
 export async function getStaticPaths() {
   const projectPosts = Object.values(import.meta.glob('../posts/*.md', { eager: true })) as any[]
@@ -43,6 +44,11 @@ const { posts } = Astro.props
 
 <BaseLayout pageTitle={tag}>
   <p class="subtitle">{posts.length} 篇文章带有此标签</p>
+  <nav class="tag-nav" aria-label="标签浏览方式">
+    <a href={withBase('/tags')}>全部标签</a>
+    <a href={withBase('/blog')}>文章</a>
+    <a href={withBase('/archive')}>归档</a>
+  </nav>
   <ul>
     {posts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
   </ul>
@@ -50,9 +56,36 @@ const { posts } = Astro.props
 
 <style>
   .subtitle {
-    margin: 0 0 1rem;
+    margin: 0 0 0.75rem;
     font-size: 0.9rem;
     color: var(--muted);
+  }
+
+  .tag-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .tag-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid var(--tag-border);
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-size: 0.86rem;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .tag-nav a:hover,
+  .tag-nav a:focus-visible {
+    border-color: var(--accent);
+    background: var(--code-bg);
+    color: var(--accent);
   }
 
   ul {
