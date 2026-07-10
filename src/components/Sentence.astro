@@ -48,29 +48,49 @@ const sentences = sentenceJson.flatMap((item) => item.li_texts)
 </style>
 
 <script is:inline define:vars={{ sentences }}>
-  const el = document.getElementById('sentence')
-  const storageKey = 'storedIndex'
+  ;(() => {
+    const storageKey = 'storedIndex'
+    window.__sentenceList = sentences
 
-  function readIndex() {
-    const stored = Number.parseInt(localStorage.getItem(storageKey), 10)
-    return Number.isFinite(stored) ? stored : 0
-  }
+    function readIndex() {
+      const stored = Number.parseInt(localStorage.getItem(storageKey), 10)
+      return Number.isFinite(stored) ? stored : 0
+    }
 
-  function renderSentence(index, animate = false) {
-    if (!el) return
-    el.textContent = sentences[index]
-    if (!animate) return
-    el.classList.remove('switching')
-    void el.offsetWidth
-    el.classList.add('switching')
-  }
+    function renderSentence(el, index, animate = false) {
+      const list = window.__sentenceList ?? []
+      if (!el || list.length === 0) return
+      el.textContent = list[index % list.length]
+      if (!animate) return
+      el.classList.remove('switching')
+      void el.offsetWidth
+      el.classList.add('switching')
+    }
 
-  function nextSentence(animate = false) {
-    const index = readIndex() % sentences.length
-    renderSentence(index, animate)
-    localStorage.setItem(storageKey, String((index + 1) % sentences.length))
-  }
+    function nextSentence(el, animate = false) {
+      const list = window.__sentenceList ?? []
+      if (!el || list.length === 0) return
+      const index = readIndex() % list.length
+      renderSentence(el, index, animate)
+      localStorage.setItem(storageKey, String((index + 1) % list.length))
+    }
 
-  nextSentence(false)
-  el?.addEventListener('click', () => nextSentence(true))
+    function initSentence() {
+      const el = document.getElementById('sentence')
+      if (!el) return
+      nextSentence(el, false)
+      if (el.dataset.ready === 'true') return
+      el.dataset.ready = 'true'
+      el.addEventListener('click', () => nextSentence(el, true))
+    }
+
+    window.__initSentence = initSentence
+
+    if (!window.__sentenceReady) {
+      window.__sentenceReady = true
+      document.addEventListener('astro:page-load', initSentence)
+    }
+
+    initSentence()
+  })()
 </script>
