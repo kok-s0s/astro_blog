@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/Base.astro'
 import OriginalBlogPost from '../components/OriginalBlogPost.astro'
 import BlogPost from '../components/BlogPost.astro'
+import { withBase } from '../utils/path'
 
 const projectPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true })) as any[]
 projectPosts.sort((a, b) => (new Date(b.frontmatter.updatedDate) as any) - (new Date(a.frontmatter.updatedDate) as any))
@@ -16,6 +17,11 @@ const pageTitle = '博文'
   <blockquote>
     <p>记录所思，分享所得。</p>
   </blockquote>
+  <nav class="blog-tools" aria-label="文章浏览方式">
+    <a href={withBase('/blog')} class="active" aria-current="page">文章</a>
+    <a href={withBase('/tags')}>标签</a>
+    <a href={withBase('/archive')}>归档</a>
+  </nav>
   <h2>原创</h2>
   <ul class="posts-list">
     {
@@ -62,6 +68,34 @@ const pageTitle = '博文'
     border-left: 3px solid var(--accent);
     padding-left: 0.6rem;
     margin-bottom: 0.75rem;
+  }
+
+  .blog-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: -0.25rem 0 1.25rem;
+  }
+
+  .blog-tools a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid var(--tag-border);
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-size: 0.86rem;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .blog-tools a:hover,
+  .blog-tools a:focus-visible,
+  .blog-tools a.active {
+    border-color: var(--accent);
+    background: var(--code-bg);
+    color: var(--accent);
   }
 
   ul {

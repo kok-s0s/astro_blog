@@ -12,12 +12,31 @@ for (const post of allPosts) {
   byYear[year].push(post)
 }
 const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a))
+const postCount = allPosts.length
 ---
 
 <BaseLayout pageTitle="归档" description="所有文章按年份归档">
+  <div class="archive-toolbar" aria-label="按年份筛选文章">
+    <p class="archive-count">
+      共 <strong>{postCount}</strong> 篇文章
+    </p>
+    <div class="year-filter" role="list">
+      <button type="button" class="year-filter-btn active" data-year="all" aria-pressed="true">
+        全部
+      </button>
+      {
+        years.map((year) => (
+          <button type="button" class="year-filter-btn" data-year={year} aria-pressed="false">
+            {year}
+            <span>{byYear[year].length}</span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
   {
     years.map((year) => (
-      <section class="year-section">
+      <section class="year-section" data-year-section={year}>
         <h2>{year}</h2>
         <ul>
           {byYear[year].map((post) => (
@@ -30,9 +49,99 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a))
       </section>
     ))
   }
+
+  <script>
+    function initArchiveFilter() {
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.year-filter-btn'))
+      const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-year-section]'))
+      if (buttons.length === 0 || sections.length === 0) return
+
+      const setYear = (selectedYear: string) => {
+        buttons.forEach((button) => {
+          const active = button.dataset.year === selectedYear
+          button.classList.toggle('active', active)
+          button.setAttribute('aria-pressed', String(active))
+        })
+
+        sections.forEach((section) => {
+          const visible = selectedYear === 'all' || section.dataset.yearSection === selectedYear
+          section.hidden = !visible
+        })
+      }
+
+      buttons.forEach((button) => {
+        if (button.dataset.ready === 'true') return
+        button.dataset.ready = 'true'
+        button.addEventListener('click', () => setYear(button.dataset.year ?? 'all'))
+      })
+
+      setYear('all')
+    }
+
+    document.addEventListener('astro:page-load', initArchiveFilter)
+    initArchiveFilter()
+  </script>
 </BaseLayout>
 
 <style>
+  .archive-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .archive-count {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .archive-count strong {
+    color: var(--accent);
+  }
+
+  .year-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .year-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2rem;
+    padding: 0.2rem 0.75rem;
+    border: 1px solid var(--tag-border);
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .year-filter-btn span {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .year-filter-btn:hover,
+  .year-filter-btn:focus-visible,
+  .year-filter-btn.active {
+    border-color: var(--accent);
+    background: var(--code-bg);
+    color: var(--accent);
+  }
+
+  .year-filter-btn.active span {
+    color: var(--accent);
+  }
+
   .year-section h2 {
     margin-bottom: 0.5rem;
   }
