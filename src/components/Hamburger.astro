@@ -9,33 +9,54 @@ import '../styles/hamburger.css'
 </button>
 
 <script>
-  const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')!
-  const navLinks = document.querySelector<HTMLElement>('.nav-links')!
-  const backdrop = document.getElementById('nav-backdrop')!
-
-  function openNav() {
-    navLinks.classList.add('expanded')
-    hamburger.classList.add('open')
-    hamburger.setAttribute('aria-expanded', 'true')
-    backdrop.classList.add('visible')
-    document.body.style.overflow = 'hidden'
-  }
-
   function closeNav() {
-    navLinks.classList.remove('expanded')
-    hamburger.classList.remove('open')
-    hamburger.setAttribute('aria-expanded', 'false')
-    backdrop.classList.remove('visible')
+    const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')
+    const navLinks = document.querySelector<HTMLElement>('.nav-links')
+    const backdrop = document.getElementById('nav-backdrop')
+    navLinks?.classList.remove('expanded')
+    hamburger?.classList.remove('open')
+    hamburger?.setAttribute('aria-expanded', 'false')
+    backdrop?.classList.remove('visible')
     document.body.style.overflow = ''
   }
 
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.contains('expanded') ? closeNav() : openNav()
-  })
+  function toggleNav() {
+    const hamburger = document.querySelector<HTMLButtonElement>('.hamburger')
+    const navLinks = document.querySelector<HTMLElement>('.nav-links')
+    const backdrop = document.getElementById('nav-backdrop')
+    if (!hamburger || !navLinks || !backdrop) return
 
-  backdrop.addEventListener('click', closeNav)
+    const expanded = navLinks.classList.toggle('expanded')
+    hamburger.classList.toggle('open', expanded)
+    hamburger.setAttribute('aria-expanded', String(expanded))
+    backdrop.classList.toggle('visible', expanded)
+    document.body.style.overflow = expanded ? 'hidden' : ''
+  }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeNav()
-  })
+  if (!(window as any).__hamburgerReady) {
+    ;(window as any).__hamburgerReady = true
+    document.addEventListener('click', (e) => {
+      const target = e.target instanceof Element ? e.target : null
+      if (target?.closest('.hamburger')) {
+        toggleNav()
+        return
+      }
+      if (target?.closest('#nav-backdrop')) {
+        closeNav()
+        return
+      }
+      if (target?.closest('.nav-links a')) closeNav()
+    })
+    document.addEventListener('astro:page-load', initHamburger)
+    document.addEventListener('astro:before-swap', closeNav)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNav()
+    })
+  }
+
+  function initHamburger() {
+    closeNav()
+  }
+
+  initHamburger()
 </script>
