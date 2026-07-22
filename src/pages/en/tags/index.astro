@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../../../layouts/Base.astro'
+import { withBase } from '../../../utils/path'
+import { getEnTagLabel, getEnTagSlug } from '../../../utils/enTags'
+
+const projectPosts = Object.values(import.meta.glob('../../posts/*.md', { eager: true })) as any[]
+const cleanCxxPosts = Object.values(import.meta.glob('../../posts/clean_cxx/*.md', { eager: true })) as any[]
+const cxxCreationalPatternsPosts = Object.values(import.meta.glob('../../posts/cxx_design_patterns/creational_patterns/*.md', { eager: true })) as any[]
+const cxxStructuralPatternsPosts = Object.values(import.meta.glob('../../posts/cxx_design_patterns/structural_patterns/*.md', { eager: true })) as any[]
+const cxxBehavioralPatternsPosts = Object.values(import.meta.glob('../../posts/cxx_design_patterns/behavioral_patterns/*.md', { eager: true })) as any[]
+const allPosts = [
+  ...projectPosts,
+  ...cleanCxxPosts,
+  ...cxxCreationalPatternsPosts,
+  ...cxxStructuralPatternsPosts,
+  ...cxxBehavioralPatternsPosts,
+]
+const tagCounts = new Map<string, number>()
+
+for (const post of allPosts) {
+  for (const tag of post.frontmatter.tags ?? []) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)
+  }
+}
+
+const tags = [...tagCounts.entries()]
+  .map(([name, count]) => ({ name, label: getEnTagLabel(name), slug: getEnTagSlug(name), count }))
+  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+const pageTitle = 'Tags'
+---
+
+<BaseLayout pageTitle={pageTitle} lang="en" description="Browse posts by tag.">
+  <div class="tag-toolbar">
+    <p>
+      <strong>{tags.length}</strong> tags
+    </p>
+    <label class="tag-search">
+      <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+      <input id="tag-filter" type="search" placeholder="Filter tags" autocomplete="off" />
+    </label>
+  </div>
+  <div class="tags">
+    {
+      tags.map((tag) => (
+        <a href={withBase(`/en/tags/${tag.slug}`)} class="tag" data-tag={tag.label.toLocaleLowerCase()}>
+          {tag.label}
+          <span>{tag.count}</span>
+        </a>
+      ))
+    }
+  </div>
+  <p class="empty-tags" hidden>No matching tags</p>
+
+  <script>
+    function initTagFilter() {
+      const input = document.querySelector<HTMLInputElement>('#tag-filter')
+      const tags = Array.from(document.querySelectorAll<HTMLElement>('.tag[data-tag]'))
+      const empty = document.querySelector<HTMLElement>('.empty-tags')
+      if (!input || tags.length === 0 || !empty) return
+
+      const filterTags = () => {
+        const keyword = input.value.trim().toLocaleLowerCase()
+        let visibleCount = 0
+
+        tags.forEach((tag) => {
+          const visible = !keyword || (tag.dataset.tag ?? '').includes(keyword)
+          tag.hidden = !visible
+          if (visible) visibleCount += 1
+        })
+
+        empty.hidden = visibleCount > 0
+      }
+
+      if (input.dataset.ready !== 'true') {
+        input.dataset.ready = 'true'
+        input.addEventListener('input', filterTags)
+      }
+
+      filterTags()
+    }
+
+    document.addEventListener('astro:page-load', initTagFilter)
+    initTagFilter()
+  </script>
+</BaseLayout>
+
+<style>
+  .tag-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin: 0 0 1rem;
+  }
+
+  .tag-toolbar p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .tag-toolbar strong {
+    color: var(--accent);
+  }
+
+  .tag-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: min(18rem, 100%);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--code-bg);
+    color: var(--muted);
+    padding: 0.35rem 0.75rem;
+  }
+
+  .tag-search:focus-within {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tag-search input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.86rem;
+  }
+
+  .tag-search input::placeholder {
+    color: var(--muted);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid var(--tag-border);
+    border-radius: 999px;
+    background: var(--tag-bg);
+    font-size: 0.875rem;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .tag[hidden] {
+    display: none;
+  }
+
+  .tag:link,
+  .tag:visited {
+    color: var(--accent);
+  }
+
+  .tag span {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tag:hover,
+  .tag:active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .tag:hover span,
+  .tag:active span {
+    color: #fff;
+  }
+
+  .empty-tags {
+    margin: 1rem 0 0;
+    color: var(--muted);
+  }
+</style>

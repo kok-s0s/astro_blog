@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../../../layouts/Base.astro'
+import Toc from '../../../components/Toc.astro'
+import { withBase } from '../../../utils/path'
+import { getEnPostMeta, getEnPostSlug } from '../../../data/en-posts'
+import { getEnTagLabel, getEnTagSlug } from '../../../utils/enTags'
+
+export async function getStaticPaths() {
+  const projectPosts = Object.values(import.meta.glob('../../posts/*.md', { eager: true })) as any[]
+  const cleanCxxPosts = Object.values(import.meta.glob('../../posts/clean_cxx/*.md', { eager: true })) as any[]
+  const cxxCreationalPatternsPosts = Object.values(import.meta.glob('../../posts/cxx_design_patterns/creational_patterns/*.md', { eager: true })) as any[]
+  const cxxStructuralPatternsPosts = Object.values(import.meta.glob('../../posts/cxx_design_patterns/structural_patterns/*.md', { eager: true })) as any[]
+  const cxxBehavioralPatternsPosts = Object.values(import.meta.glob('../../posts/cxx_design_patterns/behavioral_patterns/*.md', { eager: true })) as any[]
+  const patternPosts = cxxCreationalPatternsPosts.concat(cxxStructuralPatternsPosts).concat(cxxBehavioralPatternsPosts)
+  projectPosts.sort(
+    (a, b) =>
+      new Date(b.frontmatter.updatedDate ?? b.frontmatter.pubDate).getTime() -
+      new Date(a.frontmatter.updatedDate ?? a.frontmatter.pubDate).getTime(),
+  )
+  cleanCxxPosts.sort((a, b) => getEnPostSlug(a.url).localeCompare(getEnPostSlug(b.url)))
+  const posts = projectPosts.concat(cleanCxxPosts).concat(patternPosts)
+  const translations = import.meta.glob('../../../content/en-posts/**/*.md', { eager: true }) as Record<string, any>
+  const getPostGroup = (slug: string) => {
+    if (slug.startsWith('clean_cxx/')) return cleanCxxPosts
+    if (slug.startsWith('cxx_design_patterns/')) return patternPosts
+    return projectPosts
+  }
+
+  return posts.map((post) => {
+    const slug = getEnPostSlug(post.url)
+    const translation = translations[`../../../content/en-posts/${slug}.md`]
+    const postGroup = getPostGroup(slug)
+    const index = postGroup.findIndex((candidate) => candidate.url === post.url)
+    const previousPost = postGroup[(index - 1 + postGroup.length) % postGroup.length]
+    const nextPost = postGroup[(index + 1) % postGroup.length]
+    const previousTranslation = translations[`../../../content/en-posts/${getEnPostSlug(previousPost.url)}.md`]
+    const nextTranslation = translations[`../../../content/en-posts/${getEnPostSlug(nextPost.url)}.md`]
+    return {
+      params: { slug },
+      props: { post, translation, previousPost, nextPost, previousTranslation, nextTranslation },
+    }
+  })
+}
+
+const { post, translation, previousPost, nextPost, previousTranslation, nextTranslation } = Astro.props
+const isEnglishSource = getEnPostSlug(post.url).startsWith('cxx_design_patterns/')
+const resolvePostMeta = (targetPost: any, targetTranslation?: any) => {
+  if (targetTranslation?.frontmatter) return targetTranslation.frontmatter
+  if (getEnPostSlug(targetPost.url).startsWith('cxx_design_patterns/')) return targetPost.frontmatter
+  return getEnPostMeta(targetPost.url, targetPost.frontmatter)
+}
+const meta = resolvePostMeta(post, translation)
+const previousMeta = resolvePostMeta(previousPost, previousTranslation)
+const nextMeta = resolvePostMeta(nextPost, nextTranslation)
+const sourceUrl = withBase(post.url)
+const pubDate = post.frontmatter.pubDate?.slice(0, 10)
+const updatedDate = post.frontmatter.updatedDate?.slice(0, 10)
+---
+
+<BaseLayout pageTitle={meta.title} lang="en" description={meta.description} ogImage={post.frontmatter.image?.url}>
+  <p class="time">Published <b><em>{pubDate}</em></b></p>
+  {updatedDate && <p class="time">Updated <b><em>{updatedDate}</em></b></p>}
+  <p><em>{meta.description}</em></p>
+  <p>Written by - <b><em>{post.frontmatter.author}</em></b></p>
+  {
+    post.frontmatter.image?.url && (
+      <img src={withBase(post.frontmatter.image.url)} width="300" alt={post.frontmatter.image.alt ?? meta.title} loading="lazy" decoding="async" />
+    )
+  }
+  <div class="tags">
+    {
+      post.frontmatter.tags?.map((tag: string) => (
+        <p class="tag">
+          <a href={withBase(`/en/tags/${getEnTagSlug(tag)}`)}>{getEnTagLabel(tag)}</a>
+        </p>
+      ))
+    }
+  </div>
+  <Toc />
+
+  {
+    translation ? (
+      <article class="translated-post">
+        <translation.Content />
+      </article>
+    ) : isEnglishSource ? (
+      <article class="translated-post">
+        <post.Content />
+      </article>
+    ) : (
+      <section class="en-companion">
+        <h2>English Companion Article</h2>
+        <p>
+          This page is an English companion version based on the Chinese original. It keeps the main idea, context, and reading path available for international visitors.
+        </p>
+        <h3>Main Points</h3>
+        <ul>
+          {meta.points.map((point: string) => <li>{point}</li>)}
+        </ul>
+      </section>
+    )
+  }
+  <p class="original-link">
+    Chinese original:
+    <a href={sourceUrl} class="underline">Read the original article</a>.
+  </p>
+  <div id="previous-next-article">
+    <a href={withBase(`/en/posts/${getEnPostSlug(previousPost.url)}`)} id="previous" class="underline">{previousMeta.title}</a>
+    <a href={withBase(`/en/posts/${getEnPostSlug(nextPost.url)}`)} id="next" class="underline">{nextMeta.title}</a>
+  </div>
+</BaseLayout>
+
+<style>
+  img {
+    margin-bottom: 0.5rem;
+  }
+
+  .en-companion {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .translated-post {
+    margin-top: 1rem;
+  }
+
+  .original-link {
+    margin-top: 1.5rem;
+    color: var(--muted);
+  }
+
+  .en-companion h2,
+  .en-companion h3,
+  .translated-post h2,
+  .translated-post h3 {
+    border-left: 3px solid var(--accent);
+    padding-left: 0.6rem;
+  }
+
+  .en-companion ul,
+  .translated-post ul,
+  .translated-post ol {
+    padding-left: 1.2rem;
+  }
+
+  .en-companion li,
+  .translated-post li {
+    margin: 0.4rem 0;
+    line-height: 1.7;
+  }
+</style>

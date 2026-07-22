@@ -1,0 +1,78 @@
+[
+  {
+    "title": "Notes from Grokking Algorithms",
+    "li_texts": [
+      "An algorithm is a series of steps for accomplishing a task.",
+      "Any piece of code can be viewed as an algorithm.",
+      "A logarithm is the inverse of exponentiation.",
+      "Algorithm running times grow at different rates.",
+      "Big O notation is not about seconds. It compares the number of operations and describes how running time grows.",
+      "Algorithm speed is not about time itself, but about the growth rate of operations.",
+      "When discussing algorithm speed, the key question is how running time grows as input grows.",
+      "It is okay if an answer is not perfect.",
+      "Write code often so your hands do not get rusty.",
+      "For any project, what matters most is that you actually participated in building it.",
+      "Action is the key.",
+      "O(1) is relative to file size. Even as the file grows, the transfer time remains constant.",
+      "When data needs to be stored in memory, the computer provides a storage address.",
+      "Linked lists are a better choice when items need to be inserted in the middle.",
+      "Pseudocode is a brief description of the problem at hand. It looks like code, but is closer to natural language.",
+      "Recursion can make a solution clearer, but it does not provide a performance advantage by itself.",
+      "Loops may perform better; recursion may be easier to understand. Choose based on what matters more.",
+      "Every recursive function has a base case and a recursive case.",
+      "Computers use a call stack internally.",
+      "The stack plays an important role in recursion.",
+      "Using a stack is convenient, but storing detailed call information can consume a lot of memory.",
+      "Divide and conquer is a well-known recursive problem-solving method.",
+      "For recursive functions over arrays, the base case is often an empty array or a single element.",
+      "Hash tables are useful for mappings, duplicate prevention, and caching.",
+      "Dijkstra's algorithm works only when weights are positive.",
+      "A greedy algorithm chooses the best-looking option at each step.",
+      "Perfect is the enemy of good.",
+      "NP-complete problems are known for being hard.",
+      "If a problem is NP-complete, it is often better to use an approximation than chase a perfect solution.",
+      "Problems involving all combinations are often NP-complete.",
+      "Dynamic programming solves subproblems first, then builds toward the larger problem.",
+      "Dynamic programming works only when subproblems are discrete and independent enough.",
+      "There is no universal formula for dynamic programming. The solution must fit the problem."
+    ]
+  },
+  {
+    "title": "Notes from Living Documentation",
+    "li_texts": [
+      "The future is already here; it is just not evenly distributed.",
+      "Writing documentation can become a time trap.",
+      "Augmented code equals code plus comments.",
+      "Too much information is the same as no information.",
+      "Code must be written for people to read, and only incidentally for machines to execute.",
+      "Searching for the right word during design is a good use of time.",
+      "If you cannot change a decision, it is a requirement. If you can change it, it is your design.",
+      "Documentation is a means, not an end and not a product.",
+      "Having the conversation matters more than recording it.",
+      "One call can save twenty emails. One face-to-face talk can save twenty calls.",
+      "Do not do the same thing twice. If you already did, it may be time to automate it.",
+      "Consistency in a codebase means unfamiliar code still feels familiar.",
+      "Documentation does not make foolish decisions less foolish.",
+      "Legacy applications are knowledge fossils.",
+      "Use documentation for specialized knowledge and training for general knowledge.",
+      "Knowledge has location problems and stability problems.",
+      "If you want an activity to continue, make it interesting.",
+      "Fun begins with automating small chores.",
+      "Most knowledge already exists. It only needs missing context, intent, and rationale.",
+      "Whoever controls vocabulary controls thought.",
+      "Every time standard vocabulary expands in software, the industry moves forward.",
+      "Design patterns are communication tools for experienced programmers, not training wheels for beginners.",
+      "You still need to think, but you do not need to think alone."
+    ]
+  },
+  {
+    "title": "Notes from Daily Programming Work",
+    "li_texts": [
+      "Most business code is not impossibly difficult. The key is being reliable, responsive, and accountable.",
+      "Do not over-guess a problem. If the source can compile, run it, test it, and repeat until the issue is solved.",
+      "The fastest way to enter a field is to build a small thing first, then improve it gradually.",
+      "Thinking too much and doing too little is a common trap. Code does not enter your brain just because you read more of it.",
+      "Health matters. Eight cups of water every day may be unrealistic, but drink more water."
+    ]
+  }
+]

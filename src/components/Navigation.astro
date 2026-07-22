@@ -1,6 +1,9 @@
 ---
 import '../styles/nav.css'
 import { withBase } from '../utils/path'
+import { localizedPath } from '../utils/i18n'
+
+const { lang = 'zh' } = Astro.props
 
 const basePath = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
 const rawPathname = Astro.url.pathname.replace(/\/$/, '') || '/'
@@ -10,16 +13,23 @@ const pathname =
     : rawPathname
 
 const navItems = [
-  { label: 'Home', href: '/', match: ['/'] },
-  { label: 'About', href: '/about', match: ['/about'] },
-  { label: 'Blog', href: '/blog', match: ['/blog', '/posts', '/tags'] },
-  { label: 'Archive', href: '/archive', match: ['/archive'] },
-  { label: 'Anime', href: '/anime', match: ['/anime'] },
-  { label: 'Music', href: '/music', match: ['/music'] },
+  { label: lang === 'en' ? 'Home' : 'Home', href: localizedPath('/', lang), match: lang === 'en' ? ['=/en'] : ['=/'] },
+  { label: lang === 'en' ? 'About' : 'About', href: localizedPath('/about', lang), match: [localizedPath('/about', lang)] },
+  {
+    label: lang === 'en' ? 'Blog' : 'Blog',
+    href: localizedPath('/blog', lang),
+    match: lang === 'en' ? ['/en/blog', '/en/tags'] : ['/blog', '/posts', '/tags'],
+  },
+  { label: lang === 'en' ? 'Archive' : 'Archive', href: localizedPath('/archive', lang), match: [localizedPath('/archive', lang)] },
+  { label: lang === 'en' ? 'Anime' : 'Anime', href: localizedPath('/anime', lang), match: [localizedPath('/anime', lang)] },
+  { label: lang === 'en' ? 'Music' : 'Music', href: localizedPath('/music', lang), match: [localizedPath('/music', lang)] },
 ]
 
 const isActive = (matches: string[]) =>
-  matches.some((match) => (match === '/' ? pathname === '/' : pathname === match || pathname.startsWith(`${match}/`)))
+  matches.some((match) => {
+    if (match.startsWith('=')) return pathname === match.slice(1)
+    return pathname === match || pathname.startsWith(`${match}/`)
+  })
 ---
 
 <div id="nav-backdrop"></div>
@@ -35,7 +45,7 @@ const isActive = (matches: string[]) =>
       )
     })
   }
-  <a href={withBase('/search')} class="nav-search-mobile">Search</a>
+  <a href={withBase(localizedPath('/search', lang))} class="nav-search-mobile">Search</a>
 </nav>
 
 <script>
@@ -50,7 +60,10 @@ const isActive = (matches: string[]) =>
   }
 
   function matchNav(pathname: string, matches: string[]) {
-    return matches.some((match) => (match === '/' ? pathname === '/' : pathname === match || pathname.startsWith(`${match}/`)))
+    return matches.some((match) => {
+      if (match.startsWith('=')) return pathname === match.slice(1)
+      return pathname === match || pathname.startsWith(`${match}/`)
+    })
   }
 
   function syncActiveNav() {

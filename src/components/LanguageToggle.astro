@@ -1,0 +1,38 @@
+---
+import { alternateLangPath } from '../utils/i18n'
+import { withBase } from '../utils/path'
+
+const isEnglish = Astro.url.pathname.replace(/\/$/, '').includes('/en')
+const href = withBase(alternateLangPath(Astro.url.pathname))
+const label = isEnglish ? '中' : 'EN'
+const title = isEnglish ? '切换到中文' : 'Switch to English'
+---
+
+<a href={href} class="lang-toggle" aria-label={title} title={title}>{label}</a>
+
+<style>
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 1.6rem;
+    padding: 0 0.35rem;
+    color: var(--muted);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .lang-toggle:link,
+  .lang-toggle:visited {
+    color: var(--muted);
+  }
+
+  .lang-toggle:hover,
+  .lang-toggle:focus-visible {
+    color: var(--accent);
+  }
+</style>

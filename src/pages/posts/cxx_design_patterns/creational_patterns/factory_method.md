@@ -260,7 +260,7 @@ int main() {
 
 </details>
 
-## 绘制不同形状的图形
+## Drawing Different Shapes
 
 <details><summary>code</summary>
 
@@ -268,31 +268,31 @@ int main() {
 #include <iostream>
 using namespace std;
 
-// 基类 Shape
+// Base class Shape
 class Shape {
 public:
   virtual void draw() = 0;
 };
 
-// 派生类 Circle
+// Derived class Circle
 class Circle : public Shape {
 public:
   void draw() { cout << "Draw a circle" << endl; }
 };
 
-// 派生类 Square
+// Derived class Square
 class Square : public Shape {
 public:
   void draw() { cout << "Draw a square" << endl; }
 };
 
-// 派生类 Rectangle
+// Derived class Rectangle
 class Rectangle : public Shape {
 public:
   void draw() { cout << "Draw a rectangle" << endl; }
 };
 
-// 工厂类 ShapeFactory
+// Factory class ShapeFactory
 class ShapeFactory {
 public:
   static Shape *createShape(string shapeType) {
@@ -308,7 +308,7 @@ public:
   }
 };
 
-// 主函数
+// Main function
 int main() {
   Shape *circle = ShapeFactory::createShape("Circle");
   circle->draw();

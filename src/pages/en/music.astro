@@ -1,0 +1,272 @@
+---
+import BaseLayout from '../../layouts/Base.astro'
+import fallbackTracks from '../../data/music-fallback.json'
+
+const UID = '467185512'
+
+type Track = {
+  id: number
+  name: string
+  artists: string[]
+  album: string
+  cover: string
+  duration: number
+}
+
+let tracks: Track[] = []
+let fetchError = ''
+
+const HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  Referer: 'https://music.163.com/',
+}
+
+async function fetchJson(url: string, init: RequestInit = {}) {
+  const res = await fetch(url, {
+    ...init,
+    signal: AbortSignal.timeout(8000),
+  })
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+  return res.json()
+}
+
+function formatDuration(ms: number): string {
+  const s = Math.floor(ms / 1000)
+  const m = Math.floor(s / 60)
+  return `${m}:${(s % 60).toString().padStart(2, '0')}`
+}
+
+function coverUrl(url: string): string {
+  const clean = url.replace(/^https?:\/\//, '')
+  return `https://wsrv.nl/?url=${clean}&w=120&output=webp`
+}
+
+function songUrl(id: number): string {
+  return `https://music.163.com/#/song?id=${id}`
+}
+
+try {
+  const plData = await fetchJson(
+    `https://music.163.com/api/user/playlist?uid=${UID}&limit=1&offset=0`,
+    { headers: HEADERS }
+  )
+  const playlistId: number = plData.playlist?.[0]?.id
+  if (!playlistId) throw new Error('Unable to fetch playlist id')
+
+  const detailData = await fetchJson(
+    `https://music.163.com/api/v3/playlist/detail?id=${playlistId}&n=500`,
+    { headers: HEADERS }
+  )
+  const trackIds: number[] = (detailData.playlist?.trackIds ?? []).map((t: any) => t.id)
+  if (trackIds.length === 0) throw new Error('Playlist is empty')
+
+  const idsStr = '[' + trackIds.join(',') + ']'
+  const songData = await fetchJson('https://music.163.com/api/song/detail', {
+    method: 'POST',
+    headers: { ...HEADERS, 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `ids=${encodeURIComponent(idsStr)}`,
+  })
+
+  const songMap = new Map<number, any>((songData.songs ?? []).map((s: any) => [s.id, s]))
+
+  tracks = trackIds
+    .map((id) => {
+      const s = songMap.get(id)
+      if (!s) return null
+      return {
+        id: s.id,
+        name: s.name,
+        artists: (s.artists ?? []).map((a: any) => a.name),
+        album: s.album?.name ?? '',
+        cover: s.album?.picUrl ?? '',
+        duration: s.duration ?? 0,
+      } satisfies Track
+    })
+    .filter(Boolean) as Track[]
+} catch (e: any) {
+  tracks = fallbackTracks as Track[]
+  fetchError = e.message ?? 'Failed to fetch music list'
+}
+
+const tracksForClient = tracks.map((t) => ({
+  id: t.id,
+  name: t.name,
+  artists: t.artists,
+  cover: coverUrl(t.cover),
+}))
+---
+
+<BaseLayout pageTitle="Music" lang="en" description="Music liked by kok-s0s.">
+  <meta slot="head" name="referrer" content="no-referrer" />
+  <p class="count-line">
+    <strong>{tracks.length}</strong> saved tracks · from
+    <a href={`https://music.163.com/#/user/home?id=${UID}`} target="_blank" rel="noopener" class="ncm-link">NetEase Cloud Music</a>
+  </p>
+
+  {
+    fetchError && tracks.length === 0 ? (
+      <p class="fetch-error">Failed to fetch: {fetchError}</p>
+    ) : (
+      <ul class="track-list" id="track-list">
+        {tracks.map((track, i) => (
+          <li>
+            <a href={songUrl(track.id)} target="_blank" rel="noopener" class="track-row" data-index={i} data-track-id={track.id}>
+              <span class="track-index">
+                <span class="idx-num">{i + 1}</span>
+                <span class="idx-bars" aria-hidden="true"><i /><i /><i /></span>
+              </span>
+              <div class="cover-wrap">
+                <img src={coverUrl(track.cover)} alt={track.album} loading="lazy" data-no-zoom />
+              </div>
+              <div class="track-info">
+                <span class="track-name">{track.name}</span>
+                <span class="track-sub">{track.artists.join(' / ')}</span>
+              </div>
+              <span class="track-album">{track.album}</span>
+              <span class="track-duration">{formatDuration(track.duration)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <script type="application/json" id="ncm-tracks" is:inline set:html={JSON.stringify(tracksForClient)} />
+</BaseLayout>
+
+<style>
+  .count-line {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 1.25rem;
+  }
+  .count-line strong,
+  .ncm-link {
+    color: var(--accent) !important;
+  }
+  .fetch-error {
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .track-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .track-list li + li {
+    border-top: 1px solid var(--border);
+  }
+  .track-row {
+    display: grid;
+    grid-template-columns: 2rem 3rem 1fr auto auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+    color: inherit;
+  }
+  .track-row:hover {
+    background: var(--code-bg);
+  }
+  .track-index {
+    position: relative;
+    width: 2rem;
+    height: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .idx-num {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    transition: opacity 0.15s;
+  }
+  .idx-bars {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .idx-bars i {
+    display: block;
+    width: 3px;
+    border-radius: 1px;
+    background: var(--accent);
+    height: 40%;
+    animation: bar-bounce 0.8s ease-in-out infinite alternate;
+  }
+  .idx-bars i:nth-child(2) { animation-delay: 0.2s; }
+  .idx-bars i:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bar-bounce {
+    from { height: 30%; }
+    to { height: 90%; }
+  }
+  .track-row.is-playing .idx-num { opacity: 0; }
+  .track-row.is-playing .idx-bars { opacity: 1; }
+  .track-row.is-playing .track-name { color: var(--accent); }
+  .cover-wrap {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--code-bg);
+    flex-shrink: 0;
+  }
+  .cover-wrap img {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    object-fit: cover;
+  }
+  .track-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .track-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--heading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.15s;
+  }
+  .track-row:hover .track-name { color: var(--accent); }
+  .track-sub,
+  .track-album,
+  .track-duration {
+    font-size: 0.8rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .track-sub,
+  .track-album {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-sub { font-size: 0.78rem; }
+  .track-album { max-width: 10rem; }
+  .track-duration { font-variant-numeric: tabular-nums; }
+  @media (max-width: 600px) {
+    .track-row { grid-template-columns: 2rem 2.75rem 1fr auto; }
+    .track-album { display: none; }
+  }
+  @media (max-width: 400px) {
+    .track-row { grid-template-columns: 2.75rem 1fr auto; }
+    .track-index { display: none; }
+  }
+</style>
+

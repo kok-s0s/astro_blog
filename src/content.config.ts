@@ -7,4 +7,12 @@ const roadmap = defineCollection({
   }),
 })
 
-export const collections = { roadmap }
+const enPosts = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+})
+
+export const collections = { roadmap, 'en-posts': enPosts }

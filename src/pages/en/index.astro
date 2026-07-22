@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/Base.astro'
+import { withBase } from '../../utils/path'
+
+const pageTitle = 'Zero'
+---
+
+<BaseLayout pageTitle={pageTitle} lang="en" description="kok-s0s personal technical blog and notes.">
+  <p>
+    <em id="motto">『 無無無無_just4now 』</em>
+  </p>
+  <p class="intro">
+    Hi, I am kok-s0s. I build desktop/client applications, write C++ and Qt in production, and use this site to keep notes about software, tools, and things I enjoy.
+  </p>
+  <img src={withBase('/images/moon.jpeg')} alt="moon" id="moon" />
+</BaseLayout>
+
+<style>
+  #motto {
+    letter-spacing: 1.6px;
+  }
+
+  .intro {
+    max-width: 46rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  #moon {
+    width: 50%;
+  }
+</style>
+

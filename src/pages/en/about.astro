@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../../layouts/Base.astro'
+import { selfInfoEn, skillsEn, reposEn, booksReadEn } from '../../data/about'
+import { withBase } from '../../utils/path'
+
+const pageTitle = 'About'
+---
+
+<BaseLayout pageTitle={pageTitle} lang="en" description="About kok-s0s: software developer, C++/Qt, tooling, and robotics client applications.">
+  <h2>Personal</h2>
+  <ul class="info-list">
+    {selfInfoEn.map((info) => <li>{info}</li>)}
+  </ul>
+
+  <h2>Capabilities</h2>
+  <p class="section-tip">A practical roadmap of capabilities is available in the <a href={withBase('/en/roadmap')} class="tip-link">roadmap</a>.</p>
+  <ul class="skill-chips">
+    {skillsEn.map((skill) => <li>{skill}</li>)}
+  </ul>
+
+  <h2>Projects</h2>
+  <ul class="repo-list">
+    {
+      reposEn.map((repo) => (
+        <li>
+          <details>
+            <summary>
+              <a href={repo.link} target="_blank" rel="noopener" class="underline">
+                {repo.name}
+              </a>
+            </summary>
+            <p class="repo-desc">{repo.description}</p>
+          </details>
+        </li>
+      ))
+    }
+  </ul>
+
+  <details class="books-details">
+    <summary>Books I have read</summary>
+    <ul class="book-list">
+      {
+        booksReadEn.map((book) => (
+          <li class={book.status ? 'done' : 'pending'}>
+            <span class="book-name">{book.status ? <s>{book.name}</s> : book.name}</span>
+            <span class="book-desc">{book.description}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</BaseLayout>
+
+<style>
+  h2 {
+    border-left: 3px solid var(--accent);
+    padding-left: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .info-list,
+  .repo-list,
+  .book-list,
+  .skill-chips {
+    list-style: none;
+    padding: 0;
+  }
+
+  .info-list {
+    margin: 0 0 2rem;
+  }
+
+  .info-list li {
+    padding: 0.55rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    line-height: 1.7;
+    border-radius: 5px;
+    transition: background 0.15s;
+  }
+
+  .info-list li:last-child {
+    border-bottom: none;
+  }
+
+  .info-list li:hover {
+    background: var(--code-bg);
+  }
+
+  .section-tip {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+  }
+
+  .tip-link {
+    color: var(--accent) !important;
+    text-decoration: underline;
+  }
+
+  .skill-chips {
+    margin: 0 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-chips li {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: var(--tag-bg);
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .skill-chips li:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .repo-list {
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .repo-list li {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .repo-list li:has(details[open]) {
+    border-color: var(--accent);
+  }
+
+  .repo-list details {
+    padding: 0 0.75rem;
+  }
+
+  .repo-list details[open] {
+    padding-bottom: 0.75rem;
+  }
+
+  .repo-list summary {
+    padding: 0.65rem 0;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+  }
+
+  .repo-list summary::marker,
+  .repo-list summary::-webkit-details-marker {
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  .repo-list summary a {
+    color: var(--accent) !important;
+  }
+
+  .repo-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .books-details {
+    margin: 0 0 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 0.75rem;
+  }
+
+  .books-details[open] {
+    padding-bottom: 0.5rem;
+  }
+
+  .books-details > summary {
+    padding: 0.65rem 0 0.65rem 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .books-details > summary::marker,
+  .books-details > summary::-webkit-details-marker {
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .book-list {
+    margin: 0.25rem 0;
+  }
+
+  .book-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.45rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    border-radius: 5px;
+    transition: background 0.15s;
+  }
+
+  .book-list li:last-child {
+    border-bottom: none;
+  }
+
+  .book-list li:hover {
+    background: var(--code-bg);
+  }
+
+  .book-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .book-list li.done .book-name,
+  .book-desc {
+    color: var(--muted);
+  }
+
+  .book-desc {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 480px) {
+    .book-list li {
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+  }
+</style>

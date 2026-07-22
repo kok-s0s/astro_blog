@@ -1,10 +1,18 @@
 ---
 import sentenceJson from '../data/sentence.json'
+import sentenceEnJson from '../data/sentence-en.json'
 
-const sentences = sentenceJson.flatMap((item) => item.li_texts)
+const basePath = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+const currentPath = basePath && basePath !== '/' && Astro.url.pathname.startsWith(basePath)
+  ? Astro.url.pathname.slice(basePath.length) || '/'
+  : Astro.url.pathname
+const isEnglish = currentPath === '/en' || currentPath.startsWith('/en/')
+const sentences = (isEnglish ? sentenceEnJson : sentenceJson).flatMap((item) => item.li_texts)
+const storageKey = isEnglish ? 'storedIndex:en' : 'storedIndex:zh'
+const title = isEnglish ? 'Another sentence' : '换一句'
 ---
 
-<button id="sentence" type="button" title="换一句"></button>
+<button id="sentence" type="button" title={title} aria-label={title} data-sentences={JSON.stringify(sentences)} data-storage-key={storageKey}></button>
 
 <style>
   #sentence {
@@ -47,18 +55,21 @@ const sentences = sentenceJson.flatMap((item) => item.li_texts)
   }
 </style>
 
-<script is:inline define:vars={{ sentences }}>
+<script is:inline>
   ;(() => {
-    const storageKey = 'storedIndex'
-    window.__sentenceList = sentences
+    function getState(el) {
+      const list = JSON.parse(el.dataset.sentences || '[]')
+      const storageKey = el.dataset.storageKey || 'storedIndex:zh'
+      return { list, storageKey }
+    }
 
-    function readIndex() {
+    function readIndex(storageKey) {
       const stored = Number.parseInt(localStorage.getItem(storageKey), 10)
       return Number.isFinite(stored) ? stored : 0
     }
 
     function renderSentence(el, index, animate = false) {
-      const list = window.__sentenceList ?? []
+      const { list } = getState(el)
       if (!el || list.length === 0) return
       el.textContent = list[index % list.length]
       if (!animate) return
@@ -68,9 +79,9 @@ const sentences = sentenceJson.flatMap((item) => item.li_texts)
     }
 
     function nextSentence(el, animate = false) {
-      const list = window.__sentenceList ?? []
+      const { list, storageKey } = getState(el)
       if (!el || list.length === 0) return
-      const index = readIndex() % list.length
+      const index = readIndex(storageKey) % list.length
       renderSentence(el, index, animate)
       localStorage.setItem(storageKey, String((index + 1) % list.length))
     }

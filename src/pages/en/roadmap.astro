@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/Base.astro'
+import '../../styles/roadmap.css'
+import { withBase } from '../../utils/path'
+
+const pageTitle = 'Roadmap'
+const knowledgeElementPosts = Object.values(import.meta.glob('../../content/roadmap/knowledge_element/*.md', { eager: true })) as any[]
+const scatteredPosts = Object.values(import.meta.glob('../../content/roadmap/scattered/*.md', { eager: true })) as any[]
+---
+
+<BaseLayout pageTitle={pageTitle} lang="en" description="A practical software development capability roadmap.">
+  <img src={withBase('/images/bird.jpg')} alt="bird" id="bird" />
+  <blockquote>
+    <p>Even when it is work, I still want to find the fun in it.</p>
+  </blockquote>
+  <h2>Knowledge Elements</h2>
+  <p>Practical knowledge points that show up often in real development, not limited to one language.</p>
+  <div id="knowledge-element">
+    {
+      knowledgeElementPosts.map((post) => (
+        <details>
+          <summary>{post.frontmatter.title}</summary>
+          <div class="post-content">
+            <post.Content />
+          </div>
+        </details>
+      ))
+    }
+  </div>
+  <p>Scattered topics that are useful but not always held in muscle memory.</p>
+  <div id="scattered">
+    {
+      scatteredPosts.map((post) => (
+        <details>
+          <summary>{post.frontmatter.title}</summary>
+          <div class="post-content">
+            <post.Content />
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<script>
+  const reposList = document.getElementById('knowledge-element')
+  const scatteredList = document.getElementById('scattered')
+
+  if (reposList && scatteredList) {
+    const allDetailsElements = [
+      ...reposList.getElementsByTagName('details'),
+      ...scatteredList.getElementsByTagName('details'),
+    ]
+
+    for (const details of allDetailsElements) {
+      details.addEventListener('toggle', () => {
+        if (details.open) {
+          for (const otherDetails of allDetailsElements) {
+            if (otherDetails !== details) otherDetails.removeAttribute('open')
+          }
+        }
+      })
+    }
+  }
+</script>

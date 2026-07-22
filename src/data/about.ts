@@ -49,3 +49,63 @@ export const booksRead = [
   { status: true, name: '《Clean C++》', description: '读完且记录，推荐！' },
   { status: true, name: '《Linux Shell 脚本攻略》', description: '看一半弃了，用 ChatGPT 生成脚本嘎嘎香！' }
 ]
+
+export const selfInfoEn = [
+  'I like to drive myself with clear goals: break work into executable steps, then move steadily toward completion.',
+  'I currently build client-side applications at a robotics company in the manufacturing industry. My daily work involves C/C++ for performance-sensitive logic, Qt for desktop GUI, and Python for automation scripts and tooling.',
+  'I am pragmatic about programming languages. The right choice depends on the problem, the constraints, and the time available.',
+  'I use AI coding agents as pair-programming partners, while keeping final design judgment and code review in my own hands.',
+  'Code formatting and code review are two habits I value highly in team development.',
+]
+
+export const skillsEn = [
+  'English communication',
+  'Information search and validation',
+  'Technical documentation reading',
+  'Program debugging',
+  'Postmortem and reflection',
+  'AI-assisted coding',
+  'Translating business needs into technical requirements',
+  'Cross-domain communication between software and robotics',
+]
+
+export const reposEn = [
+  {
+    name: 'terminal tools',
+    link: 'https://repos-kok-s0s.netlify.app/',
+    description:
+      'Small terminal tools built for my own workflow. They are not technically complex, but they make daily work more efficient and keep me writing code regularly.',
+  },
+  {
+    name: 'cxx_crud_file',
+    link: 'https://github.com/kok-s0s/cxx_crud_file',
+    description:
+      'A C++ project created to replace Qt-dependent file and data utilities. It uses UString, filesystem, and small file abstractions for JSON, INI, binary, text, and BMP file handling.',
+  },
+  {
+    name: 'cxx_thread',
+    link: 'https://github.com/kok-s0s/cxx_thread',
+    description:
+      'A modern C++ thread abstraction designed to replace Qt QThread in selected scenarios, with synchronization primitives and a signal-slot-like usage style.',
+  },
+  {
+    name: 'flutter_ffi_opencv',
+    link: 'https://github.com/kok-s0s/flutter_ffi_opencv',
+    description:
+      'A Flutter FFI experiment that connects Dart code with existing C/C++ modules, making native functionality available to Flutter applications.',
+  },
+  {
+    name: 'socket_qt_dotNet',
+    link: 'https://github.com/kok-s0s/socket_qt_dotNet',
+    description: 'A socket communication demo between a Qt application and a C# application.',
+  },
+]
+
+export const booksReadEn = [
+  { status: true, name: 'Designing Data-Intensive Applications', description: 'A strong systems and architecture book.' },
+  { status: true, name: 'Crafting Interpreters', description: 'Paused until I have a practical project to apply it.' },
+  { status: true, name: 'Living Documentation', description: 'Lightly read; not strongly recommended.' },
+  { status: true, name: 'Refactoring', description: 'Finished; recommended.' },
+  { status: true, name: 'Clean C++', description: 'Finished and documented; recommended.' },
+  { status: true, name: 'Linux Shell Scripting Cookbook', description: 'Stopped halfway; AI tools cover many of my scripting needs now.' },
+]
