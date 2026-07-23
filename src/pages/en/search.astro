@@ -11,17 +11,44 @@ const pageTitle = 'Search'
 </BaseLayout>
 
 <link href={withBase('/pagefind/pagefind-ui.css')} rel="stylesheet" />
-<script is:inline src={withBase('/pagefind/pagefind-ui.js')}></script>
-<script is:inline>
-  new PagefindUI({
-    element: '#search',
-    showSubResults: true,
-    showImages: false,
-    translations: {
-      placeholder: 'Search...',
-      zero_results: 'No results for "[SEARCH_TERM]"',
-    },
-  })
+<script>
+  const pagefindBase = import.meta.env.BASE_URL.replace(/\/$/, '')
+
+  function loadPagefindUI() {
+    if ((window as any).PagefindUI) return Promise.resolve()
+    if ((window as any).__pagefindUILoading) return (window as any).__pagefindUILoading
+
+    ;(window as any).__pagefindUILoading = new Promise<void>((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = `${pagefindBase}/pagefind/pagefind-ui.js`
+      script.onload = () => resolve()
+      script.onerror = () => reject(new Error('Failed to load Pagefind UI'))
+      document.head.appendChild(script)
+    })
+
+    return (window as any).__pagefindUILoading
+  }
+
+  async function initSearch() {
+    const el = document.getElementById('search')
+    if (!el || el.dataset.ready === 'true') return
+    await loadPagefindUI()
+    if (!(window as any).PagefindUI) return
+
+    el.dataset.ready = 'true'
+    new (window as any).PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+      translations: {
+        placeholder: 'Search...',
+        zero_results: 'No results for "[SEARCH_TERM]"',
+      },
+    })
+  }
+
+  document.addEventListener('astro:page-load', initSearch)
+  initSearch()
 </script>
 
 <style>
