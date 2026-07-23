@@ -20,23 +20,38 @@
 </style>
 
 <script>
-  const toggle = document.getElementById('theme-toggle')!
-  const icon = document.getElementById('theme-icon')!
-
   function applyTheme(theme: string) {
     document.documentElement.classList.toggle('light', theme === 'light')
+    const icon = document.getElementById('theme-icon')
     // 亮色=露琪亚（冰雪），点击可切换到一护（暗），图标为火焰
     // 暗色=一护（烈焰），点击可切换到露琪亚（亮），图标为雪花
-    icon.className = theme === 'light' ? 'fas fa-fire' : 'fas fa-snowflake'
+    if (icon) icon.className = theme === 'light' ? 'fas fa-fire' : 'fas fa-snowflake'
   }
 
-  const saved = localStorage.getItem('theme')
-  const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-  applyTheme(saved ?? system)
+  function getInitialTheme() {
+    const saved = localStorage.getItem('theme')
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+    return saved ?? system
+  }
 
-  toggle.addEventListener('click', () => {
+  function syncThemeToggle() {
+    applyTheme(document.documentElement.classList.contains('light') ? 'light' : getInitialTheme())
+  }
+
+  function toggleTheme() {
     const next = document.documentElement.classList.contains('light') ? 'dark' : 'light'
     localStorage.setItem('theme', next)
     applyTheme(next)
-  })
+  }
+
+  if (!(window as any).__themeToggleReady) {
+    ;(window as any).__themeToggleReady = true
+    document.addEventListener('click', (e) => {
+      const target = e.target instanceof Element ? e.target : null
+      if (target?.closest('#theme-toggle')) toggleTheme()
+    })
+    document.addEventListener('astro:page-load', syncThemeToggle)
+  }
+
+  syncThemeToggle()
 </script>
