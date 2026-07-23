@@ -7,7 +7,11 @@ const pageTitle = 'Search'
 
 <BaseLayout pageTitle={pageTitle} lang="en" description="Search across the whole site.">
   <p class="tip">Full-text search across all indexed posts</p>
-  <div id="search"></div>
+  <div
+    id="search"
+    data-placeholder="Search..."
+    data-zero-results='No results for "[SEARCH_TERM]"'
+  ></div>
 </BaseLayout>
 
 <link href={withBase('/pagefind/pagefind-ui.css')} rel="stylesheet" />
@@ -32,22 +36,36 @@ const pageTitle = 'Search'
   async function initSearch() {
     const el = document.getElementById('search')
     if (!el || el.dataset.ready === 'true') return
-    await loadPagefindUI()
-    if (!(window as any).PagefindUI) return
-
     el.dataset.ready = 'true'
+
+    try {
+      await loadPagefindUI()
+    } catch (_) {
+      delete el.dataset.ready
+      return
+    }
+
+    if (!(window as any).PagefindUI) {
+      delete el.dataset.ready
+      return
+    }
+
     new (window as any).PagefindUI({
       element: '#search',
       showSubResults: true,
       showImages: false,
       translations: {
-        placeholder: 'Search...',
-        zero_results: 'No results for "[SEARCH_TERM]"',
+        placeholder: el.dataset.placeholder || 'Search...',
+        zero_results: el.dataset.zeroResults || 'No results for "[SEARCH_TERM]"',
       },
     })
   }
 
-  document.addEventListener('astro:page-load', initSearch)
+  if (!(window as any).__searchPageReady) {
+    ;(window as any).__searchPageReady = true
+    document.addEventListener('astro:page-load', initSearch)
+  }
+
   initSearch()
 </script>
 

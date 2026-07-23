@@ -7,7 +7,11 @@ const pageTitle = '搜索'
 
 <BaseLayout pageTitle={pageTitle} description="全站文章搜索">
   <p class="tip">全文搜索 · 覆盖所有博文</p>
-  <div id="search"></div>
+  <div
+    id="search"
+    data-placeholder="输入关键词..."
+    data-zero-results="没有找到「[SEARCH_TERM]」相关内容"
+  ></div>
 </BaseLayout>
 
 <link href={withBase('/pagefind/pagefind-ui.css')} rel="stylesheet" />
@@ -32,22 +36,36 @@ const pageTitle = '搜索'
   async function initSearch() {
     const el = document.getElementById('search')
     if (!el || el.dataset.ready === 'true') return
-    await loadPagefindUI()
-    if (!(window as any).PagefindUI) return
-
     el.dataset.ready = 'true'
+
+    try {
+      await loadPagefindUI()
+    } catch (_) {
+      delete el.dataset.ready
+      return
+    }
+
+    if (!(window as any).PagefindUI) {
+      delete el.dataset.ready
+      return
+    }
+
     new (window as any).PagefindUI({
       element: '#search',
       showSubResults: true,
       showImages: false,
       translations: {
-        placeholder: '输入关键词...',
-        zero_results: '没有找到「[SEARCH_TERM]」相关内容',
+        placeholder: el.dataset.placeholder || '输入关键词...',
+        zero_results: el.dataset.zeroResults || '没有找到「[SEARCH_TERM]」相关内容',
       },
     })
   }
 
-  document.addEventListener('astro:page-load', initSearch)
+  if (!(window as any).__searchPageReady) {
+    ;(window as any).__searchPageReady = true
+    document.addEventListener('astro:page-load', initSearch)
+  }
+
   initSearch()
 </script>
 
