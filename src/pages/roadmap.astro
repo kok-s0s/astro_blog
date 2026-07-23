@@ -43,28 +43,19 @@ const scatteredPosts = Object.values(import.meta.glob('../content/roadmap/scatte
 </BaseLayout>
 
 <script>
-  // 处理details的互斥逻辑
-  const reposList = document.getElementById('knowledge-element')
-  const scatteredList = document.getElementById('scattered')
+  if (!(window as any).__roadmapDetailsReady) {
+    ;(window as any).__roadmapDetailsReady = true
+    document.addEventListener(
+      'toggle',
+      (event) => {
+        const details = event.target instanceof HTMLDetailsElement ? event.target : null
+        if (!details?.open || !details.matches('#knowledge-element details, #scattered details')) return
 
-  if (reposList && scatteredList) {
-    // 合并两个列表中的所有 details 元素
-    const allDetailsElements = [
-      ...reposList.getElementsByTagName('details'),
-      ...scatteredList.getElementsByTagName('details'),
-    ]
-
-    // 处理互斥逻辑
-    for (const details of allDetailsElements) {
-      details.addEventListener('toggle', () => {
-        if (details.open) {
-          for (const otherDetails of allDetailsElements) {
-            if (otherDetails !== details) {
-              otherDetails.removeAttribute('open')
-            }
-          }
-        }
-      })
-    }
+        document.querySelectorAll<HTMLDetailsElement>('#knowledge-element details, #scattered details').forEach((otherDetails) => {
+          if (otherDetails !== details) otherDetails.removeAttribute('open')
+        })
+      },
+      true,
+    )
   }
 </script>

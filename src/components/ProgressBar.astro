@@ -19,8 +19,9 @@
   if ((window as any).__progressBarReady) return
   ;(window as any).__progressBarReady = true
 
-  const bar = document.getElementById('progress-bar') as HTMLElement
   function updateProgress() {
+    const bar = document.getElementById('progress-bar') as HTMLElement | null
+    if (!bar) return
     const scrolled = window.scrollY
     const total = document.documentElement.scrollHeight - window.innerHeight
     bar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : '0%'

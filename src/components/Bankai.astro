@@ -93,10 +93,6 @@
   if ((window as any).__bankaiReady) return
   ;(window as any).__bankaiReady = true
 
-  const overlay = document.getElementById('bankai-overlay')!
-  const textEl = document.getElementById('bankai-text')!
-  const rings = document.querySelectorAll<HTMLElement>('.ring')
-
   let buffer = ''
   let clearTimer: ReturnType<typeof setTimeout>
 
@@ -111,6 +107,11 @@
   })
 
   function triggerBankai() {
+    const overlay = document.getElementById('bankai-overlay')
+    const textEl = document.getElementById('bankai-text')
+    const rings = document.querySelectorAll<HTMLElement>('.ring')
+    if (!overlay || !textEl) return
+
     buffer = ''
     const light = document.documentElement.classList.contains('light')
     const accent = light ? '#6c3fb5' : '#e8722a'

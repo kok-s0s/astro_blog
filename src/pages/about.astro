@@ -267,16 +267,18 @@ const pageTitle = '关于'
 </style>
 
 <script>
-  const reposList = document.querySelector('.repo-list')
-  if (reposList) {
-    const detailsElements = reposList.getElementsByTagName('details')
-    for (const details of detailsElements) {
-      details.addEventListener('click', () => {
-        for (const otherDetails of detailsElements) {
-          if (otherDetails !== details) otherDetails.removeAttribute('open')
-        }
+  if (!(window as any).__aboutDetailsReady) {
+    ;(window as any).__aboutDetailsReady = true
+    document.addEventListener('click', (event) => {
+      const target = event.target instanceof Element ? event.target : null
+      const details = target?.closest<HTMLDetailsElement>('.repo-list details')
+      const reposList = details?.closest('.repo-list')
+      if (!details || !reposList) return
+
+      reposList.querySelectorAll<HTMLDetailsElement>('details').forEach((otherDetails) => {
+        if (otherDetails !== details) otherDetails.removeAttribute('open')
       })
-    }
+    })
   }
 
 </script>
