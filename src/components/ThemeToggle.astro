@@ -1,4 +1,10 @@
-<button id="theme-toggle" aria-label="切换主题" title="切换主题（露琪亚 / 一护）">
+---
+const { lang = 'zh' } = Astro.props
+const label = lang === 'en' ? 'Switch theme' : '切换主题'
+const title = lang === 'en' ? 'Switch theme (Rukia / Ichigo)' : '切换主题（露琪亚 / 一护）'
+---
+
+<button id="theme-toggle" aria-label={label} title={title}>
   <i id="theme-icon" class="fas fa-snowflake" aria-hidden="true"></i>
 </button>
 

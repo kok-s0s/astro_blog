@@ -50,7 +50,7 @@ const ogImageURL = new URL(withBase(ogImage), Astro.site)
     <meta property="og:url" content={canonicalURL} />
 
     <!-- RSS -->
-    <link rel="alternate" type="application/rss+xml" title="kok-s0s · 博客" href={withBase('/rss.xml')} />
+    <link rel="alternate" type="application/rss+xml" title={lang === 'en' ? 'kok-s0s · Blog' : 'kok-s0s · 博客'} href={withBase('/rss.xml')} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -62,7 +62,7 @@ const ogImageURL = new URL(withBase(ogImage), Astro.site)
     <title>{pageTitle}</title>
     <ClientRouter />
     <slot name="head" />
-    <!-- 防止主题切换闪烁 -->
+    <!-- Prevent theme flicker before hydration. -->
     <script is:inline>
       ;(function () {
         const saved = localStorage.getItem('theme')
@@ -81,8 +81,8 @@ const ogImageURL = new URL(withBase(ogImage), Astro.site)
       <slot />
     </main>
     <Footer />
-    <Top />
-    <GlobalMusicPlayer />
+    <Top lang={lang} />
+    <GlobalMusicPlayer lang={lang} />
     <script>
       import '../scripts/copy.js'
       import '../scripts/zoom-images'

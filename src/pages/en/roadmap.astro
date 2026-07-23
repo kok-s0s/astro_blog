@@ -4,8 +4,8 @@ import '../../styles/roadmap.css'
 import { withBase } from '../../utils/path'
 
 const pageTitle = 'Roadmap'
-const knowledgeElementPosts = Object.values(import.meta.glob('../../content/roadmap/knowledge_element/*.md', { eager: true })) as any[]
-const scatteredPosts = Object.values(import.meta.glob('../../content/roadmap/scattered/*.md', { eager: true })) as any[]
+const knowledgeElementPosts = Object.values(import.meta.glob('../../content/en-roadmap/knowledge_element/*.md', { eager: true })) as any[]
+const scatteredPosts = Object.values(import.meta.glob('../../content/en-roadmap/scattered/*.md', { eager: true })) as any[]
 ---
 
 <BaseLayout pageTitle={pageTitle} lang="en" description="A practical software development capability roadmap.">

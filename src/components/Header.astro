@@ -11,7 +11,7 @@ const { lang = 'zh' } = Astro.props
 
 <header>
   <nav id="header">
-    <Hamburger />
+    <Hamburger lang={lang} />
     <Navigation lang={lang} />
     <div id="header-actions">
       <a href={withBase(localizedPath('/search', lang))} class="icon-btn" aria-label={lang === 'en' ? 'Search' : '搜索'} title={lang === 'en' ? 'Search (Ctrl+K)' : '搜索 (Ctrl+K)'}>
@@ -20,7 +20,7 @@ const { lang = 'zh' } = Astro.props
           <line x1="10" y1="10" x2="14" y2="14"/>
         </svg>
       </a>
-      <a href={withBase('/rss.xml')} class="icon-btn" aria-label="RSS 订阅" title="RSS 订阅">
+      <a href={withBase('/rss.xml')} class="icon-btn" aria-label={lang === 'en' ? 'RSS feed' : 'RSS 订阅'} title={lang === 'en' ? 'RSS feed' : 'RSS 订阅'}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <circle cx="3" cy="13" r="1.8"/>
           <path d="M2 8.5a6.5 6.5 0 0 1 6.5 6.5H10A7.5 7.5 0 0 0 2 7v1.5z"/>
@@ -28,7 +28,7 @@ const { lang = 'zh' } = Astro.props
         </svg>
       </a>
       <LanguageToggle />
-      <ThemeToggle />
+      <ThemeToggle lang={lang} />
     </div>
   </nav>
 </header>

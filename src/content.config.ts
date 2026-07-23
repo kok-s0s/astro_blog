@@ -15,4 +15,4 @@ const enPosts = defineCollection({
   }),
 })
 
-export const collections = { roadmap, 'en-posts': enPosts }
+export const collections = { roadmap, 'en-roadmap': roadmap, 'en-posts': enPosts }

@@ -1,8 +1,10 @@
 ---
 import '../styles/hamburger.css'
+
+const { lang = 'zh' } = Astro.props
 ---
 
-<button class="hamburger" aria-label="菜单" aria-expanded="false">
+<button class="hamburger" aria-label={lang === 'en' ? 'Menu' : '菜单'} aria-expanded="false">
   <span class="line"></span>
   <span class="line"></span>
   <span class="line"></span>
